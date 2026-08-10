@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — Odoo & ERP Engineer{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_settings.hero_subtitle|default:"Odoo and ERP implementation, customization, migration and support by Mostakim Jihad." }}{% endblock %}">
+
+    <link rel="stylesheet" href="{% static 'css/tailwind.compiled.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+<!-- Scroll progress -->
+<div id="scroll-progress" class="scroll-progress" style="transform: scaleX(0)"></div>
+
+<!-- ============================================================
+     THIN NARROW NAVBAR — ~36px tall
+     ============================================================ -->
+<header class="sticky top-0 z-50">
+    <nav class="max-w-5xl mx-auto px-3 sm:px-4 mt-3">
+        <div class="nav-capsule px-2.5 py-1.5 flex items-center justify-between gap-2">
+
+            <!-- Brand monogram -->
+            <a href="{% url 'home' %}" class="flex items-center gap-1.5 pl-1 pr-1.5 py-1 group">
+                <span class="relative w-5 h-5 rounded-md flex items-center justify-center text-white text-[10px] font-display font-semibold" style="background: linear-gradient(135deg, #6366F1, #22D3EE)">
+                    <span>M</span>
+                    <span class="absolute -right-0.5 -bottom-0.5 w-1.5 h-1.5 rounded-full bg-cyan-400 border border-base"></span>
+                </span>
+                <span class="hidden sm:inline font-display font-semibold text-ink text-[12px] tracking-tight">Mostakim Jihad</span>
+            </a>
+
+            <!-- Desktop nav with sliding pill -->
+            <div class="hidden lg:flex relative items-center">
+                <span id="nav-pill" class="nav-pill"></span>
+                <div id="primary-nav" class="flex items-center gap-0.5 relative">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                    <a href="{% url 'modules' %}" class="nav-link">Modules</a>
+                    <a href="{% url 'services' %}" class="nav-link">Services</a>
+                    <a href="{% url 'portfolio:portfolio' %}" class="nav-link">Work</a>
+                    <a href="{% url 'clients' %}" class="nav-link">Clients</a>
+                    <a href="{% url 'certifications' %}" class="nav-link">Certs</a>
+                    <a href="{% url 'blog:list' %}" class="nav-link">Blog</a>
+                    <a href="{% url 'contact' %}" class="nav-link">Contact</a>
+                </div>
+            </div>
+
+            <!-- Right side: availability + CTA -->
+            <div class="hidden md:flex items-center gap-1.5">
+                {% if site_settings.fiverr_url %}
+                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr text-[11px] py-1 px-2.5">
+                    Hire on Fiverr
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="lg:hidden inline-flex items-center justify-center w-7 h-7 rounded-full text-ink hover:bg-white/5 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden lg:hidden mt-1.5">
+            <div class="surface p-1.5 flex flex-col gap-0.5">
+                <a href="{% url 'home' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink hover:bg-white/5">Home</a>
+                <a href="{% url 'modules' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Modules</a>
+                <a href="{% url 'services' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Services</a>
+                <a href="{% url 'portfolio:portfolio' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Work</a>
+                <a href="{% url 'clients' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Clients</a>
+                <a href="{% url 'certifications' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Certifications</a>
+                <a href="{% url 'blog:list' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Blog</a>
+                <a href="{% url 'contact' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Contact</a>
+                {% if site_settings.fiverr_url %}
+                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="mt-1 btn-fiverr justify-center text-[12px]">
+                    Hire on Fiverr
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% if messages %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    {% for message in messages %}
+    <div class="message {% if message.tags == 'error' %}error{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main class="flex-1">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="mt-20 border-t border-line bg-base">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <!-- Brand + status -->
+            <div class="md:col-span-5">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="relative w-6 h-6 rounded-md flex items-center justify-center text-white text-[10px] font-display font-semibold" style="background: linear-gradient(135deg, #6366F1, #22D3EE)">
+                        <span>M</span>
+                        <span class="absolute -right-0.5 -bottom-0.5 w-1.5 h-1.5 rounded-full bg-cyan-400 border border-base"></span>
+                    </span>
+                    <span class="font-display font-semibold text-ink">{{ site_settings.full_name|default:"Mostakim Jihad" }}</span>
+                </div>
+                <p class="text-sm text-ink2 leading-relaxed mb-4 max-w-sm">{{ site_settings.tagline }}</p>
+
+                <div class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border border-line text-[11px]">
+                    <span class="dot-pulse"></span>
+                    <span class="font-medium text-ink">Available</span>
+                    <span class="text-ink4 font-mono">·</span>
+                    <span class="text-ink3 font-mono">Replies &lt; 4h</span>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="md:col-span-3">
+                <h4 class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 mb-3">Sitemap</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{% url 'home' %}" class="text-ink2 hover:text-ink transition">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="text-ink2 hover:text-ink transition">About</a></li>
+                    <li><a href="{% url 'modules' %}" class="text-ink2 hover:text-ink transition">Modules</a></li>
+                    <li><a href="{% url 'services' %}" class="text-ink2 hover:text-ink transition">Services</a></li>
+                    <li><a href="{% url 'portfolio:portfolio' %}" class="text-ink2 hover:text-ink transition">Work</a></li>
+                    <li><a href="{% url 'blog:list' %}" class="text-ink2 hover:text-ink transition">Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="md:col-span-4">
+                <h4 class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 mb-3">Get in touch</h4>
+                <ul class="space-y-2 text-sm">
+                    {% if site_settings.email %}<li><a href="mailto:{{ site_settings.email }}" class="text-ink2 hover:text-cyan-400 transition break-all">{{ site_settings.email }}</a></li>{% endif %}
+                    {% if site_settings.phone %}<li><a href="tel:{{ site_settings.phone }}" class="text-ink2 hover:text-cyan-400 transition">{{ site_settings.phone }}</a></li>{% endif %}
+                    {% if site_settings.location %}<li class="text-ink3">{{ site_settings.location }}</li>{% endif %}
+                </ul>
+
+                <div class="flex flex-wrap gap-1.5 mt-4">
+                    {% if site_settings.linkedin %}<a href="{{ site_settings.linkedin }}" target="_blank" rel="noopener" class="btn-ghost text-[11px] py-1 px-2.5">LinkedIn</a>{% endif %}
+                    {% if site_settings.github %}<a href="{{ site_settings.github }}" target="_blank" rel="noopener" class="btn-ghost text-[11px] py-1 px-2.5">GitHub</a>{% endif %}
+                    {% if site_settings.codeforces %}<a href="{{ site_settings.codeforces }}" target="_blank" rel="noopener" class="btn-ghost text-[11px] py-1 px-2.5">Codeforces</a>{% endif %}
+                    {% if site_settings.fiverr_url %}<a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr text-[11px] py-1 px-2.5">Fiverr</a>{% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-line mt-10 pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-ink3 font-mono">
+            <span>&copy; {% now "Y" %} {{ site_settings.full_name|default:"Mostakim Jihad" }}</span>
+            <span class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"></span>
+                Built with Django · Tailwind · PostgreSQL
+            </span>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/main.js' %}" defer></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

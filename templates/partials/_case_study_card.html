@@ -1,0 +1,25 @@
+<a href="{% url 'portfolio:case_study_detail' case_study.slug %}" class="group surface hover-lift overflow-hidden block">
+    <!-- Cover -->
+    <div class="relative aspect-video overflow-hidden border-b border-line">
+        {% if case_study.cover_image %}
+            <img src="{{ case_study.cover_image.url }}" alt="{{ case_study.title }}" class="w-full h-full object-cover">
+        {% else %}
+            <div class="w-full h-full bg-surface flex items-center justify-center">
+                <span class="font-display text-6xl font-semibold grad-text-static">{{ case_study.title|slice:":1" }}</span>
+            </div>
+        {% endif %}
+        {% if case_study.industry %}
+        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider bg-base/85 text-ink2 border border-line2">{{ case_study.industry }}</span>
+        {% endif %}
+    </div>
+
+    <div class="p-5">
+        <h3 class="font-display text-base font-semibold text-ink mb-1.5 group-hover:text-cyan-400 transition tracking-tight">{{ case_study.title }}</h3>
+        <p class="text-sm text-ink2 line-clamp-2 leading-relaxed">{{ case_study.problem|truncatechars:120 }}</p>
+
+        <div class="mt-4 inline-flex items-center text-[12px] font-medium text-cyan-400">
+            <span>Read case study</span>
+            <svg class="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </div>
+    </div>
+</a>

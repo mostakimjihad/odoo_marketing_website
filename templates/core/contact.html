@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact — {{ site_settings.full_name }}{% endblock %}
+
+{% block content %}
+
+<section class="pt-12 pb-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="eyebrow">// contact</div>
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Let's build something.</h1>
+        <p class="text-lg text-ink2 max-w-2xl">
+            Share a few details about your project and I'll get back to you within 24 hours.
+        </p>
+    </div>
+</section>
+
+<section class="pb-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-12 gap-6">
+            <!-- Contact form -->
+            <div class="md:col-span-8">
+                <div class="surface-strong p-7 md:p-9">
+                    <form method="post" class="space-y-5" novalidate>
+                        {% csrf_token %}
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Name <span class="text-cyan-400">*</span></label>
+                                {{ form.name }}
+                                {% if form.name.errors %}<p class="mt-1 text-sm text-danger">{{ form.name.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div>
+                                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Email <span class="text-cyan-400">*</span></label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<p class="mt-1 text-sm text-danger">{{ form.email.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Phone</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}<p class="mt-1 text-sm text-danger">{{ form.phone.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div>
+                                <label for="{{ form.company.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Company</label>
+                                {{ form.company }}
+                                {% if form.company.errors %}<p class="mt-1 text-sm text-danger">{{ form.company.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="{{ form.service.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Service of interest</label>
+                                {{ form.service }}
+                                {% if form.service.errors %}<p class="mt-1 text-sm text-danger">{{ form.service.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div>
+                                <label for="{{ form.budget.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Budget</label>
+                                {{ form.budget }}
+                                {% if form.budget.errors %}<p class="mt-1 text-sm text-danger">{{ form.budget.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="{{ form.message.id_for_label }}" class="block text-sm font-medium text-ink mb-1.5">Message <span class="text-cyan-400">*</span></label>
+                            {{ form.message }}
+                            {% if form.message.errors %}<p class="mt-1 text-sm text-danger">{{ form.message.errors.0 }}</p>{% endif %}
+                        </div>
+
+                        <button type="submit" class="btn-neon w-full sm:w-auto justify-center">
+                            Send message
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sidebar info -->
+            <aside class="md:col-span-4 space-y-3">
+                <div class="surface p-6">
+                    <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-4">Direct</h3>
+                    <ul class="space-y-4 text-sm">
+                        {% if site_settings.email %}
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 rounded-md bg-surface border border-line2 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </span>
+                            <a href="mailto:{{ site_settings.email }}" class="text-ink2 hover:text-cyan-400 transition break-all">{{ site_settings.email }}</a>
+                        </li>
+                        {% endif %}
+                        {% if site_settings.phone %}
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 rounded-md bg-surface border border-line2 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.22l-2.2 1.28a11 11 0 005.5 5.5l1.28-2.2a1 1 0 011.22-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z"/></svg>
+                            </span>
+                            <a href="tel:{{ site_settings.phone }}" class="text-ink2 hover:text-cyan-400 transition">{{ site_settings.phone }}</a>
+                        </li>
+                        {% endif %}
+                        {% if site_settings.location %}
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 rounded-md bg-surface border border-line2 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </span>
+                            <span class="text-ink2">{{ site_settings.location }}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="surface p-6">
+                    <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-3">Find me online</h3>
+                    <ul class="space-y-2 text-sm">
+                        {% if site_settings.linkedin %}<li><a href="{{ site_settings.linkedin }}" target="_blank" rel="noopener" class="text-ink2 hover:text-cyan-400 transition">LinkedIn →</a></li>{% endif %}
+                        {% if site_settings.github %}<li><a href="{{ site_settings.github }}" target="_blank" rel="noopener" class="text-ink2 hover:text-cyan-400 transition">GitHub →</a></li>{% endif %}
+                        {% if site_settings.codeforces %}<li><a href="{{ site_settings.codeforces }}" target="_blank" rel="noopener" class="text-ink2 hover:text-cyan-400 transition">Codeforces →</a></li>{% endif %}
+                        {% if site_settings.fiverr_url %}<li><a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="text-cyan-400 font-medium hover:text-cyan-300 transition">Fiverr →</a></li>{% endif %}
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

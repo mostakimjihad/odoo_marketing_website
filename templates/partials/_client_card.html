@@ -1,0 +1,15 @@
+{% if client.website %}
+<a href="{{ client.website }}" target="_blank" rel="noopener" class="block">
+{% else %}
+<div>
+{% endif %}
+    {% if client.logo %}
+    <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="max-h-14 mx-auto opacity-70 hover:opacity-100 transition">
+    {% else %}
+    <div class="text-center text-ink3 font-mono text-sm">{{ client.name }}</div>
+    {% endif %}
+{% if client.website %}
+</a>
+{% else %}
+</div>
+{% endif %}

@@ -1,0 +1,243 @@
+{% comment %}
+Reusable browser-frame mockup for a module tile.
+Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
+{% endcomment %}
+<div class="browser-frame">
+    <div class="chrome">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
+        <span class="url">odoo.{{ code }}.app</span>
+    </div>
+    <div class="body">
+
+        {% if code == 'pos' %}
+            <div class="flex gap-2 h-full">
+                <div class="w-1/4 bg-canvas rounded-md p-1.5 space-y-1">
+                    <div class="text-[9px] font-mono text-ink3">Register</div>
+                    <div class="bg-white rounded px-1.5 py-1 text-[9px]">Products</div>
+                    <div class="bg-white rounded px-1.5 py-1 text-[9px]">Orders</div>
+                    <div class="bg-white rounded px-1.5 py-1 text-[9px]">Sessions</div>
+                </div>
+                <div class="flex-1 grid grid-cols-3 gap-1">
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Latte</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$4.50</div>
+                    </div>
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Croissant</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$3.20</div>
+                    </div>
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Sandwich</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$6.80</div>
+                    </div>
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Espresso</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$2.50</div>
+                    </div>
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Muffin</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$2.80</div>
+                    </div>
+                    <div class="bg-white border border-line rounded p-1 text-center">
+                        <div class="font-display font-semibold text-[10px] text-ink">Tea</div>
+                        <div class="font-mono text-[9px] text-ink3 mt-0.5">$2.00</div>
+                    </div>
+                </div>
+                <div class="w-1/5 bg-canvas rounded-md p-1.5">
+                    <div class="font-mono text-[8px] text-ink3">Order total</div>
+                    <div class="font-display font-semibold text-sm text-ink mt-0.5">$24.50</div>
+                    <div class="bg-success rounded text-[9px] text-white text-center mt-1.5 py-0.5 font-mono">Pay</div>
+                </div>
+            </div>
+
+        {% elif code == 'accounting' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-display font-semibold text-[11px] text-ink">Revenue</div>
+                    <div class="font-mono text-[9px] text-ink3">Last 30 days</div>
+                </div>
+                <div class="h-12 flex items-end gap-0.5 mb-2">
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:40%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:55%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:45%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:70%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:60%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:80%"></div>
+                    <div class="flex-1 bg-brand rounded-t" style="height:95%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:75%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:85%"></div>
+                    <div class="flex-1 bg-brandLine rounded-t" style="height:90%"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-1">
+                    <div class="bg-canvas rounded p-1.5">
+                        <div class="font-mono text-[8px] text-ink3">Revenue</div>
+                        <div class="font-display font-semibold text-[11px] text-ink">$45.2K</div>
+                    </div>
+                    <div class="bg-canvas rounded p-1.5">
+                        <div class="font-mono text-[8px] text-ink3">Invoices</div>
+                        <div class="font-display font-semibold text-[11px] text-ink">124</div>
+                    </div>
+                    <div class="bg-canvas rounded p-1.5">
+                        <div class="font-mono text-[8px] text-ink3">Collected</div>
+                        <div class="font-display font-semibold text-[11px] text-ink">89%</div>
+                    </div>
+                </div>
+            </div>
+
+        {% elif code == 'mrp' %}
+            <div>
+                <div class="font-mono text-[9px] text-ink3 mb-1.5">Work orders · Shop floor</div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <div>
+                        <div class="font-mono text-[8px] text-ink4 uppercase tracking-wider mb-1">To do</div>
+                        <div class="space-y-1">
+                            <div class="bg-canvas border border-line rounded p-1">
+                                <div class="font-display font-semibold text-[9px] text-ink">WO-421</div>
+                                <div class="font-mono text-[8px] text-ink3 mt-0.5">8h · 12 ops</div>
+                            </div>
+                            <div class="bg-canvas border border-line rounded p-1">
+                                <div class="font-display font-semibold text-[9px] text-ink">WO-422</div>
+                                <div class="font-mono text-[8px] text-ink3 mt-0.5">4h · 6 ops</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-teal uppercase tracking-wider mb-1">In progress</div>
+                        <div class="space-y-1">
+                            <div class="bg-tealSoft border border-tealLine rounded p-1">
+                                <div class="font-display font-semibold text-[9px] text-ink">WO-418</div>
+                                <div class="font-mono text-[8px] text-ink3 mt-0.5">62% · 5h left</div>
+                                <div class="mt-1 h-0.5 bg-line rounded-full overflow-hidden">
+                                    <div class="h-full bg-teal" style="width:62%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-success uppercase tracking-wider mb-1">Done</div>
+                        <div class="space-y-1">
+                            <div class="bg-canvas border border-line rounded p-1 opacity-60">
+                                <div class="font-display font-semibold text-[9px] text-ink line-through">WO-415</div>
+                                <div class="font-mono text-[8px] text-ink3 mt-0.5">2d ago</div>
+                            </div>
+                            <div class="bg-canvas border border-line rounded p-1 opacity-60">
+                                <div class="font-display font-semibold text-[9px] text-ink line-through">WO-414</div>
+                                <div class="font-mono text-[8px] text-ink3 mt-0.5">3d ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% elif code == 'hr' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-display font-semibold text-[11px] text-ink">Employees · 28</div>
+                    <div class="font-mono text-[9px] text-success">● Active</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas rounded px-2 py-1">
+                        <div class="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-white text-[7px] font-semibold">SR</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Sadia Rahman</div>
+                        <div class="font-mono text-[8px] text-ink3">Engineering</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-success"></div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-canvas rounded px-2 py-1">
+                        <div class="w-4 h-4 rounded-full bg-teal flex items-center justify-center text-white text-[7px] font-semibold">TJ</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Tanvir Jamil</div>
+                        <div class="font-mono text-[8px] text-ink3">Operations</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-success"></div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-canvas rounded px-2 py-1">
+                        <div class="w-4 h-4 rounded-full bg-ink flex items-center justify-center text-white text-[7px] font-semibold">NF</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Nadia Ferdous</div>
+                        <div class="font-mono text-[8px] text-ink3">Finance</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-warning" style="background:#F59E0B"></div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-canvas rounded px-2 py-1">
+                        <div class="w-4 h-4 rounded-full bg-brand flex items-center justify-center text-white text-[7px] font-semibold">RA</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Rafiq Ahmed</div>
+                        <div class="font-mono text-[8px] text-ink3">Sales</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-success"></div>
+                    </div>
+                </div>
+            </div>
+
+        {% elif code == 'ecommerce' %}
+            <div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <div class="bg-white border border-line rounded overflow-hidden">
+                        <div class="aspect-square bg-gradient-to-br from-brandLine to-brandSoft"></div>
+                        <div class="p-1.5">
+                            <div class="font-display font-semibold text-[9px] text-ink">Classic Tee</div>
+                            <div class="font-mono text-[9px] text-brand mt-0.5">$29.00</div>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-line rounded overflow-hidden">
+                        <div class="aspect-square bg-gradient-to-br from-tealLine to-tealSoft"></div>
+                        <div class="p-1.5">
+                            <div class="font-display font-semibold text-[9px] text-ink">Linen Shirt</div>
+                            <div class="font-mono text-[9px] text-brand mt-0.5">$49.00</div>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-line rounded overflow-hidden">
+                        <div class="aspect-square bg-gradient-to-br from-brandLine to-tealSoft"></div>
+                        <div class="p-1.5">
+                            <div class="font-display font-semibold text-[9px] text-ink">Cap</div>
+                            <div class="font-mono text-[9px] text-brand mt-0.5">$19.00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">3 items · Shipping</div>
+                    <div class="font-display font-semibold text-[11px] text-ink">$97.00</div>
+                </div>
+            </div>
+
+        {% elif code == 'crm' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-display font-semibold text-[11px] text-ink">Pipeline · Q4</div>
+                    <div class="font-mono text-[9px] text-brand">$248K</div>
+                </div>
+                <div class="grid grid-cols-4 gap-1.5">
+                    <div>
+                        <div class="font-mono text-[8px] text-ink3 mb-1">Lead</div>
+                        <div class="bg-canvas border border-line rounded p-1 space-y-1">
+                            <div class="bg-white rounded px-1 py-0.5 text-[8px]">Acme Corp</div>
+                            <div class="bg-white rounded px-1 py-0.5 text-[8px]">Lumen Ltd</div>
+                            <div class="bg-white rounded px-1 py-0.5 text-[8px]">North Co</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-ink3 mb-1">Qualified</div>
+                        <div class="bg-canvas border border-line rounded p-1 space-y-1">
+                            <div class="bg-white rounded px-1 py-0.5 text-[8px]">Vertex</div>
+                            <div class="bg-white rounded px-1 py-0.5 text-[8px]">Helix</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-ink3 mb-1">Proposal</div>
+                        <div class="bg-canvas border border-line rounded p-1 space-y-1">
+                            <div class="bg-brandSoft border border-brandLine rounded px-1 py-0.5 text-[8px] font-medium">Atlas Inc · $42K</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-success mb-1">Won</div>
+                        <div class="bg-canvas border border-line rounded p-1 space-y-1">
+                            <div class="bg-tealSoft border border-tealLine rounded px-1 py-0.5 text-[8px] font-medium">Pinnacle · $36K</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="text-center text-ink3 font-mono text-[10px] py-6">
+                // module preview
+            </div>
+        {% endif %}
+
+    </div>
+</div>

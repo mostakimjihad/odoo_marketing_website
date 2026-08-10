@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ case_study.title }} — Case Study{% endblock %}
+{% block meta_description %}{{ case_study.problem|truncatechars:150 }}{% endblock %}
+
+{% block content %}
+
+{% if case_study.cover_image %}
+<section class="pt-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="aspect-[21/9] rounded-xl overflow-hidden border border-line">
+            <img src="{{ case_study.cover_image.url }}" alt="{{ case_study.title }}" class="w-full h-full object-cover">
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="pt-10 pb-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <a href="{% url 'portfolio:portfolio' %}" class="inline-flex items-center text-sm font-medium text-ink2 hover:text-ink transition mb-6">
+            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            All portfolio
+        </a>
+        {% if case_study.industry %}<div class="eyebrow">// {{ case_study.industry }}</div>{% endif %}
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ case_study.title }}</h1>
+        <p class="text-ink2 text-sm">
+            <span class="font-mono text-ink3">Client</span> <span class="font-medium text-ink">{{ case_study.client_name }}</span>
+            {% if case_study.completed_at %} <span class="text-ink4 mx-1.5">·</span> <span class="font-mono">{{ case_study.completed_at|date:"M Y" }}</span>{% endif %}
+            {% if case_study.duration %} <span class="text-ink4 mx-1.5">·</span> <span class="font-mono">{{ case_study.duration }}</span>{% endif %}
+        </p>
+    </div>
+</section>
+
+<section class="pb-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
+        <div class="surface p-8 md:p-10">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-danger">// problem</span>
+            <div class="prose-content mt-3">{{ case_study.problem|linebreaks }}</div>
+        </div>
+        <div class="surface p-8 md:p-10">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-cyan-400">// solution</span>
+            <div class="prose-content mt-3">{{ case_study.solution|linebreaks }}</div>
+        </div>
+        {% if case_study.results %}
+        <div class="surface p-8 md:p-10">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-lime-400">// results</span>
+            <div class="prose-content mt-3">{{ case_study.results|linebreaks }}</div>
+        </div>
+        {% endif %}
+
+        {% if case_study.get_tech_list %}
+        <div>
+            <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-3">// tech stack</h3>
+            <div class="flex flex-wrap gap-1.5">
+                {% for tech in case_study.get_tech_list %}
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-surface text-ink2 border border-line">{{ tech }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grad-border p-10 md:p-12 text-center">
+            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink mb-3 tracking-tight">Want results like this?</h2>
+            <p class="text-ink2 mb-7">Let's discuss how I can help with your Odoo/ERP project.</p>
+            <a href="{% url 'contact' %}" class="btn-neon">Start a conversation</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

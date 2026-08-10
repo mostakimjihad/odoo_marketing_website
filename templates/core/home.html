@@ -1,0 +1,369 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ============================================================
+     HERO — auto-playing video (when uploaded) sits behind text.
+     Otherwise the global animated mesh (body::before) provides
+     the backdrop. All motion is GPU-friendly.
+     ============================================================ -->
+<section class="relative pt-10 md:pt-14 pb-12 md:pb-16 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+
+            <!-- Left: text -->
+            <div class="lg:col-span-7">
+                <!-- Eyebrow with availability dot -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-line bg-card/60 backdrop-blur-sm text-[12px]">
+                    <span class="dot-pulse"></span>
+                    <span class="font-medium text-ink">Available for new projects</span>
+                    <span class="text-ink4">·</span>
+                    <span class="text-ink3 font-mono">Q4 2026</span>
+                </div>
+
+                <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-3">// ERP implementation partner</div>
+
+                <h1 class="font-display text-[44px] md:text-[60px] lg:text-[68px] font-semibold leading-[1.02] tracking-ultratight text-ink mb-6">
+                    Odoo &amp; ERP services
+                    <br class="hidden md:inline">
+                    <span class="grad-text">for serious businesses.</span>
+                </h1>
+
+                <p class="text-lg text-ink2 leading-relaxed max-w-xl mb-8">
+                    From end-to-end Odoo rollouts to focused customizations — I implement ERP systems that fit how your business actually runs.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    {% if site_settings.fiverr_url %}
+                    <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr">
+                        Hire me on Fiverr
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+                    </a>
+                    {% endif %}
+                    <a href="#modules" class="btn-neon">
+                        See what I build
+                    </a>
+                    <a href="{% url 'contact' %}" class="text-sm font-medium text-ink2 hover:text-ink transition pl-1">
+                        or send a brief →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: video slot (auto-playing when uploaded) -->
+            <div class="lg:col-span-5">
+                <div class="relative max-w-sm mx-auto lg:ml-auto lg:mr-0">
+                    <!-- Video frame -->
+                    <div class="relative aspect-[4/5] rounded-2xl overflow-hidden border border-line grad-border">
+                        {% if site_settings.hero_video %}
+                            <div class="hero-video-wrap" style="opacity:1">
+                                <video autoplay loop muted playsinline preload="metadata">
+                                    <source src="{{ site_settings.hero_video.url }}" type="video/mp4">
+                                </video>
+                            </div>
+                        {% else %}
+                            <!-- Fallback visual: animated gradient + monogram -->
+                            <div class="absolute inset-0" style="background: radial-gradient(60% 80% at 30% 20%, rgba(99,102,241,0.45) 0%, transparent 60%), radial-gradient(50% 60% at 80% 80%, rgba(34,211,238,0.35) 0%, transparent 60%), radial-gradient(40% 50% at 50% 50%, rgba(244,114,182,0.25) 0%, transparent 60%);"></div>
+                        {% endif %}
+
+                        <!-- Frame overlays -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            {% if not site_settings.hero_video %}
+                                <div class="text-center">
+                                    <div class="font-display text-7xl font-semibold grad-text-static">ERP</div>
+                                    <div class="font-mono text-[10px] text-ink3 mt-2 uppercase tracking-[0.18em]">// motion enabled</div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Bottom status bar -->
+                        <div class="absolute bottom-0 left-0 right-0 p-3 flex items-center justify-between bg-gradient-to-t from-base/95 to-transparent">
+                            <div class="flex items-center gap-1.5">
+                                <span class="dot-pulse"></span>
+                                <span class="font-mono text-[10px] text-ink2 uppercase tracking-[0.16em]">Live</span>
+                            </div>
+                            <span class="font-mono text-[10px] text-ink3 uppercase tracking-[0.16em]">{{ site_settings.full_name|default:"Mostakim Jihad" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="mt-12 md:mt-16 grid grid-cols-3 gap-3 max-w-3xl">
+            <div class="surface px-4 py-3.5 hover-lift">
+                <div class="font-display font-semibold text-ink text-2xl md:text-3xl leading-none">
+                    <span data-counter="{{ site_settings.years_experience }}" data-suffix="+">0</span>
+                </div>
+                <div class="font-mono text-[10px] text-ink3 uppercase tracking-[0.16em] mt-2">Years of ERP work</div>
+            </div>
+            <div class="surface px-4 py-3.5 hover-lift">
+                <div class="font-display font-semibold text-ink text-2xl md:text-3xl leading-none">
+                    <span data-counter="{{ site_settings.projects_completed }}" data-suffix="+">0</span>
+                </div>
+                <div class="font-mono text-[10px] text-ink3 uppercase tracking-[0.16em] mt-2">Projects delivered</div>
+            </div>
+            <div class="surface px-4 py-3.5 hover-lift">
+                <div class="font-display font-semibold text-ink text-2xl md:text-3xl leading-none">
+                    <span data-counter="{{ site_settings.happy_clients }}" data-suffix="+">0</span>
+                </div>
+                <div class="font-mono text-[10px] text-ink3 uppercase tracking-[0.16em] mt-2">Happy clients</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     MODULE GRID — the signature
+     ============================================================ -->
+<section id="modules" class="pt-6 pb-16 md:pb-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+            <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-3">// modules I implement</div>
+                <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink tracking-tight">Pick a module. I'll wire it up.</h2>
+            </div>
+            <a href="{% url 'modules' %}" class="text-sm font-medium text-ink2 hover:text-ink transition inline-flex items-center gap-1">
+                All modules
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        {% if modules %}
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for module in modules %}
+            <a href="{% url 'module_detail' module.slug %}" class="module-tile">
+                <div class="p-3 pb-0 bg-gradient-to-b from-base to-card">
+                    {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
+                </div>
+                <div class="meta">
+                    <div>
+                        <div class="tag">{{ module.short_tag }} · {{ module.get_category_display }}</div>
+                        <div class="name mt-0.5">{{ module.name }}</div>
+                    </div>
+                    <span class="play">
+                        <svg class="w-3 h-3 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="surface p-8 text-center">
+            <p class="text-ink3 mb-3">No modules published yet.</p>
+            <a href="/admin/core/erpmodule/add/" class="btn-neon">Add a module in admin</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ============================================================
+     SECTOR COVERAGE — what kinds of businesses
+     ============================================================ -->
+<section class="py-12 md:py-16 border-y border-line bg-surface/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+            <div class="md:col-span-4">
+                <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-3">// sectors</div>
+                <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink tracking-tight mb-3">Built for businesses across sectors</h2>
+                <p class="text-sm text-ink2">ERP isn't one-size-fits-all. Each industry has its own workflows, regulations, and integration points.</p>
+            </div>
+            <div class="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">01</div>
+                    <div class="font-display font-semibold text-ink text-sm">Manufacturing</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">BOM · Routing · QC</div>
+                </div>
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">02</div>
+                    <div class="font-display font-semibold text-ink text-sm">Retail &amp; POS</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">Multi-store · Loyalty</div>
+                </div>
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">03</div>
+                    <div class="font-display font-semibold text-ink text-sm">Services</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">Projects · Timesheets</div>
+                </div>
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">04</div>
+                    <div class="font-display font-semibold text-ink text-sm">Distribution</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">Warehouse · Routes</div>
+                </div>
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">05</div>
+                    <div class="font-display font-semibold text-ink text-sm">Hospitality</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">Restaurants · Hotels</div>
+                </div>
+                <div class="surface hover-lift p-4">
+                    <div class="font-mono text-[10px] text-cyan-400 uppercase tracking-[0.16em] mb-2">06</div>
+                    <div class="font-display font-semibold text-ink text-sm">eCommerce</div>
+                    <div class="font-mono text-[10px] text-ink3 mt-1">D2C · B2B catalogs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PROCESS — how I deliver
+     ============================================================ -->
+<section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-3">// how I deliver</div>
+            <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">A four-step process, every project</h2>
+            <p class="text-ink2 max-w-xl mx-auto">Predictable delivery, no surprises. Every engagement moves through the same four phases.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="process-card">
+                <div class="step">Step 01</div>
+                <div class="num">01</div>
+                <h3 class="font-display font-semibold text-ink mb-1.5">Requirement Review</h3>
+                <p class="text-sm text-ink2 leading-relaxed">We start with your goals, workflows, and pain points. I write up a functional scope so we're aligned before any code is touched.</p>
+            </div>
+            <div class="process-card">
+                <div class="step">Step 02</div>
+                <div class="num">02</div>
+                <h3 class="font-display font-semibold text-ink mb-1.5">Scope Discussion</h3>
+                <p class="text-sm text-ink2 leading-relaxed">Together we lock the modules, the data to migrate, and the integrations. Fixed milestones, transparent timeline.</p>
+            </div>
+            <div class="process-card">
+                <div class="step">Step 03</div>
+                <div class="num">03</div>
+                <h3 class="font-display font-semibold text-ink mb-1.5">Implementation</h3>
+                <p class="text-sm text-ink2 leading-relaxed">Configuration, custom modules, data migration, and UAT with your team. You see working software every week.</p>
+            </div>
+            <div class="process-card">
+                <div class="step">Step 04</div>
+                <div class="num">04</div>
+                <h3 class="font-display font-semibold text-ink mb-1.5">Handover &amp; Support</h3>
+                <p class="text-sm text-ink2 leading-relaxed">Training, documentation, and ongoing support. Your team owns the system — I'm a phone call away when you need me.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     FEATURED PORTFOLIO
+     ============================================================ -->
+{% if featured_case_studies or featured_projects %}
+<section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+            <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-2">// selected work</div>
+                <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink tracking-tight">Recent projects</h2>
+            </div>
+            <a href="{% url 'portfolio:portfolio' %}" class="text-sm font-medium text-ink2 hover:text-ink transition inline-flex items-center gap-1">
+                View portfolio
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {% for cs in featured_case_studies %}
+                {% include 'partials/_case_study_card.html' with case_study=cs %}
+            {% endfor %}
+            {% for project in featured_projects %}
+                {% include 'partials/_project_card.html' with project=project %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     CLIENTS — marquee
+     ============================================================ -->
+{% if featured_clients %}
+<section class="py-10 border-y border-line">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink3 text-center mb-7">// trusted by</div>
+        <div class="marquee">
+            <div class="marquee-track">
+                {% for client in featured_clients %}
+                <div class="flex items-center justify-center h-12 px-4 opacity-70 hover:opacity-100 transition">
+                    {% if client.logo %}
+                    <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="max-h-8 max-w-[140px] object-contain">
+                    {% else %}
+                    <div class="font-display font-semibold text-base text-ink2">{{ client.name }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <!-- duplicate for seamless loop -->
+                {% for client in featured_clients %}
+                <div class="flex items-center justify-center h-12 px-4 opacity-70 hover:opacity-100 transition" aria-hidden="true">
+                    {% if client.logo %}
+                    <img src="{{ client.logo.url }}" alt="" class="max-h-8 max-w-[140px] object-contain">
+                    {% else %}
+                    <div class="font-display font-semibold text-base text-ink2">{{ client.name }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     LATEST BLOG POSTS
+     ============================================================ -->
+{% if latest_posts %}
+<section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+            <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-400 mb-2">// writing</div>
+                <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink tracking-tight">From the blog</h2>
+            </div>
+            <a href="{% url 'blog:list' %}" class="text-sm font-medium text-ink2 hover:text-ink transition inline-flex items-center gap-1">
+                All posts
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-3">
+            {% for post in latest_posts %}
+                {% include 'partials/_post_card.html' with post=post %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     CTA — gradient border card
+     ============================================================ -->
+<section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grad-border p-10 md:p-14 text-center relative overflow-hidden">
+            <div class="relative">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-line bg-card/60 text-[12px]">
+                    <span class="dot-pulse"></span>
+                    <span class="font-mono text-ink2">Currently accepting Q4 engagements</span>
+                </div>
+                <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-4">
+                    Have an ERP project <span class="grad-text-static">on the table?</span>
+                </h2>
+                <p class="text-ink2 max-w-xl mx-auto mb-8 leading-relaxed">
+                    Tell me about the business, the workflow that hurts, and the deadline. I'll come back with a scope and a quote within 24 hours.
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="{% url 'contact' %}" class="btn-neon">
+                        Start a conversation
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                    {% if site_settings.fiverr_url %}
+                    <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr">
+                        Hire on Fiverr
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

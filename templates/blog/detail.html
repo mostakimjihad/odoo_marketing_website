@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}{{ post.excerpt|default:post.body|truncatechars:150 }}{% endblock %}
+
+{% block content %}
+
+<article class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <a href="{% url 'blog:list' %}" class="inline-flex items-center text-sm font-medium text-ink2 hover:text-ink transition mb-6">
+            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            All posts
+        </a>
+        {% if post.published_at %}<p class="font-mono text-[12px] text-ink3 mb-3">{{ post.published_at|date:"F j, Y" }}</p>{% endif %}
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ post.title }}</h1>
+        {% if post.excerpt %}
+        <p class="text-xl text-ink2 mb-8 italic">{{ post.excerpt }}</p>
+        {% endif %}
+
+        {% if post.cover_image %}
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full rounded-xl mb-10 border border-line">
+        {% endif %}
+
+        <div class="prose-content text-lg">
+            {{ post.body|linebreaks }}
+        </div>
+
+        {% if post.get_tags_list %}
+        <div class="mt-12 pt-6 border-t border-line">
+            <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-3">// tags</h3>
+            <div class="flex flex-wrap gap-1.5">
+                {% for tag in post.get_tags_list %}
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-surface text-ink2 border border-line">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</article>
+
+{% if recent_posts %}
+<section class="py-10 border-t border-line bg-surface/40">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-5">// more posts</h3>
+        <div class="space-y-2">
+            {% for rp in recent_posts %}
+            <a href="{% url 'blog:detail' rp.slug %}" class="block surface hover-lift p-4">
+                <p class="font-display font-semibold text-ink">{{ rp.title }}</p>
+                {% if rp.published_at %}<p class="font-mono text-[11px] text-ink3 mt-1">{{ rp.published_at|date:"M j, Y" }}</p>{% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Certifications — {{ site_settings.full_name }}{% endblock %}
+
+{% block content %}
+
+<section class="pt-12 pb-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="eyebrow">// credentials</div>
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Certifications</h1>
+        <p class="text-lg text-ink2 max-w-2xl">
+            Industry-recognized certifications validating my expertise in Odoo and related technologies.
+        </p>
+    </div>
+</section>
+
+{% if certifications %}
+<section class="pb-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-3">
+            {% for cert in certifications %}
+                {% include 'partials/_certification_card.html' with cert=cert %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="pb-20">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <p class="text-ink3">No certifications listed yet. Add your Odoo certifications via the admin panel.</p>
+        <a href="/admin/portfolio/certification/add/" class="inline-block mt-4 btn-neon">Add certification</a>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
