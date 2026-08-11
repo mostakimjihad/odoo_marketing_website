@@ -7,33 +7,31 @@
 <section class="pt-12 pb-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-12 gap-10 items-start">
-            <!-- Profile -->
             <div class="md:col-span-4">
-                <div class="surface-strong p-4 max-w-xs mx-auto md:mx-0 hover-lift">
-                    <div class="aspect-square w-full rounded-[10px] bg-surface overflow-hidden flex items-center justify-center border border-line">
+                <div class="surface p-4 max-w-xs mx-auto md:mx-0 hover-lift">
+                    <div class="aspect-square w-full rounded-lg bg-surface overflow-hidden flex items-center justify-center border border-line">
                         {% if site_settings.profile_image %}
                             <img src="{{ site_settings.profile_image.url }}" alt="{{ site_settings.full_name }}" class="w-full h-full object-cover">
                         {% else %}
-                            <span class="font-display font-semibold text-7xl grad-text-static">{{ site_settings.full_name|slice:":1" }}</span>
+                            <span class="font-semibold text-7xl text-ink4">{{ site_settings.full_name|slice:":1" }}</span>
                         {% endif %}
                     </div>
                     <div class="mt-4">
-                        <div class="font-display font-semibold text-ink">{{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
-                        <div class="font-mono text-[12px] text-ink3 mt-1">Jr. Software Engineer</div>
-                        <div class="font-mono text-[12px] text-ink3">Mysoftheaven (BD) Ltd.</div>
+                        <div class="font-semibold text-ink">{{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
+                        <div class="text-[12px] text-ink3 mt-1">Senior ERP &amp; Odoo Engineer</div>
+                        <div class="text-[12px] text-ink3">Functional · Technical · Deployment · Migration</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bio -->
             <div class="md:col-span-8">
-                <div class="eyebrow">// about me</div>
-                <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-6">{{ site_settings.about_title }}</h1>
+                <div class="eyebrow">About me</div>
+                <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-6">{{ site_settings.about_title }}</h1>
                 <div class="prose-content text-lg">
                     {{ site_settings.about_body|linebreaks }}
                 </div>
                 <div class="flex flex-wrap gap-3 mt-8">
-                    <a href="{% url 'contact' %}" class="btn-neon">Get in touch</a>
+                    <a href="{% url 'contact' %}" class="btn-primary">Get in touch</a>
                     {% if site_settings.cv_file %}
                     <a href="{{ site_settings.cv_file.url }}" target="_blank" rel="noopener" class="btn-ghost">
                         Download CV
@@ -46,115 +44,112 @@
     </div>
 </section>
 
-<!-- Education -->
 <section class="py-12 md:py-16">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="eyebrow">// education</div>
-        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Education</h2>
+        <div class="eyebrow">Education</div>
+        <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Education</h2>
         <div class="space-y-3">
             <div class="surface hover-lift p-6">
                 <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
-                    <h3 class="font-display font-semibold text-ink text-lg">B.Sc. in Computer Science &amp; Engineering</h3>
-                    <span class="font-mono text-[11px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line">2020 – 2024</span>
+                    <h3 class="font-semibold text-ink text-lg">B.Sc. in Computer Science &amp; Engineering</h3>
+                    <span class="text-[11px] text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line">2020 – 2024</span>
                 </div>
                 <p class="text-sm text-ink2">Green University of Bangladesh</p>
-                <p class="font-mono text-[12px] text-ink3 mt-1">CGPA: 3.61 / 4.00</p>
+                <p class="text-[12px] text-ink3 mt-1">CGPA: 3.61 / 4.00</p>
             </div>
             <div class="surface hover-lift p-6">
                 <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
-                    <h3 class="font-display font-semibold text-ink text-lg">Higher Secondary Certificate</h3>
-                    <span class="font-mono text-[11px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line">2017 – 2019</span>
+                    <h3 class="font-semibold text-ink text-lg">Higher Secondary Certificate</h3>
+                    <span class="text-[11px] text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line">2017 – 2019</span>
                 </div>
                 <p class="text-sm text-ink2">Dhaka City College</p>
-                <p class="font-mono text-[12px] text-ink3 mt-1">GPA: 4.00 / 5.00</p>
+                <p class="text-[12px] text-ink3 mt-1">GPA: 4.00 / 5.00</p>
             </div>
             <div class="surface hover-lift p-6">
                 <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
-                    <h3 class="font-display font-semibold text-ink text-lg">Secondary School Certificate</h3>
-                    <span class="font-mono text-[11px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line">2016 – 2017</span>
+                    <h3 class="font-semibold text-ink text-lg">Secondary School Certificate</h3>
+                    <span class="text-[11px] text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line">2016 – 2017</span>
                 </div>
                 <p class="text-sm text-ink2">Banani Bidyaniketon School and College</p>
-                <p class="font-mono text-[12px] text-ink3 mt-1">GPA: 5.00 / 5.00</p>
+                <p class="text-[12px] text-ink3 mt-1">GPA: 5.00 / 5.00</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Experience -->
 <section class="py-12 md:py-16">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="eyebrow">// experience</div>
-        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Experience</h2>
+        <div class="eyebrow">Experience</div>
+        <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Experience</h2>
         <div class="space-y-3">
-            <div class="surface-strong hover-lift p-7">
+            <div class="surface hover-lift p-7">
                 <div class="flex items-start justify-between mb-3 flex-wrap gap-2">
                     <div>
-                        <h3 class="font-display font-semibold text-ink text-xl">Jr. Software Engineer</h3>
-                        <p class="text-cyan-400 font-medium mt-0.5">Mysoftheaven (BD) Ltd.</p>
+                        <h3 class="font-semibold text-ink text-xl">Senior ERP &amp; Odoo Engineer</h3>
+                        <p class="text-indigo-300 font-medium mt-0.5">Mysoftheaven (BD) Ltd.</p>
                     </div>
-                    <span class="font-mono text-[11px] text-ink3 px-2.5 py-1 rounded-md bg-surface border border-line whitespace-nowrap">May 2024 – Present</span>
+                    <span class="text-[11px] text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line whitespace-nowrap">May 2024 – Present</span>
                 </div>
                 <div class="prose-content text-ink2 mt-4">
                     <p>Successfully implemented a full-scale ERP solution at Mysoftheaven (BD) Ltd., including CRM, HRM, Accounts, and Project Management. Additionally, developed a Bangla chatbot for the government project LDTax, showcasing the ability to deliver diverse technical solutions.</p>
-                    <p class="text-[12px] text-ink3 font-mono mt-3">// stack: Odoo · ERPNext · Python · Django · MySQL · Docker</p>
+                    <p class="text-[12px] text-ink3 mt-3">Stack: Odoo · ERPNext · Python · Django · MySQL · Docker</p>
                 </div>
             </div>
 
-            <div class="surface-strong hover-lift p-7">
+            <div class="surface hover-lift p-7">
                 <div class="flex items-start justify-between mb-3 flex-wrap gap-2">
                     <div>
-                        <h3 class="font-display font-semibold text-ink text-xl">AI Engineer Intern</h3>
-                        <p class="text-cyan-400 font-medium mt-0.5">JanataWifi</p>
+                        <h3 class="font-semibold text-ink text-xl">AI Engineer Intern</h3>
+                        <p class="text-indigo-300 font-medium mt-0.5">JanataWifi</p>
                     </div>
-                    <span class="font-mono text-[11px] text-ink3 px-2.5 py-1 rounded-md bg-surface border border-line whitespace-nowrap">Oct 2023 – Dec 2023</span>
+                    <span class="text-[11px] text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line whitespace-nowrap">Oct 2023 – Dec 2023</span>
                 </div>
                 <div class="prose-content text-ink2 mt-4">
                     <p>Designed and implemented an innovative system architecture for a browser-automation AI enabling human-like interactions on diverse websites. Managed the project's Git repository, ensuring version control, and developed advanced features like intelligent input-field filling.</p>
-                    <p class="text-[12px] text-ink3 font-mono mt-3">// stack: Azure OpenAI · LangChain · Selenium · gpt-3.5/4</p>
+                    <p class="text-[12px] text-ink3 mt-3">Stack: Azure OpenAI · LangChain · Selenium · gpt-3.5/4</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Achievements -->
 <section class="py-12 md:py-16">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="eyebrow">// achievements</div>
-        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Achievements</h2>
+        <div class="eyebrow">Achievements</div>
+        <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink mb-8 tracking-tight">Achievements</h2>
         <div class="grid md:grid-cols-2 gap-3">
             <div class="surface hover-lift p-6">
                 <div class="flex items-start gap-3">
-                    <span class="font-mono text-[10px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line mt-1">01</span>
+                    <span class="text-[10px] font-medium text-indigo-300 px-2 py-1 rounded-full bg-surface border border-line mt-1">01</span>
                     <div>
-                        <h3 class="font-display font-semibold text-ink mb-1.5">IEEExtreme 17.0 — 13th in Bangladesh</h3>
+                        <h3 class="font-semibold text-ink mb-1.5">IEEExtreme 17.0 — 13th in Bangladesh</h3>
                         <p class="text-sm text-ink2">Team Lead of Team GreenT in the 24-hour global programming contest.</p>
                     </div>
                 </div>
             </div>
             <div class="surface hover-lift p-6">
                 <div class="flex items-start gap-3">
-                    <span class="font-mono text-[10px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line mt-1">02</span>
+                    <span class="text-[10px] font-medium text-indigo-300 px-2 py-1 rounded-full bg-surface border border-line mt-1">02</span>
                     <div>
-                        <h3 class="font-display font-semibold text-ink mb-1.5">Conference Paper — DCOSS-IoT 2024</h3>
+                        <h3 class="font-semibold text-ink mb-1.5">Conference Paper — DCOSS-IoT 2024</h3>
                         <p class="text-sm text-ink2">"QoE Aware Task Offloading in Digital Twinning Vehicular Edge Computing" — Abu Dhabi, UAE.</p>
                     </div>
                 </div>
             </div>
             <div class="surface hover-lift p-6">
                 <div class="flex items-start gap-3">
-                    <span class="font-mono text-[10px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line mt-1">03</span>
+                    <span class="text-[10px] font-medium text-indigo-300 px-2 py-1 rounded-full bg-surface border border-line mt-1">03</span>
                     <div>
-                        <h3 class="font-display font-semibold text-ink mb-1.5">Vice Chancellor's Award</h3>
+                        <h3 class="font-semibold text-ink mb-1.5">Vice Chancellor's Award</h3>
                         <p class="text-sm text-ink2">For academic excellence at Green University of Bangladesh (Summer &amp; Fall 2022).</p>
                     </div>
                 </div>
             </div>
             <div class="surface hover-lift p-6">
                 <div class="flex items-start gap-3">
-                    <span class="font-mono text-[10px] text-ink3 px-2 py-1 rounded-md bg-surface border border-line mt-1">04</span>
+                    <span class="text-[10px] font-medium text-indigo-300 px-2 py-1 rounded-full bg-surface border border-line mt-1">04</span>
                     <div>
-                        <h3 class="font-display font-semibold text-ink mb-1.5">Competitive Programming</h3>
+                        <h3 class="font-semibold text-ink mb-1.5">Competitive Programming</h3>
                         <p class="text-sm text-ink2">CodeForces 816 · CodeChef 1290 · 100+ problems solved.</p>
                     </div>
                 </div>
@@ -163,18 +158,16 @@
     </div>
 </section>
 
-<!-- Certifications -->
 {% if certifications %}
 <section class="py-12 md:py-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
             <div>
-                <div class="eyebrow">// credentials</div>
-                <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink tracking-tight">Certifications</h2>
+                <div class="eyebrow">Credentials</div>
+                <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink tracking-tight">Certifications</h2>
             </div>
-            <a href="{% url 'certifications' %}" class="text-sm font-medium text-ink2 hover:text-ink transition inline-flex items-center gap-1">
-                View all
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            <a href="{% url 'certifications' %}" class="text-sm font-medium text-ink3 hover:text-ink transition inline-flex items-center gap-1">
+                View all →
             </a>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">

@@ -8,7 +8,7 @@
 {% if project.cover_image %}
 <section class="pt-8">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="aspect-[21/9] rounded-xl overflow-hidden border border-line">
+        <div class="aspect-[21/9] rounded-lg overflow-hidden border border-line">
             <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover">
         </div>
     </div>
@@ -17,13 +17,13 @@
 
 <section class="pt-10 pb-10">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'portfolio:portfolio' %}" class="inline-flex items-center text-sm font-medium text-ink2 hover:text-ink transition mb-6">
+        <a href="{% url 'portfolio:portfolio' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-6">
             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             All portfolio
         </a>
-        <div class="eyebrow">// project</div>
-        <h1 class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ project.title }}</h1>
-        {% if project.completed_at %}<p class="font-mono text-[12px] text-ink3">// completed {{ project.completed_at|date:"M Y" }}</p>{% endif %}
+        <div class="eyebrow">Project</div>
+        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ project.title }}</h1>
+        {% if project.completed_at %}<p class="text-[12px] text-ink3">Completed {{ project.completed_at|date:"M Y" }}</p>{% endif %}
     </div>
 </section>
 
@@ -33,10 +33,10 @@
 
         {% if project.get_tech_list %}
         <div class="mb-10">
-            <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-3">// technologies</h3>
+            <h3 class="text-[11px] font-medium uppercase tracking-[0.12em] text-ink3 mb-3">Technologies</h3>
             <div class="flex flex-wrap gap-1.5">
                 {% for tech in project.get_tech_list %}
-                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-surface text-ink2 border border-line">{{ tech }}</span>
+                <span class="px-2.5 py-1 rounded-full text-[11px] bg-surface text-ink2 border border-line">{{ tech }}</span>
                 {% endfor %}
             </div>
         </div>
@@ -44,7 +44,7 @@
 
         <div class="flex flex-wrap gap-3">
             {% if project.project_url %}
-            <a href="{{ project.project_url }}" target="_blank" rel="noopener" class="btn-neon">
+            <a href="{{ project.project_url }}" target="_blank" rel="noopener" class="btn-primary">
                 Live project
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>

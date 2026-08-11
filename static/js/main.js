@@ -1,6 +1,6 @@
 // =========================================================
 // Minimal JS — mobile menu, smooth scroll, sliding nav pill,
-// animated counters, scroll progress.
+// scroll progress, animated counters.
 // All animations GPU-friendly (transform + opacity only).
 // =========================================================
 document.addEventListener('DOMContentLoaded', function () {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       let current = 0;
-      const duration = 1200;
+      const duration = 1100;
       const startTime = performance.now();
       function tick(now) {
         const elapsed = now - startTime;

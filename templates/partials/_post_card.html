@@ -1,20 +1,48 @@
+{% if variant == 'lead' %}
 <a href="{% url 'blog:detail' post.slug %}" class="group surface hover-lift overflow-hidden block h-full">
-    <div class="relative aspect-video overflow-hidden border-b border-line">
+    <div class="img relative overflow-hidden border-b border-line">
         {% if post.cover_image %}
             <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
         {% else %}
             <div class="w-full h-full bg-surface flex items-center justify-center">
-                <span class="font-display text-6xl font-semibold grad-text-static">{{ post.title|slice:":1" }}</span>
+                <span class="font-semibold text-7xl text-ink4">{{ post.title|slice:":1" }}</span>
+            </div>
+        {% endif %}
+        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider bg-indigo-500 text-white border border-indigo-400">Featured</span>
+    </div>
+    <div class="p-6">
+        {% if post.published_at %}
+        <p class="text-[11px] text-ink3 mb-2 uppercase tracking-wider">{{ post.published_at|date:"Y.m.d" }}</p>
+        {% endif %}
+        <h3 class="font-semibold text-ink mb-2 group-hover:text-indigo-300 transition tracking-tight">{{ post.title }}</h3>
+        {% if post.excerpt %}
+        <p class="excerpt text-sm text-ink2 leading-relaxed">{{ post.excerpt }}</p>
+        {% endif %}
+        <div class="mt-4 inline-flex items-center text-[12px] font-medium text-indigo-300 uppercase tracking-wider">
+            <span>Read article</span>
+            <svg class="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </div>
+    </div>
+</a>
+{% else %}
+<a href="{% url 'blog:detail' post.slug %}" class="group surface hover-lift overflow-hidden block h-full">
+    <div class="img relative overflow-hidden border-b border-line">
+        {% if post.cover_image %}
+            <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+        {% else %}
+            <div class="w-full h-full bg-surface flex items-center justify-center">
+                <span class="font-semibold text-6xl text-ink4">{{ post.title|slice:":1" }}</span>
             </div>
         {% endif %}
     </div>
     <div class="p-5">
         {% if post.published_at %}
-        <p class="font-mono text-[11px] text-ink3 mb-2">{{ post.published_at|date:"M j, Y" }}</p>
+        <p class="text-[11px] text-ink3 mb-2 uppercase tracking-wider">{{ post.published_at|date:"Y.m.d" }}</p>
         {% endif %}
-        <h3 class="font-display text-base font-semibold text-ink mb-1.5 group-hover:text-cyan-400 transition tracking-tight">{{ post.title }}</h3>
+        <h3 class="font-semibold text-base text-ink mb-1.5 group-hover:text-indigo-300 transition tracking-tight">{{ post.title }}</h3>
         {% if post.excerpt %}
         <p class="text-sm text-ink2 line-clamp-2">{{ post.excerpt }}</p>
         {% endif %}
     </div>
 </a>
+{% endif %}

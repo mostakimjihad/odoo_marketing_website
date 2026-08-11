@@ -2,17 +2,17 @@
 <a href="{% url 'service_detail' service.slug %}" class="group surface hover-lift p-6 block h-full">
     <div class="flex items-start justify-between mb-5">
         <div class="w-11 h-11 bg-surface rounded-lg flex items-center justify-center border border-line2">
-            <img src="{% static 'images/icons/' %}{{ service.icon }}" alt="{{ service.title }}" class="w-6 h-6 icon-invert">
+            <img src="{% static 'images/icons/' %}{{ service.icon }}" alt="{{ service.title }}" class="w-6 h-6 icon-tint">
         </div>
-        <span class="font-mono text-[10px] text-ink4 group-hover:text-cyan-400 transition uppercase tracking-[0.16em]">// 0{{ forloop.counter|stringformat:"d" }}</span>
+        <span class="text-[11px] font-medium text-ink4 group-hover:text-indigo-300 transition uppercase tracking-wider">0{{ forloop.counter|stringformat:"d" }}</span>
     </div>
 
-    <h3 class="font-display text-lg font-semibold text-ink mb-2 group-hover:text-cyan-400 transition tracking-tight">
+    <h3 class="font-semibold text-lg text-ink mb-2 group-hover:text-indigo-300 transition tracking-tight">
         {{ service.title }}
     </h3>
     <p class="text-sm text-ink2 leading-relaxed mb-4">{{ service.short_description }}</p>
 
-    <div class="inline-flex items-center text-[12px] font-medium text-cyan-400">
+    <div class="inline-flex items-center text-[12px] font-medium text-indigo-300 uppercase tracking-wider">
         <span>Learn more</span>
         <svg class="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
     </div>
