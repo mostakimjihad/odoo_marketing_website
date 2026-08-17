@@ -1,46 +1,32 @@
 {% comment %}
-Reusable 9-step ERP business flow diagram.
-Visualizes the core Odoo/ERP cycle:
-  Purchase Order → Stock Picking → Inventory Stock →
-  Sale Order → Delivery Product → Customer Invoice →
-  Take Payment → Pay Vendor Bill → Party Ledger
-{% endcomment %}
-<div class="erp-flow">
-    <div class="nodes">
-        {% with steps="Purchase Order|Stock Picking|Inventory Stock|Sale Order|Delivery Product|Invoice on Sale|Take Payment|Pay Vendor Bill|Party Ledger" %}{% endwith %}
+ERP business flow — sale-first cycle, grouped into 3 stages.
 
+Stage 1 (SELL):    Quotation → Sale Order → Delivery
+Stage 2 (COLLECT): Customer Invoice → Receive Payment → Bank Reconciliation
+Stage 3 (RESTOCK): Purchase Order → Receive Goods → Pay Vendor Bill
+
+Every step writes to the same data layer — accounting, inventory and
+CRM all stay in sync automatically.
+{% endcomment %}
+
+<div class="erp-flow">
+    <div class="stage-labels">
+        <div class="stage-tag stage-1">01 · Sell</div>
+        <div class="stage-tag stage-2">02 · Collect</div>
+        <div class="stage-tag stage-3">03 · Restock</div>
+    </div>
+
+    <div class="nodes">
+
+        <!-- ==================== STAGE 1: SELL ==================== -->
         <div class="node">
             <div class="icon">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             <div class="text">
                 <div class="step-num">Step 01</div>
-                <div class="step-title">Purchase Order</div>
-                <div class="step-module">Purchase</div>
-            </div>
-            <span class="arrow-end"></span>
-        </div>
-
-        <div class="node">
-            <div class="icon">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-            </div>
-            <div class="text">
-                <div class="step-num">Step 02</div>
-                <div class="step-title">Stock Picking</div>
-                <div class="step-module">Inventory</div>
-            </div>
-            <span class="arrow-end"></span>
-        </div>
-
-        <div class="node">
-            <div class="icon">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            </div>
-            <div class="text">
-                <div class="step-num">Step 03</div>
-                <div class="step-title">Inventory Stock</div>
-                <div class="step-module">Inventory</div>
+                <div class="step-title">Quotation</div>
+                <div class="step-module">Sales</div>
             </div>
             <span class="arrow-end"></span>
         </div>
@@ -50,7 +36,7 @@ Visualizes the core Odoo/ERP cycle:
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
             </div>
             <div class="text">
-                <div class="step-num">Step 04</div>
+                <div class="step-num">Step 02</div>
                 <div class="step-title">Sale Order</div>
                 <div class="step-module">Sales</div>
             </div>
@@ -62,20 +48,21 @@ Visualizes the core Odoo/ERP cycle:
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
             </div>
             <div class="text">
-                <div class="step-num">Step 05</div>
-                <div class="step-title">Delivery Product</div>
+                <div class="step-num">Step 03</div>
+                <div class="step-title">Delivery</div>
                 <div class="step-module">Inventory</div>
             </div>
             <span class="arrow-end"></span>
         </div>
 
+        <!-- ==================== STAGE 2: COLLECT ==================== -->
         <div class="node">
             <div class="icon">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             <div class="text">
-                <div class="step-num">Step 06</div>
-                <div class="step-title">Invoice on Sale</div>
+                <div class="step-num">Step 04</div>
+                <div class="step-title">Customer Invoice</div>
                 <div class="step-module">Accounting</div>
             </div>
             <span class="arrow-end"></span>
@@ -86,9 +73,46 @@ Visualizes the core Odoo/ERP cycle:
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             </div>
             <div class="text">
-                <div class="step-num">Step 07</div>
-                <div class="step-title">Take Payment</div>
+                <div class="step-num">Step 05</div>
+                <div class="step-title">Receive Payment</div>
                 <div class="step-module">Accounting</div>
+            </div>
+            <span class="arrow-end"></span>
+        </div>
+
+        <div class="node">
+            <div class="icon">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 10h18M3 6h18M3 14h18M3 18h18"/></svg>
+            </div>
+            <div class="text">
+                <div class="step-num">Step 06</div>
+                <div class="step-title">Bank Reconciliation</div>
+                <div class="step-module">Accounting</div>
+            </div>
+            <span class="arrow-end"></span>
+        </div>
+
+        <!-- ==================== STAGE 3: RESTOCK ==================== -->
+        <div class="node">
+            <div class="icon">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <div class="text">
+                <div class="step-num">Step 07</div>
+                <div class="step-title">Purchase Order</div>
+                <div class="step-module">Purchase</div>
+            </div>
+            <span class="arrow-end"></span>
+        </div>
+
+        <div class="node">
+            <div class="icon">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <div class="text">
+                <div class="step-num">Step 08</div>
+                <div class="step-title">Receive Goods</div>
+                <div class="step-module">Inventory</div>
             </div>
             <span class="arrow-end"></span>
         </div>
@@ -98,22 +122,14 @@ Visualizes the core Odoo/ERP cycle:
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             </div>
             <div class="text">
-                <div class="step-num">Step 08</div>
-                <div class="step-title">Pay Vendor Bill</div>
-                <div class="step-module">Accounting</div>
-            </div>
-            <span class="arrow-end"></span>
-        </div>
-
-        <div class="node">
-            <div class="icon">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2M9 17h6M9 17H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2M9 7h6"/></svg>
-            </div>
-            <div class="text">
                 <div class="step-num">Step 09</div>
-                <div class="step-title">Party Ledger</div>
+                <div class="step-title">Pay Vendor Bill</div>
                 <div class="step-module">Accounting</div>
             </div>
         </div>
     </div>
+
+    <p class="erp-flow-note">
+        One workflow. <span class="hl">Every module updates the others.</span> A sale in POS posts a journal entry, a delivery deducts stock, a reorder is auto-suggested when stock crosses its reorder point.
+    </p>
 </div>

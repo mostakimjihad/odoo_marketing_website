@@ -51,6 +51,9 @@
             </div>
 
             <div class="hidden md:flex items-center gap-1.5">
+                <a href="{% url 'pricing' %}" class="btn-ghost text-[11px] py-1 px-2.5">
+                    Pricing Calculator
+                </a>
                 {% if site_settings.fiverr_url %}
                 <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr text-[11px] py-1 px-2.5">
                     Hire on Fiverr
@@ -70,6 +73,7 @@
                 <a href="{% url 'home' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink hover:bg-white/5">Home</a>
                 <a href="{% url 'modules' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Modules</a>
                 <a href="{% url 'services' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Services</a>
+                <a href="{% url 'pricing' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Pricing Calculator</a>
                 <a href="{% url 'portfolio:portfolio' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Work</a>
                 <a href="{% url 'clients' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Clients</a>
                 <a href="{% url 'certifications' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Certifications</a>
@@ -160,5 +164,13 @@
 
 <script src="{% static 'js/main.js' %}" defer></script>
 {% block extra_js %}{% endblock %}
+
+<!-- Back to top -->
+<button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
+
 </body>
 </html>

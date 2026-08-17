@@ -1,9 +1,11 @@
 // =========================================================
 // Minimal JS — mobile menu, smooth scroll, sliding nav pill,
-// scroll progress, animated counters.
-// All animations GPU-friendly (transform + opacity only).
+// scroll progress, animated counters, tabs, FAQ, reveal,
+// back-to-top. All animations GPU-friendly (transform + opacity).
 // =========================================================
 document.addEventListener('DOMContentLoaded', function () {
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ----- Mobile menu -----
   const btn = document.getElementById('mobile-menu-button');
@@ -89,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ----- Animated number counters -----
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const counters = document.querySelectorAll('[data-counter]');
   if (counters.length) {
     counters.forEach(el => {
@@ -113,5 +114,69 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       requestAnimationFrame(tick);
     });
+  }
+
+  // ----- Module showcase tabs -----
+  const showcase = document.querySelector('.module-showcase');
+  if (showcase) {
+    const tabs = showcase.querySelectorAll('.module-tab');
+    const panes = showcase.querySelectorAll('.module-pane');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        panes.forEach(p => p.classList.toggle('active', p.getAttribute('data-tab') === target));
+      });
+    });
+  }
+
+  // ----- FAQ accordion -----
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    if (!q) return;
+    q.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      // Close siblings (single-open accordion)
+      item.parentElement.querySelectorAll('.faq-item.open').forEach(other => {
+        if (other !== item) other.classList.remove('open');
+      });
+      item.classList.toggle('open', !wasOpen);
+    });
+  });
+
+  // ----- Scroll reveal (IntersectionObserver) -----
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // ----- Back to top -----
+  const backToTop = document.getElementById('back-to-top');
+  if (backToTop) {
+    let bttTicking = false;
+    function updateBtt() {
+      const visible = window.scrollY > 600;
+      backToTop.classList.toggle('visible', visible);
+      bttTicking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!bttTicking) {
+        requestAnimationFrame(updateBtt);
+        bttTicking = true;
+      }
+    }, { passive: true });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    updateBtt();
   }
 });

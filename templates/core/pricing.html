@@ -1,0 +1,531 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing Calculator — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}Estimate the cost of your Odoo / ERP project in under a minute. Transparent, competitive pricing in USD or BDT. No hidden fees.{% endblock %}
+
+{% block content %}
+
+<!-- ============================================================
+     INTRO
+     ============================================================ -->
+<section class="pt-12 pb-6">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+            <div class="max-w-2xl">
+                <div class="eyebrow">Pricing</div>
+                <h1 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">{{ pricing.intro_title }}</h1>
+                <p class="text-ink2 leading-relaxed">{{ pricing.intro_subtitle }}</p>
+            </div>
+
+            <!-- Currency toggle -->
+            <div class="inline-flex items-center gap-1 p-1 rounded-full border border-line2 bg-surface">
+                <button type="button" class="currency-pill is-active" data-currency="USD">USD ($)</button>
+                <button type="button" class="currency-pill" data-currency="BDT">BDT (৳)</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     CALCULATOR
+     ============================================================ -->
+<section class="pb-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="pricing-shell">
+
+            <!-- LEFT: tier + add-ons -->
+            <div class="space-y-5">
+
+                <!-- Tier picker -->
+                <div>
+                    <div class="section-eyebrow"><span class="num">1</span> Pick a base package</div>
+                    <div class="grid sm:grid-cols-3 gap-3 mt-3" id="tier-grid">
+                        {% for tier in tiers %}
+                        <label class="tier-card {% if tier.popular %}is-popular{% endif %}" data-tier-id="{{ tier.id }}">
+                            <input type="radio" name="tier" value="{{ tier.id }}" {% if tier.popular %}checked{% endif %} class="sr-only tier-input">
+                            {% if tier.popular %}<span class="popular-tag">Most popular</span>{% endif %}
+                            <div class="tier-name">{{ tier.name }}</div>
+                            <div class="tier-summary">{{ tier.summary }}</div>
+                            <div class="tier-price">
+                                <span class="from">from</span>
+                                <span class="amt" data-usd="{{ tier.price_usd }}">${{ tier.price_usd }}</span>
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Add-ons -->
+                <div>
+                    <div class="section-eyebrow"><span class="num">2</span> Add what you need</div>
+                    <div class="grid sm:grid-cols-2 gap-2.5 mt-3" id="addon-grid">
+                        {% for a in addons %}
+                        <label class="addon-row" data-addon-id="{{ a.id }}" data-addon-price="{{ a.price_usd }}" data-addon-unit="{{ a.unit }}">
+                            <input type="checkbox" class="addon-input sr-only" data-addon-id="{{ a.id }}" data-addon-price="{{ a.price_usd }}" data-addon-unit="{{ a.unit }}">
+                            <span class="addon-check">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            <span class="addon-body">
+                                <span class="addon-name">{{ a.name }}</span>
+                                <span class="addon-summary">{{ a.summary }}</span>
+                            </span>
+                            <span class="addon-price">
+                                <span class="amt" data-usd="{{ a.price_usd }}">${{ a.price_usd }}</span>
+                                <span class="unit">/ {{ a.unit }}</span>
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Quantity steppers (for unit-priced addons) -->
+                    <div id="qty-rows" class="mt-3 space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT: live summary -->
+            <aside class="pricing-summary">
+                <div class="summary-head">
+                    <div>
+                        <div class="text-[11px] uppercase tracking-[0.18em] text-ink3 font-semibold">Your estimate</div>
+                        <div class="text-ink2 text-sm mt-0.5">Live — updates as you pick</div>
+                    </div>
+                    <span class="dot-pulse"></span>
+                </div>
+
+                <div id="summary-lines" class="summary-lines">
+                    <div class="summary-empty">Pick a package to see your estimate.</div>
+                </div>
+
+                <!-- Discount banner -->
+                <div id="discount-banner" class="discount-banner hidden">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span id="discount-text"></span>
+                </div>
+
+                <div class="summary-totals">
+                    <div class="totals-row">
+                        <span class="lbl">Subtotal</span>
+                        <span class="val" id="subtotal-usd">$0</span>
+                    </div>
+                    <div class="totals-row discount-row hidden" id="discount-row">
+                        <span class="lbl">Bundle discount</span>
+                        <span class="val" id="discount-usd">-$0</span>
+                    </div>
+                    <div class="totals-row grand">
+                        <span class="lbl">Total</span>
+                        <span class="val" id="total-usd">$0</span>
+                    </div>
+                </div>
+
+                <a href="{% url 'contact' %}" class="btn-primary w-full justify-center mt-5" id="summary-cta">
+                    Send this estimate →
+                </a>
+                <p class="text-[11px] text-ink4 text-center mt-3">Final quote confirmed after a 15-min discovery call. No obligation.</p>
+            </aside>
+        </div>
+
+        <!-- Trust strip -->
+        <div class="mt-10 grid sm:grid-cols-3 gap-3 text-center text-sm">
+            <div class="trust-pill">
+                <svg class="w-4 h-4 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Fixed-price quotes, no surprise invoices
+            </div>
+            <div class="trust-pill">
+                <svg class="w-4 h-4 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Bundle 3+ add-ons &amp; save 10%
+            </div>
+            <div class="trust-pill">
+                <svg class="w-4 h-4 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Replies in &lt; 4 hours, 6 days a week
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     DOWNLOADABLE PDF QUOTE — full lead form
+     ============================================================ -->
+<section id="get-quote" class="pb-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="surface p-6 sm:p-8">
+            <div class="flex items-start gap-4 mb-5">
+                <div class="quote-icon shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div>
+                    <h3 class="text-ink font-semibold text-lg tracking-tight">Download your PDF quote</h3>
+                    <p class="text-ink3 text-sm mt-1">Get a branded, shareable PDF of this estimate. I'll also follow up within 24 hours to lock the scope.</p>
+                </div>
+            </div>
+
+            <form id="quote-form" class="grid sm:grid-cols-2 gap-3" novalidate>
+                <div>
+                    <label class="field-label">Full name *</label>
+                    <input type="text" name="name" required placeholder="Your name" class="input" autocomplete="name">
+                </div>
+                <div>
+                    <label class="field-label">Phone <span class="text-ink4">(optional)</span></label>
+                    <input type="tel" name="phone" placeholder="+880 ..." class="input" autocomplete="tel">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="field-label">Email *</label>
+                    <input type="email" name="email" required placeholder="you@company.com" class="input" autocomplete="email">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="field-label">Company <span class="text-ink4">(optional)</span></label>
+                    <input type="text" name="company" placeholder="Your company" class="input" autocomplete="organization">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="field-label">Anything to add? <span class="text-ink4">(optional)</span></label>
+                    <textarea name="notes" rows="2" placeholder="Timeline, specific requirements, etc." class="input"></textarea>
+                </div>
+
+                <div class="sm:col-span-2 flex items-center justify-between gap-4 flex-wrap mt-1">
+                    <p class="text-[11px] text-ink4">Quote valid for 14 days. Final price confirmed after a 15-min call.</p>
+                    <button type="submit" id="quote-submit-btn" class="btn-primary">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <span>Download PDF quote</span>
+                    </button>
+                </div>
+
+                <div id="quote-status" class="sm:col-span-2 text-[12px] hidden"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     DATA — passed in as proper JSON via json_script (booleans = true/false)
+     ============================================================ -->
+{{ tiers|json_script:"tiers-data" }}
+{{ addons|json_script:"addons-data" }}
+{{ discounts|json_script:"discounts-data" }}
+
+<!-- ============================================================
+     SCRIPT — calculator state
+     ============================================================ -->
+<script>
+(function() {
+  const RATE = {{ pricing.usd_to_bdt|floatformat:2 }};
+  const TIERS = JSON.parse(document.getElementById('tiers-data').textContent);
+  const ADDONS = JSON.parse(document.getElementById('addons-data').textContent);
+  const DISCOUNTS = JSON.parse(document.getElementById('discounts-data').textContent);
+
+  let currency = 'USD';
+
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+  // ----- Currency toggle -----
+  $$('.currency-pill').forEach(p => {
+    p.addEventListener('click', () => {
+      $$('.currency-pill').forEach(x => x.classList.toggle('is-active', x === p));
+      currency = p.dataset.currency;
+      renderAll();
+    });
+  });
+
+  // ----- Format -----
+  function fmt(usd) {
+    if (currency === 'USD') {
+      return '$' + Math.round(usd).toLocaleString('en-US');
+    }
+    return '৳' + Math.round(usd * Number(RATE)).toLocaleString('en-US');
+  }
+  function fmtSign(usd) {
+    if (currency === 'USD') {
+      return '-$' + Math.round(Math.abs(usd)).toLocaleString('en-US');
+    }
+    return '-৳' + Math.round(Math.abs(usd) * Number(RATE)).toLocaleString('en-US');
+  }
+
+  // ----- Tier select -----
+  $$('.tier-card').forEach(card => {
+    card.addEventListener('click', () => {
+      $$('.tier-card').forEach(x => x.classList.remove('is-selected'));
+      card.classList.add('is-selected');
+      card.querySelector('.tier-input').checked = true;
+      renderAll();
+    });
+  });
+
+  // ----- Add-on toggles -----
+  // Listen on the checkbox 'change' event directly. Clicks on the wrapping
+  // <label> toggle the input natively, so we just react to the change.
+  $$('.addon-input').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const row = cb.closest('.addon-row');
+      if (row) row.classList.toggle('is-checked', cb.checked);
+      renderAll();
+    });
+  });
+
+  // ----- Update .tier-card default selected -----
+  const initialTier = $('.tier-card .tier-input:checked')?.closest('.tier-card');
+  if (initialTier) initialTier.classList.add('is-selected');
+
+  // ----- Render -----
+  function getSelectedTier() {
+    const sel = $('.tier-input:checked');
+    if (!sel) return null;
+    return TIERS.find(t => t.id === sel.value);
+  }
+  function getSelectedAddons() {
+    return $$('.addon-input:checked').map(cb => {
+      const id = cb.dataset.addonId;
+      return ADDONS.find(a => a.id === id);
+    }).filter(Boolean);
+  }
+  function getQtyRows() {
+    return $$('#qty-rows .qty-row').map(r => ({
+      addon: ADDONS.find(a => a.id === r.dataset.qtyAddonId),
+      qty: parseInt(r.querySelector('.qty-input').value, 10) || 0,
+    })).filter(x => x.qty > 0 && x.addon);
+  }
+  function getDiscountPct(addonCount) {
+    let best = 0;
+    DISCOUNTS.forEach(d => {
+      if (addonCount >= d.min_addons && d.percent > best) best = d.percent;
+    });
+    return best;
+  }
+
+  function renderAll() {
+    const tier = getSelectedTier();
+    const addons = getSelectedAddons();
+    const qtys = getQtyRows();
+    const addonCount = addons.length + qtys.length;
+    const discountPct = getDiscountPct(addonCount);
+
+    // Tier line
+    const linesEl = $('#summary-lines');
+    if (!tier && addons.length === 0 && qtys.length === 0) {
+      linesEl.innerHTML = '<div class="summary-empty">Pick a package to see your estimate.</div>';
+    } else {
+      let html = '';
+      if (tier) {
+        html += `<div class="line">
+          <span class="line-name">${tier.name} package</span>
+          <span class="line-price">${fmt(tier.price_usd)}</span>
+        </div>`;
+      }
+      addons.forEach(a => {
+        html += `<div class="line">
+          <span class="line-name">${a.name}</span>
+          <span class="line-price">${fmt(a.price_usd)}</span>
+        </div>`;
+      });
+      qtys.forEach(q => {
+        const lineTotal = q.addon.price_usd * q.qty;
+        html += `<div class="line">
+          <span class="line-name">${q.addon.name} <span class="line-qty">× ${q.qty}</span></span>
+          <span class="line-price">${fmt(lineTotal)}</span>
+        </div>`;
+      });
+      linesEl.innerHTML = html;
+    }
+
+    // Subtotal
+    const tierTotal = tier ? tier.price_usd : 0;
+    const addonFlatTotal = addons.reduce((s, a) => s + a.price_usd, 0);
+    const qtyTotal = qtys.reduce((s, q) => s + q.addon.price_usd * q.qty, 0);
+    const subtotal = tierTotal + addonFlatTotal + qtyTotal;
+    const discount = subtotal * (discountPct / 100);
+    const total = subtotal - discount;
+
+    $('#subtotal-usd').textContent = fmt(subtotal);
+
+    if (discount > 0) {
+      $('#discount-row').classList.remove('hidden');
+      $('#discount-usd').textContent = fmtSign(discount);
+      const banner = $('#discount-banner');
+      banner.classList.remove('hidden');
+      const match = DISCOUNTS.find(d => d.min_addons <= addonCount);
+      $('#discount-text').textContent = `${match.label} — saving ${discountPct}% on the full bundle.`;
+    } else {
+      $('#discount-row').classList.add('hidden');
+      $('#discount-banner').classList.add('hidden');
+    }
+    $('#total-usd').textContent = fmt(total);
+
+    // CTA — pass the chosen items as querystring
+    const params = new URLSearchParams();
+    if (tier) params.set('tier', tier.id);
+    addons.forEach(a => params.append('addon', a.id));
+    qtys.forEach(q => params.append('qty[' + q.addon.id + ']', q.qty));
+    const url = "{% url 'contact' %}" + '?' + params.toString();
+    $('#summary-cta').setAttribute('href', url);
+  }
+
+  // ----- Quantity rows (created on-demand for unit-priced addons) -----
+  function buildQtyRows() {
+    const wrap = $('#qty-rows');
+    wrap.innerHTML = '';
+    ADDONS.forEach(a => {
+      if (a.unit === 'page' || a.unit === 'hour' || a.unit === 'module' || a.unit === 'session' || a.unit === 'month') {
+        const row = document.createElement('div');
+        row.className = 'qty-row hidden';
+        row.dataset.qtyAddonId = a.id;
+        const unitLabel = a.unit === 'page' ? 'pages' : a.unit === 'hour' ? 'hours' : a.unit === 'module' ? 'modules' : a.unit === 'session' ? 'sessions' : 'months';
+        row.innerHTML = `
+          <div class="qty-left">
+            <span class="qty-name">${a.name}</span>
+            <span class="qty-help">${a.summary}</span>
+          </div>
+          <div class="qty-control">
+            <button type="button" class="qty-btn qty-dec" aria-label="Decrease">−</button>
+            <input type="number" class="qty-input" value="0" min="0" max="200">
+            <button type="button" class="qty-btn qty-inc" aria-label="Increase">+</button>
+            <span class="qty-unit">${unitLabel}</span>
+            <span class="qty-line-total"></span>
+          </div>
+        `;
+        wrap.appendChild(row);
+
+        // Show row when its addon is checked
+        const cb = $(`.addon-input[data-addon-id="${a.id}"]`);
+        if (!cb) return;
+        const sync = () => {
+          if (cb.checked) {
+            row.classList.remove('hidden');
+            if (parseInt(row.querySelector('.qty-input').value, 10) === 0) {
+              row.querySelector('.qty-input').value = 1;
+            }
+          } else {
+            row.classList.add('hidden');
+            row.querySelector('.qty-input').value = 0;
+          }
+          renderAll();
+        };
+        cb.addEventListener('change', sync);
+
+        // Inc / dec / input
+        row.querySelector('.qty-inc').addEventListener('click', () => {
+          const inp = row.querySelector('.qty-input');
+          inp.value = Math.min(200, (parseInt(inp.value, 10) || 0) + 1);
+          renderAll();
+        });
+        row.querySelector('.qty-dec').addEventListener('click', () => {
+          const inp = row.querySelector('.qty-input');
+          inp.value = Math.max(0, (parseInt(inp.value, 10) || 0) - 1);
+          renderAll();
+        });
+        row.querySelector('.qty-input').addEventListener('input', renderAll);
+      }
+    });
+  }
+
+  buildQtyRows();
+
+  // ----- Quote form -----
+  const quoteForm = $('#quote-form');
+  if (quoteForm) {
+    quoteForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = $('#quote-submit-btn');
+      const status = $('#quote-status');
+      status.classList.add('hidden');
+
+      const formData = new FormData(quoteForm);
+      const tier = getSelectedTier();
+      const addons = getSelectedAddons();
+      const qtys = getQtyRows();
+
+      // Build the item list for the lead + PDF
+      const items = [];
+      if (tier) {
+        items.push({
+          id: tier.id,
+          name: tier.name + ' package',
+          unit: 'flat',
+          unit_price_usd: tier.price_usd,
+          qty: 1,
+          line_total_usd: tier.price_usd,
+        });
+      }
+      addons.forEach(a => items.push({
+        id: a.id, name: a.name, unit: 'flat',
+        unit_price_usd: a.price_usd, qty: 1, line_total_usd: a.price_usd,
+      }));
+      qtys.forEach(q => items.push({
+        id: q.addon.id, name: q.addon.name, unit: q.addon.unit,
+        unit_price_usd: q.addon.price_usd, qty: q.qty,
+        line_total_usd: q.addon.price_usd * q.qty,
+      }));
+
+      const subtotal = items.reduce((s, x) => s + x.line_total_usd, 0);
+      const addonCount = addons.length + qtys.length;
+      let discountPct = 0;
+      DISCOUNTS.forEach(d => { if (addonCount >= d.min_addons && d.percent > discountPct) discountPct = d.percent; });
+      const discount = subtotal * (discountPct / 100);
+      const total = subtotal - discount;
+
+      const payload = {
+        name: (formData.get('name') || '').toString().trim(),
+        email: (formData.get('email') || '').toString().trim(),
+        phone: (formData.get('phone') || '').toString().trim(),
+        company: (formData.get('company') || '').toString().trim(),
+        notes: (formData.get('notes') || '').toString().trim(),
+        tier_id: tier ? tier.id : '',
+        currency,
+        items,
+        subtotal_usd: subtotal,
+        discount_percent: discountPct,
+        discount_usd: discount,
+        total_usd: total,
+        usd_to_bdt: RATE,
+      };
+
+      // Disable button + show progress
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="40 60"></circle></svg><span>Generating PDF…</span>';
+
+      try {
+        const res = await fetch("{% url 'quote_submit' %}", {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken')},
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          let msg = 'Could not generate your quote.';
+          try { const j = await res.json(); if (j.error) msg = j.error; } catch (_) {}
+          throw new Error(msg);
+        }
+        // Trigger PDF download
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quote-${payload.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        status.textContent = 'Quote downloaded. Check your downloads folder — I\'ll follow up within 24 hours.';
+        status.className = 'sm:col-span-2 text-[12px] text-emerald-400';
+        status.classList.remove('hidden');
+      } catch (err) {
+        status.textContent = err.message || 'Something went wrong. Please try again or email me directly.';
+        status.className = 'sm:col-span-2 text-[12px] text-red-400';
+        status.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+      }
+    });
+  }
+
+  // CSRF helper
+  function getCookie(name) {
+    const m = document.cookie.match('(^|;)\\s*' + name + '=([^;]+)');
+    return m ? decodeURIComponent(m.pop()) : '';
+  }
+
+  // Initial render
+  renderAll();
+})();
+</script>
+
+{% endblock %}

@@ -34,6 +34,65 @@ Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=
                 </div>
             </div>
 
+        {% elif code == 'purchase' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Request for Quotation</div>
+                    <div class="font-mono text-[9px] text-ink3">3 pending</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1">
+                        <div class="font-mono text-[8px] text-ink3 w-12">RFQ-0921</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Atlas Hardware</div>
+                        <div class="font-mono text-[8px] text-ink3">120 pcs</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-warning"></div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1">
+                        <div class="font-mono text-[8px] text-ink3 w-12">RFQ-0922</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">Vertex Components</div>
+                        <div class="font-mono text-[8px] text-ink3">45 boxes</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-warning"></div>
+                    </div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1">
+                        <div class="font-mono text-[8px] text-ink3 w-12">RFQ-0923</div>
+                        <div class="font-medium text-[10px] text-ink flex-1">NorthCo Supplies</div>
+                        <div class="font-mono text-[8px] text-ink3">8 skus</div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-success"></div>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Avg. lead time</div>
+                    <div class="font-semibold text-[11px] text-ink">4.2 days</div>
+                </div>
+            </div>
+
+        {% elif code == 'inventory' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Warehouse · WH-01</div>
+                    <div class="font-mono text-[9px] text-success">● synced</div>
+                </div>
+                <div class="grid grid-cols-12 gap-0.5 mb-2">
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-canvas"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-warning"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-canvas"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-warning"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-canvas"></div></div>
+                    <div class="aspect-square bg-white border border-line rounded-sm flex items-center justify-center"><div class="w-1.5 h-1.5 rounded-sm bg-success"></div></div>
+                </div>
+                <div class="grid grid-cols-3 gap-1">
+                    <div class="bg-canvas rounded-sm p-1.5"><div class="font-mono text-[8px] text-ink3">On hand</div><div class="font-semibold text-[11px] text-ink">1,248</div></div>
+                    <div class="bg-canvas rounded-sm p-1.5"><div class="font-mono text-[8px] text-ink3">Inbound</div><div class="font-semibold text-[11px] text-ink">82</div></div>
+                    <div class="bg-canvas rounded-sm p-1.5"><div class="font-mono text-[8px] text-ink3">To ship</div><div class="font-semibold text-[11px] text-ink">14</div></div>
+                </div>
+            </div>
+
         {% elif code == 'accounting' %}
             <div>
                 <div class="flex items-center justify-between mb-2">
@@ -136,6 +195,156 @@ Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=
                         <div class="font-mono text-[8px] text-success mb-1">Won</div>
                         <div class="bg-canvas border border-line rounded-sm p-1 space-y-1"><div class="bg-tealSoft border border-tealLine rounded-sm px-1 py-0.5 text-[8px] font-medium">Pinnacle · $36K</div></div>
                     </div>
+                </div>
+            </div>
+
+        {% elif code == 'project' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Website Revamp</div>
+                    <div class="font-mono text-[9px] text-brand">62h logged</div>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <div>
+                        <div class="font-mono text-[8px] text-ink3 mb-1">To do</div>
+                        <div class="bg-canvas border border-line rounded-sm p-1 space-y-1"><div class="bg-white rounded-sm px-1 py-0.5 text-[8px]">Wireframes</div><div class="bg-white rounded-sm px-1 py-0.5 text-[8px]">Copy review</div></div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-ink3 mb-1">In progress</div>
+                        <div class="bg-canvas border border-line rounded-sm p-1 space-y-1"><div class="bg-brandSoft border border-brandLine rounded-sm px-1 py-0.5 text-[8px] font-medium">Build pages · 12h</div></div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-[8px] text-success mb-1">Done</div>
+                        <div class="bg-canvas border border-line rounded-sm p-1 space-y-1"><div class="bg-tealSoft border border-tealLine rounded-sm px-1 py-0.5 text-[8px] font-medium">Discovery · 8h</div></div>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Billable this month</div>
+                    <div class="font-semibold text-[11px] text-ink">$4,340</div>
+                </div>
+            </div>
+
+        {% elif code == 'website' %}
+            <div>
+                <div class="bg-canvas border border-line rounded-sm p-2 mb-2">
+                    <div class="h-2 w-16 rounded-sm bg-brandLine mb-1.5"></div>
+                    <div class="h-1.5 w-full rounded-sm bg-line mb-1"></div>
+                    <div class="h-1.5 w-4/5 rounded-sm bg-line"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
+                    <div class="bg-white border border-line rounded-sm p-1.5"><div class="h-6 rounded-sm bg-gradient-to-br from-brandLine to-brandSoft mb-1"></div><div class="h-1 w-3/4 rounded-sm bg-line"></div></div>
+                    <div class="bg-white border border-line rounded-sm p-1.5"><div class="h-6 rounded-sm bg-gradient-to-br from-tealLine to-tealSoft mb-1"></div><div class="h-1 w-2/3 rounded-sm bg-line"></div></div>
+                    <div class="bg-white border border-line rounded-sm p-1.5"><div class="h-6 rounded-sm bg-gradient-to-br from-brandLine to-tealSoft mb-1"></div><div class="h-1 w-4/5 rounded-sm bg-line"></div></div>
+                </div>
+                <div class="flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Form → CRM lead</div>
+                    <div class="font-semibold text-[11px] text-success">Connected</div>
+                </div>
+            </div>
+
+        {% elif code == 'helpdesk' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Open tickets</div>
+                    <div class="font-mono text-[9px] text-ink3">SLA 94%</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-10">#4021</div><div class="font-medium text-[10px] text-ink flex-1">Login fails after update</div><div class="font-mono text-[8px] text-danger">2h left</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-10">#4022</div><div class="font-medium text-[10px] text-ink flex-1">Invoice PDF blank</div><div class="font-mono text-[8px] text-warning">1d left</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-10">#4023</div><div class="font-medium text-[10px] text-ink flex-1">Add a new POS terminal</div><div class="font-mono text-[8px] text-success">3d left</div></div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Avg. first response</div>
+                    <div class="font-semibold text-[11px] text-ink">38 min</div>
+                </div>
+            </div>
+
+        {% elif code == 'field-service' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Today's route</div>
+                    <div class="font-mono text-[9px] text-ink3">4 jobs</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-brand w-10">09:00</div><div class="font-medium text-[10px] text-ink flex-1">AC service · Banani</div><div class="w-1.5 h-1.5 rounded-full bg-success"></div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-brand w-10">11:30</div><div class="font-medium text-[10px] text-ink flex-1">Install · Gulshan 2</div><div class="w-1.5 h-1.5 rounded-full bg-warning"></div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-brand w-10">15:00</div><div class="font-medium text-[10px] text-ink flex-1">Repair · Dhanmondi</div><div class="w-1.5 h-1.5 rounded-full bg-line"></div></div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Parts used → invoice</div>
+                    <div class="font-semibold text-[11px] text-ink">Auto</div>
+                </div>
+            </div>
+
+        {% elif code == 'subscriptions' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Recurring revenue</div>
+                    <div class="font-mono text-[9px] text-success">+8.4%</div>
+                </div>
+                <div class="flex items-end gap-1 h-16 mb-2">
+                    <div class="flex-1 rounded-t-sm bg-brandLine" style="height:38%"></div>
+                    <div class="flex-1 rounded-t-sm bg-brandLine" style="height:46%"></div>
+                    <div class="flex-1 rounded-t-sm bg-brandLine" style="height:52%"></div>
+                    <div class="flex-1 rounded-t-sm bg-brandLine" style="height:61%"></div>
+                    <div class="flex-1 rounded-t-sm bg-brand" style="height:74%"></div>
+                    <div class="flex-1 rounded-t-sm bg-brand" style="height:88%"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <div class="bg-canvas rounded-sm px-1.5 py-1"><div class="font-mono text-[8px] text-ink3">MRR</div><div class="font-semibold text-[10px] text-ink">$12.4K</div></div>
+                    <div class="bg-canvas rounded-sm px-1.5 py-1"><div class="font-mono text-[8px] text-ink3">Active</div><div class="font-semibold text-[10px] text-ink">184</div></div>
+                    <div class="bg-canvas rounded-sm px-1.5 py-1"><div class="font-mono text-[8px] text-ink3">Churn</div><div class="font-semibold text-[10px] text-ink">1.9%</div></div>
+                </div>
+            </div>
+
+        {% elif code == 'marketing' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Welcome campaign</div>
+                    <div class="font-mono text-[9px] text-ink3">Running</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div><div class="font-medium text-[10px] text-ink flex-1">Signed up → Email 1</div><div class="font-mono text-[8px] text-ink3">1,204</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="w-1.5 h-1.5 rounded-full bg-brand"></div><div class="font-medium text-[10px] text-ink flex-1">Opened? → wait 2d</div><div class="font-mono text-[8px] text-ink3">742</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="w-1.5 h-1.5 rounded-full bg-success"></div><div class="font-medium text-[10px] text-ink flex-1">Clicked → create lead</div><div class="font-mono text-[8px] text-success">238</div></div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Attributed revenue</div>
+                    <div class="font-semibold text-[11px] text-ink">$18,900</div>
+                </div>
+            </div>
+
+        {% elif code == 'quality' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Quality checks</div>
+                    <div class="font-mono text-[9px] text-success">98.2% pass</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">Receipt</div><div class="font-medium text-[10px] text-ink flex-1">Visual inspection</div><div class="font-mono text-[8px] text-success">Pass</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">WO-118</div><div class="font-medium text-[10px] text-ink flex-1">Torque 22–24 Nm</div><div class="font-mono text-[8px] text-success">23.1</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">WO-119</div><div class="font-medium text-[10px] text-ink flex-1">Weight tolerance</div><div class="font-mono text-[8px] text-danger">Alert</div></div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Next preventive service</div>
+                    <div class="font-semibold text-[11px] text-ink">in 6 days</div>
+                </div>
+            </div>
+
+        {% elif code == 'expenses' %}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <div class="font-semibold text-[11px] text-ink">Expense reports</div>
+                    <div class="font-mono text-[9px] text-ink3">5 to approve</div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">Travel</div><div class="font-medium text-[10px] text-ink flex-1">Client visit · Chattogram</div><div class="font-mono text-[8px] text-ink">৳ 8,400</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">Meals</div><div class="font-medium text-[10px] text-ink flex-1">Team lunch</div><div class="font-mono text-[8px] text-ink">৳ 2,150</div></div>
+                    <div class="flex items-center gap-2 bg-canvas border border-line rounded-sm px-2 py-1"><div class="font-mono text-[8px] text-ink3 w-14">Software</div><div class="font-medium text-[10px] text-ink flex-1">Hosting renewal</div><div class="font-mono text-[8px] text-ink">৳ 6,900</div></div>
+                </div>
+                <div class="mt-2 flex items-center justify-between bg-canvas rounded-sm px-2 py-1.5">
+                    <div class="font-mono text-[9px] text-ink3">Approved → payroll</div>
+                    <div class="font-semibold text-[11px] text-success">Automatic</div>
                 </div>
             </div>
 

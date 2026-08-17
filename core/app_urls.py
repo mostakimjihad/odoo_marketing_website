@@ -10,4 +10,6 @@ urlpatterns = [
     path('modules/', views.ModuleListView.as_view(), name='modules'),
     path('modules/<slug:slug>/', views.ModuleDetailView.as_view(), name='module_detail'),
     path('contact/', views.ContactView.as_view(), name='contact'),
+    path('pricing/', views.PricingView.as_view(), name='pricing'),
+    path('pricing/quote/', views.quote_submit, name='quote_submit'),
 ]

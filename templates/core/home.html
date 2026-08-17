@@ -23,9 +23,24 @@
                     <span class="text-indigo-300">for every industry.</span>
                 </h1>
 
-                <p class="text-lg text-ink2 leading-relaxed max-w-xl mb-8">
+                <p class="text-lg text-ink2 leading-relaxed max-w-xl mb-5">
                     Full-stack ERP expertise across functional consulting, custom development, deployment, and data migration — 4+ years, 20+ implementations.
                 </p>
+
+                <ul class="hero-benefits">
+                    <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        POS, Sales, Accounting &amp; Manufacturing
+                    </li>
+                    <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Fixed milestones, transparent pricing
+                    </li>
+                    <li>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Replies in &lt; 4 hours
+                    </li>
+                </ul>
 
                 <div class="flex flex-wrap items-center gap-3">
                     {% if site_settings.fiverr_url %}
@@ -89,6 +104,69 @@
 </section>
 
 <!-- ============================================================
+     SERVICES — full grid of all 11 services
+     ============================================================ -->
+{% if services %}
+<section id="services" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+            <div>
+                <div class="eyebrow">What I do</div>
+                <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight">Every service, end to end</h2>
+                <p class="text-ink2 mt-2 max-w-xl">From the first scoping call to the day your team takes over — and the maintenance that follows.</p>
+            </div>
+            <a href="{% url 'services' %}" class="text-sm font-medium text-ink3 hover:text-ink transition inline-flex items-center gap-1">
+                All services
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {% for service in services %}
+            <a href="{% url 'service_detail' service.slug %}" class="svc-card group">
+                <div class="svc-icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div class="svc-name">{{ service.title }}</div>
+                <p class="svc-desc">{{ service.short_description }}</p>
+                <div class="svc-arrow">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Pricing teaser -->
+        <div class="mt-12 reveal">
+            <div class="flex items-end justify-between mb-5 gap-4 flex-wrap">
+                <div>
+                    <div class="eyebrow">Transparent pricing</div>
+                    <h3 class="text-2xl md:text-3xl font-semibold text-ink tracking-tight">Estimate your project in under a minute</h3>
+                </div>
+            </div>
+
+            <div class="pricing-teaser">
+                {% for tier in pricing_tiers %}
+                <div class="cell">
+                    <span class="tier-tag">{% if tier.popular %}Most popular{% else %}Package{% endif %}</span>
+                    <div class="tier-name">{{ tier.name }}</div>
+                    <div class="tier-from">from</div>
+                    <div class="tier-amt">${{ tier.price_usd }}</div>
+                </div>
+                {% endfor %}
+                <div class="cta-cell">
+                    <a href="{% url 'pricing' %}" class="btn-primary whitespace-nowrap">
+                        Open calculator
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
      ERP FLOW DIAGRAM — the centerpiece
      ============================================================ -->
 <section id="erp-flow" class="pt-8 pb-16 md:pb-20 scroll-mt-20">
@@ -97,7 +175,7 @@
         <div class="text-center mb-10">
             <div class="eyebrow mx-auto w-fit justify-center">The complete ERP cycle</div>
             <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">How an ERP system runs your business</h2>
-            <p class="text-ink2 max-w-2xl mx-auto">From the moment you raise a purchase order to settling your books — every step runs on a connected workflow. No double entry, no spreadsheets, no lost data.</p>
+            <p class="text-ink2 max-w-2xl mx-auto">From the first quote to the moment your vendor is paid — every step runs on one connected workflow. Sell, collect, then restock. No double entry, no spreadsheets, no lost data.</p>
         </div>
 
         {% include 'partials/_erp_flow.html' %}
@@ -190,48 +268,393 @@
     </div>
 </section>
 
-<!-- ============================================================
-     MODULE GRID
-     ============================================================ -->
-<section id="modules" class="py-16 md:py-20 scroll-mt-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- (Modules grid removed — content was duplicated by the #showcase tabs below.
+     The full module listing still lives at /modules/ for visitors who want to browse all.) -->
 
-        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
-            <div>
-                <div class="eyebrow">Modules I implement</div>
-                <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight">Pick a module. I'll wire it up.</h2>
-            </div>
-            <a href="{% url 'modules' %}" class="text-sm font-medium text-ink3 hover:text-ink transition inline-flex items-center gap-1">
-                All modules
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
+<!-- ============================================================
+     LIVE MODULE SHOWCASE — interactive tabs (POS / Sales / Manufacturing / Accounting)
+     ============================================================ -->
+<section id="showcase" class="py-16 md:py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">See it in action</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">Every module, on one screen</h2>
+            <p class="text-ink2 max-w-2xl mx-auto">Click a tab to see what each module actually does — POS, sales, purchase, inventory, eCommerce, manufacturing, HRM and accounting, all on the same data layer.</p>
         </div>
 
-        {% if modules %}
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {% for module in modules %}
-            <a href="{% url 'module_detail' module.slug %}" class="module-tile">
-                <div class="p-3 pb-0 bg-gradient-to-b from-base to-card">
-                    {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
-                </div>
-                <div class="meta">
-                    <div>
-                        <div class="tag">{{ module.short_tag }} · {{ module.get_category_display }}</div>
-                        <div class="name mt-0.5">{{ module.name }}</div>
+        <div class="module-showcase reveal">
+            <div class="module-tabs" role="tablist">
+                <button class="module-tab active" data-tab="pos" role="tab" aria-selected="true">
+                    <span class="dot"></span> POS
+                </button>
+                <button class="module-tab" data-tab="sales" role="tab" aria-selected="false">
+                    <span class="dot"></span> Sales
+                </button>
+                <button class="module-tab" data-tab="purchase" role="tab" aria-selected="false">
+                    <span class="dot"></span> Purchase
+                </button>
+                <button class="module-tab" data-tab="inventory" role="tab" aria-selected="false">
+                    <span class="dot"></span> Inventory
+                </button>
+                <button class="module-tab" data-tab="ecommerce" role="tab" aria-selected="false">
+                    <span class="dot"></span> eCommerce
+                </button>
+                <button class="module-tab" data-tab="manufacturing" role="tab" aria-selected="false">
+                    <span class="dot"></span> Manufacturing
+                </button>
+                <button class="module-tab" data-tab="hrm" role="tab" aria-selected="false">
+                    <span class="dot"></span> HRM
+                </button>
+                <button class="module-tab" data-tab="accounting" role="tab" aria-selected="false">
+                    <span class="dot"></span> Accounting
+                </button>
+            </div>
+
+            <!-- POS pane -->
+            <div class="module-pane active" data-tab="pos" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='pos' tag='POS' %}
                     </div>
-                    <span class="arrow">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </span>
                 </div>
-            </a>
+                <div class="info">
+                    <h3>Point of Sale</h3>
+                    <p>Counter, mobile, and self-checkout — all running against the same inventory and customer record. Works online and offline; sales sync the second the connection is back.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Barcode scanning</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Multi-store, multi-printer</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Loyalty &amp; promotions</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Cash, card, split tender</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'point-of-sale' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore POS module →</a>
+                </div>
+            </div>
+
+            <!-- Sales pane -->
+            <div class="module-pane" data-tab="sales" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='crm' tag='CRM' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Sales &amp; CRM</h3>
+                    <p>Quotes to cash in one pipeline. Track every lead, see what's in negotiation, and push won deals straight into delivery and invoicing without re-typing.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Visual pipeline</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Quotation → invoice</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Recurring subscriptions</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Forecast by rep</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'crm' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore Sales module →</a>
+                </div>
+            </div>
+
+            <!-- Purchase pane -->
+            <div class="module-pane" data-tab="purchase" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='purchase' tag='PUR' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Purchase &amp; Vendors</h3>
+                    <p>Reorder rules fire an RFQ before you run out. Compare vendor prices side by side, confirm the PO, and the bill is already matched against the receipt when it lands.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Automated RFQs</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Vendor price lists</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> 3-way bill matching</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Lead-time tracking</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'purchase' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore Purchase →</a>
+                </div>
+            </div>
+
+            <!-- Inventory pane -->
+            <div class="module-pane" data-tab="inventory" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='inventory' tag='STOCK' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Inventory &amp; Warehouse</h3>
+                    <p>Real stock, not last month's spreadsheet. Multi-warehouse, multi-location, lot and serial traceability — with double-entry moves so nothing disappears without a record.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Barcode putaway &amp; picking</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Lot / serial traceability</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Reordering rules</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Landed costs &amp; valuation</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'inventory' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore Inventory →</a>
+                </div>
+            </div>
+
+            <!-- eCommerce pane -->
+            <div class="module-pane" data-tab="ecommerce" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='ecommerce' tag='eCom' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Website &amp; eCommerce</h3>
+                    <p>Your storefront reads the same product catalogue and stock levels as the warehouse. An online order becomes a sale order, a picking, and an invoice — no export/import in between.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Live stock on product pages</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> bKash / SSLCommerz / Stripe</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Variants &amp; pricelists</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Abandoned cart recovery</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'ecommerce' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore eCommerce →</a>
+                </div>
+            </div>
+
+            <!-- Manufacturing pane -->
+            <div class="module-pane" data-tab="manufacturing" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='mrp' tag='MRP' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Manufacturing (MRP)</h3>
+                    <p>Bills of materials, routings, work orders, and quality checks. Schedule production based on real demand — not on what someone guessed at the start of the month.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Multi-level BOMs</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Work order tracking</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Sub-contracting</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Quality control</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'manufacturing' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore Manufacturing →</a>
+                </div>
+            </div>
+
+            <!-- HRM pane -->
+            <div class="module-pane" data-tab="hrm" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='hr' tag='HR' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>HR &amp; Payroll</h3>
+                    <p>Employee records, attendance, leave, expenses and payslips in one place. Staff request leave from their phone; managers approve in a click; payroll picks it up automatically.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Attendance &amp; shifts</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Leave &amp; approvals</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Payslips &amp; salary rules</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Recruitment pipeline</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'human-resources' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore HR module →</a>
+                </div>
+            </div>
+
+            <!-- Accounting pane -->
+            <div class="module-pane" data-tab="accounting" role="tabpanel">
+                <div class="visual">
+                    <div class="video-placeholder w-full h-full">
+                        {% include 'partials/_module_mockup.html' with code='accounting' tag='BOOKS' %}
+                    </div>
+                </div>
+                <div class="info">
+                    <h3>Accounting &amp; Books</h3>
+                    <p>Every POS swipe, sales invoice, and purchase order flows into your chart of accounts automatically. Reconciliations, taxes, and reports stay audit-ready without the late nights.</p>
+                    <ul class="feature-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Auto journal entries</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Bank reconciliation</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Tax &amp; multi-currency</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> P&amp;L, BS, cash flow</li>
+                    </ul>
+                    <a href="{% url 'module_detail' 'accounting' %}" class="btn-ghost text-[12px] py-1.5 px-3 self-start">Explore Accounting →</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-ink3 text-xs mt-4">Mockups shown — interactive previews available on request.</p>
+    </div>
+</section>
+
+<!-- ============================================================
+     WHY ERP — before / after transformation
+     ============================================================ -->
+<section id="why-erp" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">What changes</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">Before ERP, vs. after</h2>
+            <p class="text-ink2 max-w-2xl mx-auto">Same week, same team — but a different operating system. This is what the move actually feels like for the people doing the work.</p>
+        </div>
+
+        <div class="xform reveal">
+            <div class="xform-col is-before">
+                <div class="label">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                    Today
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>
+                    <span>Stock counts in three spreadsheets that <strong>never agree</strong>.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>
+                    <span>Re-typing the same sale into POS, then accounting, then the bank file.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>
+                    <span>End-of-month close takes <strong>5+ days</strong> and still has errors.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>
+                    <span>Production schedules based on <strong>gut feel</strong>, not real orders.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>
+                    <span>"Where's that order?" takes 4+ WhatsApp messages to answer.</span>
+                </div>
+            </div>
+
+            <div class="xform-arrow">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+
+            <div class="xform-col is-after">
+                <div class="label">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    With ERP
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+                    <span><strong>One source of truth</strong> — every sale, move, and return updates stock instantly.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+                    <span>POS, invoice, and ledger update from <strong>one entry</strong> — no re-typing.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+                    <span>Books close in <strong>a day or two</strong>, not a week — and reconcile cleanly.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+                    <span>MRP runs against <strong>real demand</strong> and live inventory levels.</span>
+                </div>
+                <div class="xform-item">
+                    <span class="icon"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+                    <span>Every order has a <strong>live status</strong> — no chasing, no guessing.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+{% if testimonials %}
+<section id="testimonials" class="py-16 md:py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">What clients say</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">Trusted by owners and IT leads</h2>
+        </div>
+
+        <div class="testimonial-grid reveal">
+            {% for t in testimonials|slice:":3" %}
+            <div class="testimonial-card">
+                <div class="stars">
+                    {% for i in "12345" %}
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.366-2.447a1 1 0 00-1.176 0l-3.367 2.447c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+                    {% endfor %}
+                </div>
+                <p class="quote">{{ t.testimonial }}</p>
+                <div class="author">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #6366F1, #22D3EE);">
+                        {{ t.testimonial_author|default:t.name|slice:":1"|upper }}
+                    </div>
+                    <div>
+                        <div class="name">{{ t.testimonial_author|default:t.name }}</div>
+                        <div class="role">{% if t.testimonial_role %}{{ t.testimonial_role }} · {% endif %}{{ t.name }}</div>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
-        {% else %}
-        <div class="surface p-8 text-center">
-            <p class="text-ink3 mb-3">No modules published yet.</p>
-            <a href="/admin/core/erpmodule/add/" class="btn-primary">Add a module in admin</a>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section id="faq" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">FAQ</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">Common questions, answered</h2>
         </div>
-        {% endif %}
+
+        <div class="reveal">
+            <div class="faq-item open">
+                <button class="faq-q" type="button">
+                    <span>Which Odoo versions do you support?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Mostly <strong>Odoo 16 and 17</strong> (Community &amp; Enterprise). I also run migrations from v12, v13, v14, and v15 — including multi-version jumps. If you're on an older version and unsure whether to upgrade, the short answer is: yes, but let's plan the cutover together.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>How long does a typical implementation take?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>A focused single-module rollout (POS or Sales) can go live in <strong>3–4 weeks</strong>. A full multi-module ERP with manufacturing and accounting lands between <strong>8 and 16 weeks</strong>, depending on data volume and integrations. I'll give you a fixed scope and timeline before any code is written.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Can you migrate data from my current system?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Yes. I've migrated from Tally, QuickBooks, SAP Business One, spreadsheets, and other ERPs. The migration covers chart of accounts, opening balances, customers, vendors, products, stock on hand, and open orders. We do a dry-run, then a final cutover, so nothing is lost.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Do you work remotely or on-site?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Both. Most of the build and configuration happens remotely over shared screen and a staging server. For go-live weeks and team training, I travel on-site (Bangladesh, India, GCC, EU — your cost). Hybrid is the most common setup.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>What happens after go-live?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Every project includes <strong>30 days of post-go-live support</strong> for bug fixes and user questions. After that, you can stay on a monthly retainer for ongoing improvements, or call me per-task. I also hand over documentation and a recorded walkthrough so your team can self-serve.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Can you customize Odoo if my business is unusual?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>That's most of what I do. Custom modules, workflow automations, integration with payment gateways, eCommerce, third-party logistics, and reporting. Anything Odoo doesn't ship out of the box, I'll build on top — cleanly, in OWL/QWeb, so it upgrades with you.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

@@ -165,3 +165,153 @@ class ERPModule(models.Model):
 
     def get_industries_list(self):
         return [s.strip() for s in self.industries.split(',') if s.strip()]
+
+
+class PricingConfig(models.Model):
+    """Singleton holding the pricing calculator catalog + exchange rate.
+
+    `catalog` is a JSON blob: { tiers: [...], addons: [...] } so the
+    owner can tweak prices from the admin without redeploying.
+    """
+
+    usd_to_bdt = models.DecimalField(
+        max_digits=8, decimal_places=2, default=110,
+        help_text="Exchange rate used by the calculator (1 USD = X BDT).",
+    )
+    intro_title = models.CharField(
+        max_length=160,
+        default="Estimate your project in under a minute",
+    )
+    intro_subtitle = models.TextField(
+        blank=True,
+        default="Transparent, competitive pricing. No hidden fees. Toggle USD ⇄ BDT to see both.",
+    )
+    catalog = models.JSONField(
+        default=dict,
+        help_text="Auto-seeded with default catalog on first save. Do not edit by hand unless you know the schema.",
+    )
+
+    class Meta:
+        verbose_name = "Pricing Configuration"
+        verbose_name_plural = "Pricing Configuration"
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        if not self.catalog:
+            self.catalog = PricingConfig.default_catalog()
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_solo(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+    def __str__(self):
+        return "Pricing Configuration"
+
+    @staticmethod
+    def default_catalog():
+        return {
+            "tiers": [
+                {
+                    "id": "small",
+                    "name": "Small ERP",
+                    "summary": "Up to 3 users · 1 company · core modules",
+                    "price_usd": 590,
+                    "popular": False,
+                },
+                {
+                    "id": "medium",
+                    "name": "Medium ERP",
+                    "summary": "Up to 10 users · 1 company · standard modules",
+                    "price_usd": 1490,
+                    "popular": True,
+                },
+                {
+                    "id": "large",
+                    "name": "Large ERP",
+                    "summary": "15+ users · multi-company · full suite",
+                    "price_usd": 3490,
+                    "popular": False,
+                },
+            ],
+            "addons": [
+                {"id": "deploy_community",  "name": "Odoo Community Deployment",   "summary": "Self-hosted on your server",                  "price_usd":  120, "unit": "flat"},
+                {"id": "deploy_enterprise", "name": "Odoo Enterprise Deployment",  "summary": "SaaS / Odoo.sh setup + first 30 days",        "price_usd":  290, "unit": "flat"},
+                {"id": "website",           "name": "Website / eCommerce pages",   "summary": "Theme + responsive pages",                    "price_usd":   35, "unit": "page"},
+                {"id": "data_migration",    "name": "Data Migration",              "summary": "From Tally, QuickBooks, spreadsheets, etc.",  "price_usd":  190, "unit": "flat"},
+                {"id": "consulting",        "name": "Functional Consulting",       "summary": "Discovery, gap analysis, blueprint",          "price_usd":   25, "unit": "hour"},
+                {"id": "custom_module",     "name": "Custom Module Development",   "summary": "Bespoke Odoo module or automation",           "price_usd":  290, "unit": "module"},
+                {"id": "training",          "name": "Team Training",               "summary": "Live walkthrough for end users",              "price_usd":   60, "unit": "session"},
+                {"id": "maintenance",       "name": "Monthly Maintenance",         "summary": "Bug fixes, updates, minor changes",           "price_usd":  120, "unit": "month"},
+            ],
+            "discounts": [
+                {"min_addons": 3, "percent": 10, "label": "Bundle 3+ add-ons"},
+                {"min_addons": 5, "percent": 15, "label": "Bundle 5+ add-ons"},
+            ],
+        }
+
+
+class QuoteLead(models.Model):
+    """A lead captured from the /pricing/ calculator.
+
+    Created when a user submits the customer form on the pricing page
+    to download a PDF quote. Owner reviews these in Django admin and
+    follows up. The full chosen items are stored as JSON so the admin
+    can replay the exact configuration the user priced out.
+    """
+
+    STATUS_CHOICES = [
+        ('new',       'New'),
+        ('contacted', 'Contacted'),
+        ('qualified', 'Qualified'),
+        ('won',       'Won'),
+        ('lost',      'Lost'),
+    ]
+
+    CURRENCY_CHOICES = [('USD', 'USD'), ('BDT', 'BDT')]
+
+    # Customer
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    company = models.CharField(max_length=160, blank=True)
+    notes = models.TextField(blank=True, help_text="Optional message from the prospect.")
+
+    # Quote configuration
+    tier_id = models.CharField(max_length=40, blank=True)
+    items = models.JSONField(default=list, help_text="[{id, name, qty, unit, unit_price_usd, line_total_usd}, ...]")
+    subtotal_usd = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    discount_percent = models.PositiveIntegerField(default=0)
+    discount_usd = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    total_usd = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='USD')
+    usd_to_bdt = models.DecimalField(max_digits=8, decimal_places=2, default=110)
+
+    # Generated PDF (re-renderable on demand; we also cache a copy)
+    pdf = models.FileField(upload_to='quotes/', blank=True, null=True)
+
+    # Tracking
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.CharField(max_length=400, blank=True)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Quote lead"
+        verbose_name_plural = "Quote leads"
+
+    def __str__(self):
+        return f"{self.name} — {self.currency} {self.total} ({self.get_status_display()})"
+
+    @property
+    def total(self):
+        if self.currency == 'BDT':
+            return f"৳{int(self.total_usd * self.usd_to_bdt):,}"
+        return f"${int(self.total_usd):,}"
+
+    def item_count(self):
+        return len(self.items or [])
+
