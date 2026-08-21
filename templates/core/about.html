@@ -19,7 +19,7 @@
                     <div class="mt-4">
                         <div class="font-semibold text-ink">{{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
                         <div class="text-[12px] text-ink3 mt-1">Senior ERP &amp; Odoo Engineer</div>
-                        <div class="text-[12px] text-ink3">Functional · Technical · Deployment · Migration</div>
+                        <div class="text-[12px] text-ink3">12 yrs · integrations · full-stack · ERP engineering</div>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,31 @@
                 <div class="prose-content text-lg">
                     {{ site_settings.about_body|linebreaks }}
                 </div>
+
+                <!-- ERP-specific credibility strip -->
+                <div class="mt-8 grid sm:grid-cols-2 gap-3">
+                    <div class="surface p-5">
+                        <div class="text-[11px] uppercase tracking-wider text-indigo-300 font-medium mb-1.5">ERP depth</div>
+                        <div class="text-ink font-semibold text-sm mb-2">Odoo v12 → v17 · ERPNext v13/14</div>
+                        <p class="text-[13px] text-ink3 leading-relaxed">Multi-company, multi-currency, multi-warehouse rollouts. Custom modules, version upgrades, code audits, performance tuning.</p>
+                    </div>
+                    <div class="surface p-5">
+                        <div class="text-[11px] uppercase tracking-wider text-indigo-300 font-medium mb-1.5">What I fix that others can't</div>
+                        <div class="text-ink font-semibold text-sm mb-2">Rescue, takeover, regressions</div>
+                        <p class="text-[13px] text-ink3 leading-relaxed">Half-finished builds, vanished freelancers, custom modules that block upgrades, slow reports, broken integrations — I've cleaned up all of these.</p>
+                    </div>
+                    <div class="surface p-5">
+                        <div class="text-[11px] uppercase tracking-wider text-indigo-300 font-medium mb-1.5">Industries</div>
+                        <div class="text-ink font-semibold text-sm mb-2">Manufacturing · Retail · Distribution</div>
+                        <p class="text-[13px] text-ink3 leading-relaxed">Apparel &amp; fashion, food &amp; beverage, building materials, professional services, hospitality, eCommerce D2C, healthcare ops.</p>
+                    </div>
+                    <div class="surface p-5">
+                        <div class="text-[11px] uppercase tracking-wider text-indigo-300 font-medium mb-1.5">Working with me</div>
+                        <div class="text-ink font-semibold text-sm mb-2">Remote-first, on-site when needed</div>
+                        <p class="text-[13px] text-ink3 leading-relaxed">Bangladesh-based, working with clients across GCC, India, EU, and US. NDA-friendly, audit-ready, role-based access.</p>
+                    </div>
+                </div>
+
                 <div class="flex flex-wrap gap-3 mt-8">
                     <a href="{% url 'contact' %}" class="btn-primary">Get in touch</a>
                     {% if site_settings.cv_file %}

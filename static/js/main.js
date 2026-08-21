@@ -27,6 +27,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // ----- Floating CTA: show after scrolling past the hero -----
+  const floatingCta = document.getElementById('floating-cta');
+  if (floatingCta) {
+    let ticking = false;
+    const updateFloatingCta = () => {
+      // Show once the user has scrolled ~500px (past hero), hide near footer
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const nearBottom = scrollY + winHeight > docHeight - 300;
+      if (scrollY > 500 && !nearBottom) {
+        floatingCta.classList.add('is-visible');
+      } else {
+        floatingCta.classList.remove('is-visible');
+      }
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateFloatingCta);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   // ----- Scroll progress bar -----
   const progress = document.getElementById('scroll-progress');
   if (progress) {
@@ -126,6 +151,54 @@ document.addEventListener('DOMContentLoaded', function () {
         const target = tab.getAttribute('data-tab');
         tabs.forEach(t => t.classList.toggle('active', t === tab));
         panes.forEach(p => p.classList.toggle('active', p.getAttribute('data-tab') === target));
+      });
+    });
+  }
+
+  // ----- Services board tabs (sidebar + pane) -----
+  const svcBoard = document.querySelector('.svc-board');
+  if (svcBoard) {
+    const tabs = svcBoard.querySelectorAll('.svc-tab');
+    const panes = svcBoard.querySelectorAll('.svc-pane');
+    const navBtns = svcBoard.querySelectorAll('.svc-nav-btn');
+
+    const activate = (key) => {
+      tabs.forEach(t => {
+        const isActive = t.getAttribute('data-tab') === key;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      panes.forEach(p => p.classList.toggle('active', p.getAttribute('data-pane') === key));
+      // Keep the active tab visible on mobile (horizontal scroll)
+      const activeTab = svcBoard.querySelector(`.svc-tab[data-tab="${key}"]`);
+      if (activeTab && activeTab.scrollIntoView) {
+        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => activate(tab.getAttribute('data-tab')));
+    });
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-go');
+        if (target) activate(String(target).padStart(2, '0'));
+      });
+    });
+
+    // Keyboard arrows (when a tab is focused)
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = tabs[(i + 1) % tabs.length];
+          next.focus(); activate(next.getAttribute('data-tab'));
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
+          prev.focus(); activate(prev.getAttribute('data-tab'));
+        }
       });
     });
   }

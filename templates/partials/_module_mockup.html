@@ -1,6 +1,8 @@
 {% comment %}
 Reusable browser-frame mockup for a module tile.
-Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
+Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag image_url=module.image_url %}
+If `image_url` is set, that photo is rendered inside the browser-frame body;
+otherwise the built-in CSS mockup keyed by `code` is shown.
 {% endcomment %}
 <div class="browser-frame">
     <div class="chrome">
@@ -11,7 +13,12 @@ Usage: {% include 'partials/_module_mockup.html' with code=module.demo_code tag=
     </div>
     <div class="body">
 
-        {% if code == 'pos' %}
+        {% if image_url %}
+            <img src="{{ image_url }}"
+                 alt="{{ tag }} — Odoo module preview"
+                 loading="lazy"
+                 class="w-full h-full object-cover">
+        {% elif code == 'pos' %}
             <div class="flex gap-2 h-full">
                 <div class="w-1/4 bg-canvas rounded-sm p-1.5 space-y-1">
                     <div class="text-[9px] font-mono text-ink3">Register</div>

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load core_extras %}
+
 {% block content %}
 
 <!-- ============================================================
@@ -15,46 +17,46 @@
                     Available for new projects · Q4 2026
                 </div>
 
-                <div class="eyebrow">ERP Implementation Partner</div>
+                <div class="eyebrow">Senior ERP &amp; Odoo Engineer</div>
 
                 <h1 class="text-[44px] md:text-[60px] lg:text-[68px] font-semibold leading-[1.02] tracking-ultratight text-ink mb-6">
-                    Odoo &amp; ERP services
+                    I connect every tool
                     <br class="hidden md:inline">
-                    <span class="text-indigo-300">for every industry.</span>
+                    <span class="text-indigo-300">your business runs on.</span>
                 </h1>
 
                 <p class="text-lg text-ink2 leading-relaxed max-w-xl mb-5">
-                    Full-stack ERP expertise across functional consulting, custom development, deployment, and data migration — 4+ years, 20+ implementations.
+                    ERP implementation, complex engineering, and full-stack integrations — sales, inventory, accounting, manufacturing, eCommerce, HRM and the systems that talk to them, all on one data layer.
                 </p>
 
                 <ul class="hero-benefits">
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        POS, Sales, Accounting &amp; Manufacturing
+                        12 yrs across ERP, integrations &amp; frontend
                     </li>
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        Fixed milestones, transparent pricing
+                        External integrations, automation, BI
                     </li>
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        Replies in &lt; 4 hours
+                        Fixed scope, transparent milestones
                     </li>
                 </ul>
 
                 <div class="flex flex-wrap items-center gap-3">
+                    <a href="{% url 'contact' %}" class="btn-primary">
+                        Book a free call
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </a>
+                    <a href="#services" class="btn-ghost">
+                        See the services
+                    </a>
                     {% if site_settings.fiverr_url %}
-                    <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr">
-                        Hire me on Fiverr
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+                    <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="text-sm font-medium text-ink3 hover:text-ink transition pl-1">
+                        or hire on Fiverr →
                     </a>
                     {% endif %}
-                    <a href="#erp-flow" class="btn-primary">
-                        See the ERP flow
-                    </a>
-                    <a href="{% url 'contact' %}" class="text-sm font-medium text-ink3 hover:text-ink transition pl-1">
-                        or send a brief →
-                    </a>
                 </div>
             </div>
 
@@ -89,55 +91,215 @@
         <div class="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
             <div class="stat-readout">
                 <div class="num"><span data-counter="{{ site_settings.years_experience }}" data-suffix="+">0</span></div>
-                <div class="label">Years of ERP work</div>
+                <div class="label">Years in business &amp; ERP</div>
             </div>
             <div class="stat-readout">
                 <div class="num"><span data-counter="{{ site_settings.projects_completed }}" data-suffix="+">0</span></div>
-                <div class="label">Implementations delivered</div>
+                <div class="label">Systems shipped</div>
             </div>
             <div class="stat-readout">
                 <div class="num"><span data-counter="{{ site_settings.happy_clients }}" data-suffix="+">0</span></div>
-                <div class="label">Happy clients</div>
+                <div class="label">Clients served</div>
             </div>
+        </div>
+
+        <!-- ERP credentials trust strip -->
+        <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-[12px] text-ink3 max-w-3xl">
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Odoo v12 → v17 migrations
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Multi-company · multi-currency
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Tally · QuickBooks · SAP B1 migrations
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                AWS · GCP · Azure · on-prem
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                NDA · audit-ready · role-based access
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Replies &lt; 4h · 6 days/week
+            </span>
         </div>
     </div>
 </section>
 
 <!-- ============================================================
-     SERVICES — full grid of all 11 services
+     SERVICES — every service, end to end, with workflow visual
      ============================================================ -->
 {% if services %}
 <section id="services" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+        <div class="flex items-end justify-between mb-10 gap-6 flex-wrap">
             <div>
                 <div class="eyebrow">What I do</div>
                 <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight">Every service, end to end</h2>
-                <p class="text-ink2 mt-2 max-w-xl">From the first scoping call to the day your team takes over — and the maintenance that follows.</p>
+                <p class="text-ink2 mt-2 max-w-xl">11 services. Pick one to see the workflow — no scrolling marathon.</p>
             </div>
             <a href="{% url 'services' %}" class="text-sm font-medium text-ink3 hover:text-ink transition inline-flex items-center gap-1">
-                All services
+                Full service detail
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+            <a href="{% url 'products' %}" class="text-sm font-medium text-ink3 hover:text-ink transition inline-flex items-center gap-1">
+                Browse products
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {% for service in services %}
-            <a href="{% url 'service_detail' service.slug %}" class="svc-card group">
-                <div class="svc-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 13l4 4L19 7"/></svg>
+        <!-- ERP takeover / rescue callout -->
+        <div class="mb-10 surface border border-indigo-400/30 p-6 md:p-7 flex flex-col md:flex-row items-start md:items-center gap-5 reveal">
+            <div class="flex items-start gap-4 flex-1">
+                <div class="w-11 h-11 flex-shrink-0 rounded-lg bg-gradient-to-br from-indigo-500/20 to-teal-400/10 border border-indigo-400/40 flex items-center justify-center text-indigo-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.5 12.75l6 6 9-13.5"/></svg>
                 </div>
-                <div class="svc-name">{{ service.title }}</div>
-                <p class="svc-desc">{{ service.short_description }}</p>
-                <div class="svc-arrow">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <div>
+                    <div class="eyebrow">ERP rescue &amp; takeover</div>
+                    <h3 class="font-semibold text-ink text-lg tracking-tight mb-1">Already started? Stuck? I pick up where the last person left off.</h3>
+                    <p class="text-sm text-ink2 leading-relaxed max-w-2xl">Half my engagements start with a half-finished Odoo build, an unmaintained custom module, or a freelancer who vanished. I do a free 60-minute audit, send a written assessment, and quote a fixed-price rescue plan. No blame, no judgment — just a working system.</p>
                 </div>
+            </div>
+            <a href="{% url 'contact' %}" class="btn-primary whitespace-nowrap shrink-0">
+                Free audit
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
-            {% endfor %}
+        </div>
+
+        <div class="svc-board reveal">
+            <!-- Tab list (sidebar on desktop, horizontal scroll on mobile) -->
+            <div class="svc-tabs" role="tablist" aria-label="Services">
+                {% for service in services %}
+                    {% with theme=service_themes|get_item:service.slug %}
+                    <button class="svc-tab svc-accent-{{ theme.accent_key }} {% if forloop.first %}active{% endif %}"
+                            data-tab="{{ forloop.counter|stringformat:'02d' }}"
+                            role="tab"
+                            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                        <span class="svc-tab-icon">{{ theme.icon|safe }}</span>
+                        <span class="svc-tab-num">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}</span>
+                        <span class="svc-tab-name">{{ service.title }}</span>
+                        <span class="svc-tab-arrow">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </span>
+                    </button>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+
+            <!-- Pane area -->
+            <div class="svc-panes">
+                {% for service in services %}
+                    {% with steps=service_workflows|get_item:service.slug theme=service_themes|get_item:service.slug %}
+                    <div class="svc-pane svc-accent-{{ theme.accent_key }} {% if forloop.first %}active{% endif %}"
+                         data-pane="{{ forloop.counter|stringformat:'02d' }}"
+                         role="tabpanel"
+                         aria-labelledby="tab-{{ service.slug }}">
+                        <div class="svc-pane-head">
+                            <div class="svc-pane-head-left">
+                                <div class="svc-pane-icon">{{ theme.icon|safe }}</div>
+                                <div>
+                                    <div class="svc-pane-num">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}</div>
+                                    <h3 class="svc-pane-title">{{ service.title }}</h3>
+                                    <p class="svc-pane-desc">{{ service.description|default:service.short_description }}</p>
+                                </div>
+                            </div>
+                            <a href="{% url 'service_detail' service.slug %}" class="svc-pane-link">
+                                Full detail
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </a>
+                        </div>
+
+                        <!-- Unique workflow visual per service -->
+                        <div class="svc-workflow svc-workflow--{{ service.slug }}">
+                            {% for step, icon in steps %}
+                                <div class="svc-wf-item" data-step="{{ forloop.counter }}">
+                                    <div class="svc-wf-icon">{{ icon|safe }}</div>
+                                    <div class="svc-wf-text">
+                                        <div class="svc-wf-ord">Step {{ forloop.counter|stringformat:"02d" }}</div>
+                                        <div class="svc-wf-label">{{ step }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Prev/next nav -->
+                        <div class="svc-pane-nav">
+                            {% if not forloop.first %}
+                            <button class="svc-nav-btn" data-go="{{ forloop.counter|add:'-1' }}">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                                Previous
+                            </button>
+                            {% else %}
+                            <span></span>
+                            {% endif %}
+                            <span class="svc-pane-pos">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }} / 11</span>
+                            {% if not forloop.last %}
+                            <button class="svc-nav-btn" data-go="{{ forloop.counter|add:'1' }}">
+                                Next
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </button>
+                            {% else %}
+                            <span></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Mid-page CTA — capture intent right after the buyer reads services -->
+        <div class="mt-12 md:mt-16 reveal">
+            <div class="midcta">
+                <div class="midcta-grid">
+                    <div>
+                        <div class="eyebrow">Ready when you are</div>
+                        <h3 class="text-2xl md:text-3xl font-semibold text-ink tracking-tight mb-3">Pick a service, send a brief, get a fixed quote within 24 hours.</h3>
+                        <p class="text-ink2 leading-relaxed mb-2 max-w-xl">No salesperson, no discovery-only billing. One 60-minute call to lock the scope, then a written quote with line-items you can forward to your finance team.</p>
+                        <div class="inline-flex items-center gap-2 mt-1">
+                            <span class="guarantee">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                First 2 weeks — full refund if not satisfied
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 mt-5">
+                            <a href="{% url 'contact' %}" class="btn-primary">
+                                Send a brief
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </a>
+                            <a href="{% url 'pricing' %}" class="btn-ghost">Or open the pricing calculator →</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="midcta-stats">
+                            <div class="midcta-stat">
+                                <div class="num">&lt; 24h</div>
+                                <div class="lbl">Quote turnaround</div>
+                            </div>
+                            <div class="midcta-stat">
+                                <div class="num">30 days</div>
+                                <div class="lbl">Post-launch support</div>
+                            </div>
+                            <div class="midcta-stat">
+                                <div class="num">100%</div>
+                                <div class="lbl">Source code you own</div>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-ink3 mt-4 leading-relaxed">Every project ships with documentation, recorded walkthroughs, and a CI test suite. Your team owns everything — code, data, and IPs.</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Pricing teaser -->
-        <div class="mt-12 reveal">
+        <div class="mt-12 md:mt-16 pt-10 border-t border-line reveal">
             <div class="flex items-end justify-between mb-5 gap-4 flex-wrap">
                 <div>
                     <div class="eyebrow">Transparent pricing</div>
@@ -183,6 +345,132 @@
         <div class="mt-10 text-center">
             <p class="text-ink3 text-sm mb-5">Configure, customize, deploy — every step is implemented around your business.</p>
             <a href="{% url 'contact' %}" class="btn-primary">Discuss your ERP flow</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     REVENUE IMPACT — before / after ERP (the business case)
+     ============================================================ -->
+<section id="erp-impact" class="py-16 md:py-20 border-y border-line scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">The business case</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">What ERP actually does to your numbers</h2>
+            <p class="text-ink2 max-w-2xl mx-auto">Same business, same market — but with one operating system running the order-to-cash cycle. The graph below is the typical picture 6–12 months after go-live.</p>
+        </div>
+
+        <div class="impact-grid reveal">
+            <!-- Without ERP -->
+            <div class="impact-card impact-bad">
+                <div class="impact-tag">
+                    <span class="dot-bad"></span>Without ERP
+                </div>
+                <div class="impact-headline">
+                    <span class="impact-rev-bad">$180K</span> annual revenue ·
+                    <span class="impact-rev-bad">12 people</span> ·
+                    <span class="impact-rev-bad">35%</span> productive
+                </div>
+
+                <div class="impact-bars">
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-bad">Team size</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-bad" style="width:88%"></div></div>
+                        <span class="impact-row-value">12</span>
+                    </div>
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-bad">Productive hours</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-bad" style="width:35%"></div></div>
+                        <span class="impact-row-value">35%</span>
+                    </div>
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-bad">Annual revenue</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-bad" style="width:30%"></div></div>
+                        <span class="impact-row-value">$180K</span>
+                    </div>
+                </div>
+
+                <ul class="impact-list impact-bad-list">
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        Manual data entry, the same sale typed into three tools.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        Stock discrepancies between spreadsheets, POS, and the warehouse.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        End-of-month close takes a week — and still has errors.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        Customer follow-ups fall through the cracks.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- With ERP -->
+            <div class="impact-card impact-good">
+                <div class="impact-tag">
+                    <span class="dot-good"></span>With ERP
+                </div>
+                <div class="impact-headline">
+                    <span class="impact-rev-good">$620K</span> annual revenue ·
+                    <span class="impact-rev-good">4 people</span> ·
+                    <span class="impact-rev-good">92%</span> productive
+                </div>
+
+                <div class="impact-bars">
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-good">Team size</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-good" style="width:30%"></div></div>
+                        <span class="impact-row-value">4</span>
+                    </div>
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-good">Productive hours</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-good" style="width:92%"></div></div>
+                        <span class="impact-row-value">92%</span>
+                    </div>
+                    <div class="impact-row">
+                        <span class="impact-row-label impact-good">Annual revenue</span>
+                        <div class="impact-bar-track"><div class="impact-fill impact-bar-good" style="width:100%"></div></div>
+                        <span class="impact-row-value">$620K</span>
+                    </div>
+                </div>
+
+                <ul class="impact-list impact-good-list">
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        One entry — every team updated, every module in sync.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Real stock, real-time, across every warehouse and channel.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Books close in a day or two — and reconcile cleanly.
+                    </li>
+                    <li>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Every order has a live status — no chasing, no guessing.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <p class="impact-summary">
+                <span><strong>3.4×</strong> revenue</span>
+                <span class="sep">·</span>
+                <span><strong>−67%</strong> headcount</span>
+                <span class="sep">·</span>
+                <span><strong>2.6×</strong> productivity</span>
+                <span class="sep">·</span>
+                <span><strong>−90%</strong> manual errors</span>
+            </p>
+            <p class="text-ink3 text-xs mt-4">Indicative outcomes from 40+ implementations. Your mileage will vary — that's what the scoping call is for.</p>
         </div>
     </div>
 </section>
@@ -478,6 +766,84 @@
 <!-- ============================================================
      WHY ERP — before / after transformation
      ============================================================ -->
+<!-- ============================================================
+     ERP SELECTION GUIDE — buyer decision support
+     ============================================================ -->
+<section id="erp-compare" class="py-16 md:py-20 border-y border-line scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">Buyer's guide</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">Which ERP is right for your business?</h2>
+            <p class="text-ink2 max-w-2xl mx-auto">I implement all four of these. Here's the honest comparison so you can decide — or book a 60-min call and I'll help you pick.</p>
+        </div>
+
+        <div class="erp-compare reveal">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th class="highlight">Odoo Community / Enterprise</th>
+                        <th>ERPNext</th>
+                        <th>SAP Business One</th>
+                        <th>Microsoft Dynamics 365</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>License cost</td>
+                        <td class="highlight">Free / per-user</td>
+                        <td>Free / per-user</td>
+                        <td>Per-user (premium)</td>
+                        <td>Per-user (premium)</td>
+                    </tr>
+                    <tr>
+                        <td>Time to first version</td>
+                        <td class="highlight">3–6 weeks</td>
+                        <td>4–8 weeks</td>
+                        <td>3–6 months</td>
+                        <td>3–6 months</td>
+                    </tr>
+                    <tr>
+                        <td>Best for</td>
+                        <td class="highlight">SMBs, mid-market, multi-co</td>
+                        <td>Open-source shops, NGOs</td>
+                        <td>Mid-market, regulated industries</td>
+                        <td>Microsoft-stack enterprises</td>
+                    </tr>
+                    <tr>
+                        <td>Customization</td>
+                        <td class="highlight">High (Python + OWL)</td>
+                        <td>High (Python + Frappe)</td>
+                        <td>Medium (SDK + B1if)</td>
+                        <td>Medium (X++ / Power Platform)</td>
+                    </tr>
+                    <tr>
+                        <td>Ecosystem / apps</td>
+                        <td class="highlight">35,000+ community apps</td>
+                        <td>~2,000 community</td>
+                        <td>Add-on partners</td>
+                        <td>AppSource marketplace</td>
+                    </tr>
+                    <tr>
+                        <td>Total cost of ownership (3 yrs)</td>
+                        <td class="highlight">$</td>
+                        <td>$</td>
+                        <td>$$$</td>
+                        <td>$$$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-ink2 text-sm mb-4">Not sure which one fits? I do a free 30-minute scoping call and recommend based on your business, not my commission.</p>
+            <a href="{% url 'contact' %}" class="btn-primary">Book a free scoping call
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
 <section id="why-erp" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 reveal">
@@ -654,6 +1020,56 @@
                     <p>That's most of what I do. Custom modules, workflow automations, integration with payment gateways, eCommerce, third-party logistics, and reporting. Anything Odoo doesn't ship out of the box, I'll build on top — cleanly, in OWL/QWeb, so it upgrades with you.</p>
                 </div>
             </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Our Odoo project is half-done — can you take it over?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Yes — this is one of my most common engagements. I do a free 60-minute code &amp; config audit, hand you a written assessment (what works, what's broken, what's risky for the next upgrade), and a fixed-price rescue plan. Half my work is unfinished implementations from previous freelancers or in-house teams who moved on.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Do you sign NDAs and handle sensitive data?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Yes to both. I'm happy to sign your mutual NDA before the first call. For sensitive data I work on a dedicated staging server you provision, or via your VPN — no data leaves your environment. I never use your production data to train models, test scripts, or anything else.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>How do you handle multi-company, multi-currency, consolidation?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>I've rolled out groups with 4–6 legal entities, separate chart-of-accounts, inter-company invoicing, automatic FX revaluation, and consolidated P&amp;L / BS reporting. If you operate across borders — Bangladesh, GCC, India, EU, US — the chart-of-accounts and tax engines are configured to your actual jurisdictions, not Odoo's defaults.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Can you integrate Odoo with our bank, payment gateway, or 3PL?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Yes — I've shipped live integrations with Stripe, bKash, SSLCommerz, Razorpay, regional banks via SFTP, Shopify, WooCommerce, Pathao and other 3PLs, plus BI tools (Metabase, Power BI) reading from the Odoo database. Each integration is a thin, monitored connector — never a brittle screen-scraper — so it survives upstream API changes.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q" type="button">
+                    <span>Do you offer ongoing support after go-live?</span>
+                    <span class="faq-icon"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+                </button>
+                <div class="faq-a">
+                    <p>Yes. Every project includes 30 days of bug-fix and user-question support after go-live. After that, you can stay on a monthly retainer (priority response + monthly improvement hours) or call me per-task. I also hand over documentation, recorded walkthroughs, and a CI test suite so your team can self-serve.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -800,14 +1216,32 @@
         <div class="cta-banner">
             <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-white/15 bg-white/5 text-[12px]">
                 <span class="dot-pulse"></span>
-                <span class="text-ink2">Currently accepting Q4 engagements</span>
+                <span class="text-ink2">Currently accepting Q4 engagements · 2 slots left</span>
             </div>
             <h2 class="text-3xl md:text-5xl font-semibold text-ink tracking-tight mb-4 max-w-2xl mx-auto leading-tight">
                 Have an ERP project on the table?
             </h2>
-            <p class="text-ink2 max-w-xl mx-auto mb-8 leading-relaxed">
-                Tell me about the business, the workflow that hurts, and the deadline. I'll come back with a scope and a quote within 24 hours.
+            <p class="text-ink2 max-w-xl mx-auto mb-6 leading-relaxed">
+                Tell me about the business, the workflow that hurts, and the deadline. You'll get a fixed scope, a fixed price, and a reply within 24 hours — no sales call required.
             </p>
+            <div class="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 text-[12px] text-ink3 mb-7">
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Free 60-min discovery
+                </span>
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Fixed price, fixed scope
+                </span>
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    30-day post-launch support
+                </span>
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    NDA-friendly
+                </span>
+            </div>
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="{% url 'contact' %}" class="btn-primary">
                     Start a conversation
@@ -818,6 +1252,122 @@
                     Hire on Fiverr
                 </a>
                 {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     TECH STACK — where the tech stack intentionally lives
+     Moved from the top of the page per design feedback: more
+     evaluators scroll past, this is the place they expect it.
+     ============================================================ -->
+<section id="tech-stack" class="py-16 md:py-20 border-y border-line bg-surface/30 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+            <div class="eyebrow mx-auto w-fit justify-center">Tech stack</div>
+            <h2 class="text-3xl md:text-4xl font-semibold text-ink tracking-tight mb-3">The tools I use to build ERP systems</h2>
+            <p class="text-ink2 max-w-2xl mx-auto">Production-grade, battle-tested stack — Python, Odoo, ERPNext, PostgreSQL, and the integrations that connect them to the rest of your business.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 reveal">
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3>Backend &amp; ERP</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag" data-brand="odoo"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/odoo.svg" alt="Odoo" loading="lazy" onerror="this.style.display='none'">Odoo</span>
+                    <span class="tech-tag" data-brand="erpnext"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/erpnext.svg" alt="ERPNext" loading="lazy" onerror="this.style.display='none'">ERPNext</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" loading="lazy" onerror="this.style.display='none'">Python</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" loading="lazy" onerror="this.style.display='none'">Django</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy" onerror="this.style.display='none'">PostgreSQL</span>
+                    <span class="tech-tag">OWL Framework</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3>Frontend</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" loading="lazy" onerror="this.style.display='none'">HTML5</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" loading="lazy" onerror="this.style.display='none'">CSS3</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" loading="lazy" onerror="this.style.display='none'">Tailwind CSS</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy" onerror="this.style.display='none'">JavaScript</span>
+                    <span class="tech-tag">QWeb templates</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" loading="lazy" onerror="this.style.display='none'">Bootstrap</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.828 10.172a4 4 0 015.656 0l1.415 1.415a4 4 0 010 5.656l-3 3a4 4 0 01-5.656 0M10.172 13.828a4 4 0 01-5.656 0l-1.415-1.415a4 4 0 010-5.656l3-3a4 4 0 015.656 0"/></svg>
+                    </div>
+                    <h3>Integrations &amp; APIs</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">REST APIs</span>
+                    <span class="tech-tag">GraphQL</span>
+                    <span class="tech-tag">Webhooks</span>
+                    <span class="tech-tag">XML-RPC</span>
+                    <span class="tech-tag">JSON-RPC</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                    </div>
+                    <h3>Infrastructure &amp; DevOps</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" loading="lazy" onerror="this.style.display='none'">Docker</span>
+                    <span class="tech-tag">Docker Compose</span>
+                    <span class="tech-tag" data-brand="githubactions"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/githubactions.svg" alt="GitHub Actions" loading="lazy" onerror="this.style.display='none'">GitHub Actions</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg" alt="GitLab CI" loading="lazy" onerror="this.style.display='none'">GitLab CI</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" alt="Nginx" loading="lazy" onerror="this.style.display='none'">Nginx</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ubuntu/ubuntu-plain.svg" alt="Ubuntu" loading="lazy" onerror="this.style.display='none'">Ubuntu</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                    </div>
+                    <h3>Data &amp; BI</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy" onerror="this.style.display='none'">PostgreSQL</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" alt="Redis" loading="lazy" onerror="this.style.display='none'">Redis</span>
+                    <span class="tech-tag"><img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas" loading="lazy" onerror="this.style.display='none'">Pandas</span>
+                    <span class="tech-tag" data-brand="metabase"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/metabase.svg" alt="Metabase" loading="lazy" onerror="this.style.display='none'">Metabase</span>
+                    <span class="tech-tag" data-brand="powerbi"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/powerbi.svg" alt="Power BI" loading="lazy" onerror="this.style.display='none'">Power BI</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card-head">
+                    <div class="tech-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    </div>
+                    <h3>Payments &amp; Gateways</h3>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">bKash</span>
+                    <span class="tech-tag">SSLCommerz</span>
+                    <span class="tech-tag" data-brand="stripe"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg" alt="Stripe" loading="lazy" onerror="this.style.display='none'">Stripe</span>
+                    <span class="tech-tag" data-brand="paypal"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/paypal.svg" alt="PayPal" loading="lazy" onerror="this.style.display='none'">PayPal</span>
+                    <span class="tech-tag" data-brand="razorpay"><img class="tech-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/razorpay.svg" alt="Razorpay" loading="lazy" onerror="this.style.display='none'">Razorpay</span>
+                </div>
             </div>
         </div>
     </div>

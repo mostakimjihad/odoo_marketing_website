@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('profile_image', models.ImageField(blank=True, null=True, upload_to='profile/')),
                 ('cv_file', models.FileField(blank=True, help_text='PDF resume visitors can download.', null=True, upload_to='cv/')),
                 ('full_name', models.CharField(default='Mostakim Jihad', max_length=120)),
-                ('tagline', models.CharField(default='Jr. Software Engineer · Odoo & ERPNext Specialist', max_length=200)),
+                ('tagline', models.CharField(default='Senior ERP & Odoo Engineer · 12 yrs building business systems', max_length=200)),
                 ('phone', models.CharField(blank=True, default='+8801870460323', max_length=40)),
                 ('email', models.EmailField(blank=True, default='mostakimjihad652001@gmail.com', max_length=254)),
                 ('location', models.CharField(blank=True, default='Bawnia Bazar, Dhaka-1212, Bangladesh', max_length=200)),

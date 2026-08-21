@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — Odoo & ERP Engineer{% endblock %}</title>
+    <title>{% block title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — Senior ERP & Odoo Engineer{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.hero_subtitle|default:"Odoo and ERP implementation, customization, migration and support by Mostakim Jihad." }}{% endblock %}">
 
-    <link rel="stylesheet" href="{% static 'css/tailwind.compiled.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tailwind.compiled.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}?v=2">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
      THIN NARROW NAVBAR
      ============================================================ -->
 <header class="sticky top-0 z-50">
-    <nav class="max-w-5xl mx-auto px-3 sm:px-4 mt-3">
+    <nav class="max-w-6xl mx-auto px-3 sm:px-4 mt-3">
         <div class="nav-capsule px-2.5 py-1.5 flex items-center justify-between gap-2">
 
             <a href="{% url 'home' %}" class="flex items-center gap-1.5 pl-1 pr-1.5 py-1 group">
@@ -40,8 +40,9 @@
                 <span id="nav-pill" class="nav-pill"></span>
                 <div id="primary-nav" class="flex items-center gap-0.5 relative">
                     <a href="{% url 'home' %}" class="nav-link">Home</a>
-                    <a href="{% url 'modules' %}" class="nav-link">Modules</a>
+                    <a href="{% url 'products' %}" class="nav-link">Products</a>
                     <a href="{% url 'services' %}" class="nav-link">Services</a>
+                    <a href="{% url 'modules' %}" class="nav-link">Modules</a>
                     <a href="{% url 'portfolio:portfolio' %}" class="nav-link">Work</a>
                     <a href="{% url 'clients' %}" class="nav-link">Clients</a>
                     <a href="{% url 'certifications' %}" class="nav-link">Certs</a>
@@ -71,8 +72,9 @@
         <div id="mobile-menu" class="hidden lg:hidden mt-1.5">
             <div class="surface p-1.5 flex flex-col gap-0.5">
                 <a href="{% url 'home' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink hover:bg-white/5">Home</a>
-                <a href="{% url 'modules' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Modules</a>
+                <a href="{% url 'products' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Products</a>
                 <a href="{% url 'services' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Services</a>
+                <a href="{% url 'modules' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Modules</a>
                 <a href="{% url 'pricing' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Pricing Calculator</a>
                 <a href="{% url 'portfolio:portfolio' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Work</a>
                 <a href="{% url 'clients' %}" class="px-3 py-2 rounded-lg text-sm font-medium text-ink2 hover:bg-white/5 hover:text-ink">Clients</a>
@@ -128,8 +130,9 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="{% url 'home' %}" class="text-ink2 hover:text-ink transition">Home</a></li>
                     <li><a href="{% url 'about' %}" class="text-ink2 hover:text-ink transition">About</a></li>
-                    <li><a href="{% url 'modules' %}" class="text-ink2 hover:text-ink transition">Modules</a></li>
+                    <li><a href="{% url 'products' %}" class="text-ink2 hover:text-ink transition">Products</a></li>
                     <li><a href="{% url 'services' %}" class="text-ink2 hover:text-ink transition">Services</a></li>
+                    <li><a href="{% url 'modules' %}" class="text-ink2 hover:text-ink transition">Modules</a></li>
                     <li><a href="{% url 'portfolio:portfolio' %}" class="text-ink2 hover:text-ink transition">Work</a></li>
                     <li><a href="{% url 'blog:list' %}" class="text-ink2 hover:text-ink transition">Blog</a></li>
                 </ul>
@@ -171,6 +174,13 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/>
     </svg>
 </button>
+
+<!-- Floating CTA — visible after scrolling past the hero -->
+<a href="{% url 'contact' %}" id="floating-cta" class="floating-cta hidden md:inline-flex" aria-label="Book a free call">
+    <span class="dot-pulse"></span>
+    Book a free call
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+</a>
 
 </body>
 </html>

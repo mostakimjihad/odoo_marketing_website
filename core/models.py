@@ -19,7 +19,10 @@ class SiteSettings(models.Model):
     cv_file = models.FileField(upload_to='cv/', blank=True, null=True, help_text="PDF resume visitors can download.")
 
     full_name = models.CharField(max_length=120, default="Mostakim Jihad")
-    tagline = models.CharField(max_length=200, default="Senior ERP & Odoo Engineer · Functional · Technical · Deployment · Data Migration")
+    tagline = models.CharField(
+        max_length=200,
+        default="Senior ERP & Odoo Engineer · 12 yrs building business systems",
+    )
     phone = models.CharField(max_length=40, blank=True, default="+8801870460323")
     email = models.EmailField(blank=True, default="mostakimjihad652001@gmail.com")
     location = models.CharField(max_length=200, blank=True, default="Bawnia Bazar, Dhaka-1212, Bangladesh")
@@ -28,9 +31,9 @@ class SiteSettings(models.Model):
     codeforces = models.URLField(blank=True)
     fiverr_url = models.URLField(blank=True, default="https://www.fiverr.com/your_gig")
 
-    years_experience = models.PositiveIntegerField(default=4)
-    projects_completed = models.PositiveIntegerField(default=20)
-    happy_clients = models.PositiveIntegerField(default=15)
+    years_experience = models.PositiveIntegerField(default=12)
+    projects_completed = models.PositiveIntegerField(default=80)
+    happy_clients = models.PositiveIntegerField(default=40)
 
     class Meta:
         verbose_name = "Site Settings"
@@ -136,6 +139,10 @@ class ERPModule(models.Model):
     thumbnail = models.ImageField(
         upload_to='modules/thumbs/', blank=True, null=True,
         help_text="Static preview image used as a fallback if no video is uploaded.",
+    )
+    image_url = models.URLField(
+        blank=True,
+        help_text="Optional hot-linked preview image (e.g. Unsplash) shown on the /modules/ tile. Falls back to the built-in mockup when empty.",
     )
 
     industries = models.CharField(

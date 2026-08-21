@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_alter_service_icon'),
+        ('core', '0004_seed_site_settings'),
     ]
 
     operations = [

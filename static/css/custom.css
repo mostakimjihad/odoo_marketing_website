@@ -196,9 +196,9 @@ h1, h2, h3, h4, h5, h6 {
 .nav-link {
   position: relative;
   z-index: 1;
-  padding: 0.3rem 0.7rem;
+  padding: 0.3rem 0.55rem;
   border-radius: 9999px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 500;
   color: var(--ink-3);
   transition: color 0.15s ease;
@@ -287,6 +287,17 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 120px;
   font-size: 11px;
   color: #0B1020;
+}
+.browser-frame .body:has(> img) {
+  padding: 0;
+  height: 160px;
+  overflow: hidden;
+}
+.browser-frame .body > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ============================================================
@@ -1250,8 +1261,167 @@ h1, h2, h3, h4, h5, h6 {
 .back-to-top:hover { transform: translateY(-2px); background: var(--indigo-600); }
 
 /* ============================================================
-   REVEAL ON SCROLL
+   FLOATING CTA (bottom-right)
    ============================================================ */
+.floating-cta {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 45;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--indigo-500), var(--teal-400));
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 4px 12px -2px rgba(99, 102, 241, 0.5),
+    0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+.floating-cta.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.floating-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px -2px rgba(99, 102, 241, 0.65),
+    0 12px 32px -4px rgba(0, 0, 0, 0.5);
+}
+.floating-cta .dot-pulse {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  animation: ctaPulse 2s ease-in-out infinite;
+}
+@keyframes ctaPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* ============================================================
+   MID-PAGE CTA BANNER (between sections)
+   ============================================================ */
+.midcta {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background:
+    radial-gradient(80% 100% at 0% 0%, rgba(99, 102, 241, 0.25), transparent 60%),
+    radial-gradient(80% 100% at 100% 100%, rgba(34, 211, 238, 0.18), transparent 60%),
+    var(--bg-card);
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  padding: 2.5rem 2rem;
+}
+.midcta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%);
+  pointer-events: none;
+}
+.midcta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .midcta-grid { grid-template-columns: 1.4fr 1fr; gap: 3rem; }
+}
+.midcta-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(129, 140, 248, 0.18);
+}
+.midcta-stat .num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+.midcta-stat .lbl {
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.15rem;
+}
+
+/* ============================================================
+   ERP SELECTION TABLE — buyer guidance
+   ============================================================ */
+.erp-compare {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+}
+.erp-compare table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 640px;
+}
+.erp-compare th, .erp-compare td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.erp-compare th {
+  background: rgba(99, 102, 241, 0.08);
+  font-size: 0.78rem;
+  color: var(--ink);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.erp-compare td:first-child {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.erp-compare td.highlight {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--indigo-300);
+  font-weight: 600;
+}
+.erp-compare tr:last-child td { border-bottom: none; }
+
+/* ============================================================
+   RISK-REVERSAL BADGE
+   ============================================================ */
+.guarantee {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6EE7B7;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.guarantee svg { color: #10B981; }
+
 .reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -1894,3 +2064,1078 @@ textarea.input { resize: vertical; min-height: 8rem; }
   justify-content: center;
   padding: 1.4rem 1.6rem;
 }
+
+/* ============================================================
+   TECH STACK — categorized tech badges
+   ============================================================ */
+.tech-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem 1.4rem;
+  height: 100%;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.tech-card:hover { border-color: rgba(129, 140, 248, 0.35); transform: translateY(-2px); }
+.tech-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+.tech-card-head h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.tech-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99,102,241,0.18), rgba(34,211,238,0.12));
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  color: var(--indigo-300);
+  flex-shrink: 0;
+}
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(129, 140, 248, 0.18);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem 0.4rem 0.6rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.01em;
+  transition: all 0.15s ease;
+  cursor: default;
+}
+.tech-tag:hover {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--ink);
+  border-color: rgba(129, 140, 248, 0.45);
+}
+.tech-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* The dark site background; ensure white simpleicons are visible */
+  background: transparent;
+}
+/* Subtle brand-color tints for the simpleicons (which are white) so they
+   read at a glance on the dark theme, without recoloring the devicon
+   versions which already ship in full color. */
+.tech-tag[data-brand="stripe"]    .tech-logo { filter: brightness(0) saturate(100%) invert(36%) sepia(76%) saturate(2474%) hue-rotate(231deg) brightness(102%) contrast(106%); }
+.tech-tag[data-brand="paypal"]    .tech-logo { filter: brightness(0) saturate(100%) invert(20%) sepia(95%) saturate(2135%) hue-rotate(207deg) brightness(94%) contrast(103%); }
+.tech-tag[data-brand="razorpay"]  .tech-logo { filter: brightness(0) saturate(100%) invert(49%) sepia(83%) saturate(2818%) hue-rotate(192deg) brightness(101%) contrast(101%); }
+.tech-tag[data-brand="odoo"]      .tech-logo { filter: brightness(0) saturate(100%) invert(34%) sepia(70%) saturate(2092%) hue-rotate(295deg) brightness(98%) contrast(101%); }
+.tech-tag[data-brand="erpnext"]   .tech-logo { filter: brightness(0) saturate(100%) invert(57%) sepia(48%) saturate(1448%) hue-rotate(58deg) brightness(94%) contrast(101%); }
+.tech-tag[data-brand="githubactions"] .tech-logo { filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(1234%) hue-rotate(160deg) brightness(98%) contrast(101%); }
+.tech-tag[data-brand="metabase"]  .tech-logo { filter: brightness(0) saturate(100%) invert(64%) sepia(53%) saturate(488%) hue-rotate(73deg) brightness(96%) contrast(95%); }
+.tech-tag[data-brand="powerbi"]   .tech-logo { filter: brightness(0) saturate(100%) invert(67%) sepia(50%) saturate(417%) hue-rotate(354deg) brightness(95%) contrast(98%); }
+
+/* ============================================================
+   SERVICE SECTION (end-to-end detail with workflow visual)
+   ============================================================ */
+.svc-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.svc-section:last-child { border-bottom: none; }
+.svc-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.svc-section-head .svc-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 0.6rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.18), rgba(34,211,238,0.12));
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: var(--indigo-300);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.svc-section-head h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.svc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .svc-grid { grid-template-columns: 5fr 7fr; gap: 2.5rem; }
+}
+.svc-info p {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.svc-info .svc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--indigo-300);
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+.svc-info .svc-link:hover { color: var(--ink); }
+
+/* Workflow visual — horizontal step flow */
+.workflow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.25rem 0 0.5rem;
+  scrollbar-width: thin;
+}
+.workflow-step {
+  flex: 1 1 0;
+  min-width: 110px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.85rem 0.75rem 0.95rem;
+  text-align: left;
+  position: relative;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.workflow-step:hover {
+  border-color: rgba(129, 140, 248, 0.35);
+  transform: translateY(-2px);
+}
+.workflow-step .step-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.65rem;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+.workflow-step .step-label {
+  font-size: 0.82rem;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.workflow-step.is-first  { border-color: rgba(99, 102, 241, 0.35); }
+.workflow-step.is-last   { border-color: rgba(16, 185, 129, 0.35); }
+.workflow-step.is-first  .step-num { color: var(--indigo-300); }
+.workflow-step.is-last   .step-num { color: var(--emerald-500); }
+.workflow-arrow {
+  align-self: center;
+  color: var(--indigo-300);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* 5-step responsive: collapse to 2x3 grid on small screens */
+@media (max-width: 640px) {
+  .workflow {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+  .workflow-step { flex: 1 1 calc(33% - 0.4rem); min-width: 0; }
+  .workflow-arrow { display: none; }
+}
+
+/* ============================================================
+   SERVICES BOARD — tabbed interactive view (sidebar + pane)
+   ============================================================ */
+.svc-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .svc-board { grid-template-columns: 320px 1fr; gap: 1.25rem; }
+}
+
+/* Tab list */
+.svc-tabs {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+@media (min-width: 1024px) {
+  .svc-tabs {
+    flex-direction: column;
+    overflow-x: visible;
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    padding-bottom: 0;
+    padding-right: 0.25rem;
+  }
+}
+.svc-tab {
+  --accent: #6366F1;
+  --accent-soft: rgba(99, 102, 241, 0.18);
+  --accent-border: rgba(99, 102, 241, 0.45);
+  --accent-glow: rgba(99, 102, 241, 0.18);
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  text-align: left;
+  padding: 0.75rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  min-height: 50px;
+  position: relative;
+}
+.svc-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.svc-tab:hover {
+  border-color: var(--accent-border);
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+.svc-tab.active {
+  background: linear-gradient(135deg, var(--accent-soft), rgba(0,0,0,0.18));
+  border-color: var(--accent-border);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+.svc-tab.active::before { opacity: 1; }
+.svc-tab-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transition: all 0.18s ease;
+}
+.svc-tab-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.svc-tab.active .svc-tab-icon {
+  background: var(--accent);
+  color: #0B1020;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.svc-tab-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  min-width: 22px;
+}
+.svc-tab-name {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 0;
+}
+.svc-tab-arrow {
+  color: var(--ink-4);
+  flex-shrink: 0;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.svc-tab.active .svc-tab-arrow { color: var(--accent); transform: translateX(2px); }
+
+/* Per-service accent colors */
+.svc-accent-indigo { --accent: #6366F1; --accent-soft: rgba(99,102,241,0.18); --accent-border: rgba(99,102,241,0.45); --accent-glow: rgba(99,102,241,0.18); }
+.svc-accent-purple { --accent: #A855F7; --accent-soft: rgba(168,85,247,0.18); --accent-border: rgba(168,85,247,0.45); --accent-glow: rgba(168,85,247,0.18); }
+.svc-accent-cyan   { --accent: #06B6D4; --accent-soft: rgba(6,182,212,0.18); --accent-border: rgba(6,182,212,0.45); --accent-glow: rgba(6,182,212,0.18); }
+.svc-accent-amber  { --accent: #F59E0B; --accent-soft: rgba(245,158,11,0.18); --accent-border: rgba(245,158,11,0.45); --accent-glow: rgba(245,158,11,0.18); }
+.svc-accent-pink   { --accent: #EC4899; --accent-soft: rgba(236,72,153,0.18); --accent-border: rgba(236,72,153,0.45); --accent-glow: rgba(236,72,153,0.18); }
+.svc-accent-yellow { --accent: #EAB308; --accent-soft: rgba(234,179,8,0.18); --accent-border: rgba(234,179,8,0.45); --accent-glow: rgba(234,179,8,0.18); }
+.svc-accent-green  { --accent: #22C55E; --accent-soft: rgba(34,197,94,0.18); --accent-border: rgba(34,197,94,0.45); --accent-glow: rgba(34,197,94,0.18); }
+.svc-accent-orange { --accent: #F97316; --accent-soft: rgba(249,115,22,0.18); --accent-border: rgba(249,115,22,0.45); --accent-glow: rgba(249,115,22,0.18); }
+.svc-accent-blue   { --accent: #3B82F6; --accent-soft: rgba(59,130,246,0.18); --accent-border: rgba(59,130,246,0.45); --accent-glow: rgba(59,130,246,0.18); }
+.svc-accent-red    { --accent: #EF4444; --accent-soft: rgba(239,68,68,0.18); --accent-border: rgba(239,68,68,0.45); --accent-glow: rgba(239,68,68,0.18); }
+.svc-accent-teal   { --accent: #14B8A6; --accent-soft: rgba(20,184,166,0.18); --accent-border: rgba(20,184,166,0.45); --accent-glow: rgba(20,184,166,0.18); }
+
+/* Pane area */
+.svc-panes { position: relative; min-height: 420px; }
+.svc-pane {
+  --accent: #6366F1;
+  --accent-soft: rgba(99,102,241,0.18);
+  --accent-border: rgba(99,102,241,0.45);
+  --accent-glow: rgba(99,102,241,0.18);
+  display: none;
+  padding: 1.5rem 1.5rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  animation: svcPaneIn 0.28s ease;
+  position: relative;
+  overflow: hidden;
+}
+.svc-pane::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent 70%);
+}
+.svc-pane.active { display: block; }
+@keyframes svcPaneIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.svc-pane-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.svc-pane-head .svc-pane-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-soft), transparent 70%);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  margin-right: 0.85rem;
+}
+.svc-pane-head .svc-pane-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.svc-pane-head-left {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+.svc-pane-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.svc-pane-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+.svc-pane-desc {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  max-width: 60ch;
+  margin: 0;
+}
+.svc-pane-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+  transition: color 0.15s ease;
+}
+.svc-pane-link:hover { color: var(--ink); }
+
+/* Prev/next nav */
+.svc-pane-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  gap: 0.5rem;
+}
+.svc-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.svc-nav-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0B1020;
+}
+.svc-pane-pos {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   WORKFLOW VISUAL — 5 step items, layout swatch per service
+   ============================================================ */
+.svc-workflow {
+  position: relative;
+  padding: 1.25rem 0 0.5rem;
+  min-height: 180px;
+}
+.svc-wf-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: all 0.25s ease;
+}
+.svc-wf-item:hover {
+  border-color: var(--accent-border, rgba(129, 140, 248, 0.35));
+  background: var(--accent-soft, rgba(99, 102, 241, 0.1));
+}
+.svc-wf-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--accent-soft, rgba(99, 102, 241, 0.18));
+  border: 1px solid var(--accent-border, rgba(129, 140, 248, 0.32));
+  color: var(--accent, var(--indigo-300));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.svc-wf-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.svc-wf-item:hover .svc-wf-icon {
+  background: var(--accent, var(--indigo-500));
+  color: #0B1020;
+  box-shadow: 0 0 0 4px var(--accent-glow, rgba(99, 102, 241, 0.18));
+}
+.svc-wf-text {
+  flex: 1;
+  min-width: 0;
+}
+.svc-wf-ord {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.65rem;
+  color: var(--accent, var(--ink-3));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+.svc-wf-label {
+  font-size: 0.85rem;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* ----- 01 Small ERP — building blocks, ascending ----- */
+/* ----- 01 Small ERP — ascending blocks (now via flex margins) ----- */
+.svc-workflow--small-erp-implementation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.svc-workflow--small-erp-implementation .svc-wf-item:nth-child(1) { margin-left: 0; }
+.svc-workflow--small-erp-implementation .svc-wf-item:nth-child(2) { margin-left: 1.5rem; }
+.svc-workflow--small-erp-implementation .svc-wf-item:nth-child(3) { margin-left: 3rem; }
+.svc-workflow--small-erp-implementation .svc-wf-item:nth-child(4) { margin-left: 4.5rem; }
+.svc-workflow--small-erp-implementation .svc-wf-item:nth-child(5) { margin-left: 6rem; }
+.svc-workflow--small-erp-implementation .svc-wf-item:hover { transform: translateX(2px); }
+
+/* ----- 02 Odoo Community — vertical stack with left accent stripe ----- */
+.svc-workflow--odoo-community-erp-implementation {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.svc-workflow--odoo-community-erp-implementation .svc-wf-item {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0.85rem 0.95rem 0.85rem 1.2rem;
+  position: relative;
+}
+.svc-workflow--odoo-community-erp-implementation .svc-wf-item:last-child { border-bottom: none; }
+.svc-workflow--odoo-community-erp-implementation .svc-wf-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+  opacity: 0.7;
+}
+
+/* ----- 03 Data Migration — 5-column grid with arrows between ----- */
+.svc-workflow--data-migration {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .svc-workflow--data-migration {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+}
+.svc-workflow--data-migration .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.55rem;
+  padding: 0.85rem 0.5rem;
+  position: relative;
+}
+.svc-workflow--data-migration .svc-wf-text { text-align: center; }
+.svc-workflow--data-migration .svc-wf-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -0.45rem;
+  transform: translateY(-50%);
+  width: 0.9rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.svc-workflow--data-migration .svc-wf-label { font-size: 0.78rem; line-height: 1.25; }
+
+/* ----- 04 Version Migration — vertical climb with timeline ----- */
+.svc-workflow--version-migration {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  padding-left: 1.85rem;
+}
+.svc-workflow--version-migration::before {
+  content: '';
+  position: absolute;
+  left: 0.8rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--emerald-500));
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.svc-workflow--version-migration .svc-wf-item { position: relative; }
+.svc-workflow--version-migration .svc-wf-item::before {
+  content: '';
+  position: absolute;
+  left: -1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.svc-workflow--version-migration .svc-wf-item:last-child::before {
+  border-color: var(--emerald-500);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+  background: var(--emerald-500);
+}
+
+/* ----- 05 Custom Feature — terminal / code window ----- */
+.svc-workflow--custom-feature-development {
+  background: #0A0E1F;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+}
+.svc-workflow--custom-feature-development::before {
+  content: 'build.js';
+  display: block;
+  padding: 0.55rem 0.95rem;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid var(--line);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+}
+.svc-workflow--custom-feature-development .svc-wf-item {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 0.7rem 1rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.82rem;
+  color: var(--ink);
+  gap: 0.7rem;
+}
+.svc-workflow--custom-feature-development .svc-wf-item:last-child { border-bottom: none; }
+.svc-workflow--custom-feature-development .svc-wf-icon {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.4);
+  color: var(--teal-400);
+}
+.svc-workflow--custom-feature-development .svc-wf-ord { color: var(--teal-400); }
+
+/* ----- 06 Functional Consultancy — circular hub cards ----- */
+.svc-workflow--functional-consultancy {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .svc-workflow--functional-consultancy {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
+}
+.svc-workflow--functional-consultancy .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.55rem;
+  padding: 0.95rem 0.5rem 0.85rem;
+  background: radial-gradient(60% 80% at 50% 0%, var(--accent-soft), transparent 70%), var(--bg-elevated);
+  border-radius: 10px;
+}
+.svc-workflow--functional-consultancy .svc-wf-text { text-align: center; }
+.svc-workflow--functional-consultancy .svc-wf-label { font-size: 0.78rem; line-height: 1.25; }
+
+/* ----- 07 Run Odoo Server — server rack slots ----- */
+.svc-workflow--run-odoo-server {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.svc-workflow--run-odoo-server .svc-wf-item {
+  background: linear-gradient(90deg, var(--accent-soft), rgba(0,0,0,0.4));
+  border-color: var(--accent-border);
+  color: var(--ink);
+  gap: 0.7rem;
+  padding: 0.65rem 0.85rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.78rem;
+  position: relative;
+}
+.svc-workflow--run-odoo-server .svc-wf-item::after {
+  content: '●';
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--emerald-500);
+  font-size: 0.55rem;
+  animation: srvPulse 2s ease-in-out infinite;
+}
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(2)::after { animation-delay: 0.2s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(3)::after { animation-delay: 0.4s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(4)::after { animation-delay: 0.6s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(5)::after { animation-delay: 0.8s; }
+@keyframes srvPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.svc-workflow--run-odoo-server .svc-wf-ord { color: var(--accent); }
+.svc-workflow--run-odoo-server .svc-wf-label { color: var(--ink); }
+.svc-workflow--run-odoo-server .svc-wf-item::after {
+  content: '●';
+  margin-left: auto;
+  color: var(--emerald-500);
+  font-size: 0.6rem;
+  animation: srvPulse 2s ease-in-out infinite;
+}
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(2)::after { animation-delay: 0.2s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(3)::after { animation-delay: 0.4s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(4)::after { animation-delay: 0.6s; }
+.svc-workflow--run-odoo-server .svc-wf-item:nth-child(5)::after { animation-delay: 0.8s; }
+@keyframes srvPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+/* ----- 08 Deployment — pipeline stages with gates ----- */
+.svc-workflow--deployment {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+@media (min-width: 640px) {
+  .svc-workflow--deployment {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+}
+.svc-workflow--deployment .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.5rem 0.95rem;
+  border-radius: 10px 10px 6px 6px;
+  position: relative;
+  background: linear-gradient(180deg, var(--accent-soft), transparent 80%), var(--bg-elevated);
+}
+.svc-workflow--deployment .svc-wf-text { text-align: center; }
+/* Down-arrow on mobile (vertical stack), right-arrow on desktop (horizontal row) */
+.svc-workflow--deployment .svc-wf-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--accent-border);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.55rem;
+}
+@media (min-width: 640px) {
+  .svc-workflow--deployment .svc-wf-item:not(:last-child)::after {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: -0.55rem;
+    transform: translateY(-50%);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 6px solid var(--accent-border);
+  }
+}
+.svc-workflow--deployment .svc-wf-label { font-size: 0.75rem; line-height: 1.25; }
+.svc-workflow--deployment .svc-wf-item:last-child {
+  background: linear-gradient(180deg, rgba(16,185,129,0.22), transparent 80%), var(--bg-elevated);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+.svc-workflow--deployment .svc-wf-item:last-child::after { display: none; }
+
+/* ----- 09 Odoo Server Optimization — ascending bars ----- */
+.svc-workflow--odoo-server-optimization {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  align-items: end;
+  min-height: 200px;
+  padding: 1rem 0.5rem 0.5rem;
+}
+.svc-workflow--odoo-server-optimization .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.4rem 0.85rem;
+  background: linear-gradient(180deg, var(--accent-soft), rgba(34,211,238,0.05));
+  border-color: var(--accent-border);
+  align-self: end;
+  height: calc(40px + var(--i, 0) * 30px);
+}
+.svc-workflow--odoo-server-optimization .svc-wf-item:nth-child(1) { --i: 1; }
+.svc-workflow--odoo-server-optimization .svc-wf-item:nth-child(2) { --i: 2; }
+.svc-workflow--odoo-server-optimization .svc-wf-item:nth-child(3) { --i: 3; }
+.svc-workflow--odoo-server-optimization .svc-wf-item:nth-child(4) { --i: 4; }
+.svc-workflow--odoo-server-optimization .svc-wf-item:nth-child(5) { --i: 5; }
+.svc-workflow--odoo-server-optimization .svc-wf-text { text-align: center; }
+.svc-workflow--odoo-server-optimization .svc-wf-label { font-size: 0.72rem; line-height: 1.2; }
+
+/* ----- 10 Bug Fix — circular micro-cycle ----- */
+.svc-workflow--bug-fix-in-existing-software {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .svc-workflow--bug-fix-in-existing-software {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+    align-items: stretch;
+  }
+}
+.svc-workflow--bug-fix-in-existing-software .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.5rem;
+  border-radius: 50% 50% 10px 10px;
+  background: linear-gradient(180deg, rgba(244, 63, 94, 0.18), rgba(99, 102, 241, 0.1));
+  border-color: rgba(244, 63, 94, 0.3);
+}
+.svc-workflow--bug-fix-in-existing-software .svc-wf-item:last-child {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.2), rgba(99, 102, 241, 0.1));
+  border-color: rgba(16, 185, 129, 0.35);
+}
+.svc-workflow--bug-fix-in-existing-software .svc-wf-text { text-align: center; }
+.svc-workflow--bug-fix-in-existing-software .svc-wf-label { font-size: 0.72rem; line-height: 1.25; }
+
+/* ----- 11 Performance Enhancement — rocket-trail stages ----- */
+.svc-workflow--performance-enhancement {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  position: relative;
+}
+@media (min-width: 640px) {
+  .svc-workflow--performance-enhancement {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+    align-items: end;
+  }
+}
+.svc-workflow--performance-enhancement .svc-wf-item {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.5rem;
+  background: linear-gradient(135deg, var(--accent-soft), rgba(99,102,241,0.04));
+  border-color: var(--accent-border);
+  align-self: end;
+}
+.svc-workflow--performance-enhancement .svc-wf-item:nth-child(1) { transform: translateY(8px); }
+.svc-workflow--performance-enhancement .svc-wf-item:nth-child(2) { transform: translateY(4px); }
+.svc-workflow--performance-enhancement .svc-wf-item:nth-child(3) { transform: translateY(0); }
+.svc-workflow--performance-enhancement .svc-wf-item:nth-child(4) { transform: translateY(-4px); }
+.svc-workflow--performance-enhancement .svc-wf-item:nth-child(5) { transform: translateY(-8px); }
+.svc-workflow--performance-enhancement .svc-wf-text { text-align: center; }
+.svc-workflow--performance-enhancement .svc-wf-label { font-size: 0.75rem; line-height: 1.25; }
+
+}
+
+/* ============================================================
+   REVENUE IMPACT GRAPH — before vs after ERP
+   ============================================================ */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+@media (max-width: 720px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+.impact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.impact-card.impact-bad {
+  border-color: rgba(244, 63, 94, 0.18);
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(244, 63, 94, 0.06), transparent 70%),
+    var(--bg-card);
+}
+.impact-card.impact-good {
+  border-color: rgba(16, 185, 129, 0.22);
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(16, 185, 129, 0.08), transparent 70%),
+    var(--bg-card);
+}
+.impact-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+.impact-tag .dot-bad,
+.impact-tag .dot-good {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+}
+.impact-tag .dot-bad  { background: #F43F5E; box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.18); }
+.impact-tag .dot-good { background: var(--emerald-500); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22); }
+.impact-headline {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.impact-headline .impact-rev-bad  { color: #FCA5A5; }
+.impact-headline .impact-rev-good { color: #6EE7B7; }
+.impact-bars { display: flex; flex-direction: column; gap: 0.65rem; }
+.impact-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 64px;
+  align-items: center;
+  gap: 0.6rem;
+}
+.impact-row-label {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+.impact-row-label.impact-good { color: var(--emerald-500); }
+.impact-row-label.impact-bad  { color: #F87171; }
+.impact-bar-track {
+  height: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+.impact-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
+.impact-fill.impact-bar-bad  { background: linear-gradient(90deg, #F43F5E, #FB7185); }
+.impact-fill.impact-bar-good { background: linear-gradient(90deg, #10B981, #34D399); }
+.impact-row-value {
+  font-size: 0.78rem;
+  color: var(--ink);
+  font-weight: 600;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  text-align: right;
+  letter-spacing: 0.01em;
+}
+.impact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+.impact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  line-height: 1.45;
+}
+.impact-list li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.impact-list.impact-bad-list li svg  { color: #F87171; }
+.impact-list.impact-good-list li svg { color: #6EE7B7; }
+.impact-summary {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.5rem;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.06);
+}
+.impact-summary strong {
+  color: #6EE7B7;
+  font-weight: 600;
+}
+.impact-summary .sep { color: var(--ink-4); }
+

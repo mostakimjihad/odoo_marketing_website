@@ -20,7 +20,7 @@
             {% for module in modules %}
             <a href="{% url 'module_detail' module.slug %}" class="module-tile">
                 <div class="p-3 pb-0 bg-card">
-                    {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
+                    {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag image_url=module.image_url %}
                 </div>
                 <div class="meta">
                     <div>
