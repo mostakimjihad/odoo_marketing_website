@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         floatingCta.classList.remove('is-visible');
       }
+      // Nav shadow once scrolled past hero (M3 elevation pattern)
+      const nav = document.getElementById('site-nav');
+      if (nav) {
+        if (scrollY > 8) nav.classList.add('is-scrolled');
+        else nav.classList.remove('is-scrolled');
+      }
       ticking = false;
     };
     window.addEventListener('scroll', () => {
@@ -71,6 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { passive: true });
     updateProgress();
   }
+
+  // ----- FAQ accordion -----
+  document.querySelectorAll('[data-faq-item] .faq-q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('[data-faq-item]');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (card) card.setAttribute('data-open', String(!expanded));
+    });
+  });
 
   // ----- Sliding nav pill -----
   const nav = document.getElementById('primary-nav');
@@ -155,69 +171,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ----- Services board tabs (sidebar + pane) -----
-  const svcBoard = document.querySelector('.svc-board');
-  if (svcBoard) {
-    const tabs = svcBoard.querySelectorAll('.svc-tab');
-    const panes = svcBoard.querySelectorAll('.svc-pane');
-    const navBtns = svcBoard.querySelectorAll('.svc-nav-btn');
-
-    const activate = (key) => {
-      tabs.forEach(t => {
-        const isActive = t.getAttribute('data-tab') === key;
-        t.classList.toggle('active', isActive);
-        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      });
-      panes.forEach(p => p.classList.toggle('active', p.getAttribute('data-pane') === key));
-      // Keep the active tab visible on mobile (horizontal scroll)
-      const activeTab = svcBoard.querySelector(`.svc-tab[data-tab="${key}"]`);
-      if (activeTab && activeTab.scrollIntoView) {
-        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-      }
-    };
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => activate(tab.getAttribute('data-tab')));
-    });
-
-    navBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-go');
-        if (target) activate(String(target).padStart(2, '0'));
-      });
-    });
-
-    // Keyboard arrows (when a tab is focused)
-    tabs.forEach((tab, i) => {
-      tab.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-          e.preventDefault();
-          const next = tabs[(i + 1) % tabs.length];
-          next.focus(); activate(next.getAttribute('data-tab'));
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-          e.preventDefault();
-          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
-          prev.focus(); activate(prev.getAttribute('data-tab'));
-        }
-      });
-    });
-  }
-
-  // ----- FAQ accordion -----
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const q = item.querySelector('.faq-q');
-    if (!q) return;
-    q.addEventListener('click', () => {
-      const wasOpen = item.classList.contains('open');
-      // Close siblings (single-open accordion)
-      item.parentElement.querySelectorAll('.faq-item.open').forEach(other => {
-        if (other !== item) other.classList.remove('open');
-      });
-      item.classList.toggle('open', !wasOpen);
-    });
-  });
-
   // ----- Scroll reveal (IntersectionObserver) -----
+  // Mark <html> so .reveal becomes hidden until .in is added.
+  // If JS fails entirely, .reveal stays visible — content is never trapped hidden.
+  document.documentElement.classList.add('js-reveals');
   if ('IntersectionObserver' in window && !reduceMotion) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {

@@ -4,20 +4,18 @@
 
 {% block content %}
 
-<section class="pt-12 pb-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="section section-cream" style="padding-top:5rem;">
+    <div class="container">
         <div class="eyebrow">Blog</div>
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Insights &amp; Tutorials</h1>
-        <p class="text-lg text-ink2 max-w-2xl">
-            Practical lessons from real Odoo/ERP projects.
-        </p>
+        <h1 class="h1 reveal">Insights &amp; Tutorials</h1>
+        <p class="lead reveal" data-delay="1">Practical lessons from real Odoo/ERP projects.</p>
     </div>
 </section>
 
 {% if posts %}
-<section class="pb-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+<section class="section">
+    <div class="container">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for post in posts %}
                 {% include 'partials/_post_card.html' with post=post %}
             {% endfor %}
@@ -26,21 +24,21 @@
         {% if is_paginated %}
         <div class="mt-10 flex justify-center items-center gap-2">
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">Previous</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-ghost">Previous</a>
             {% endif %}
-            <span class="px-3.5 py-2 rounded-lg surface text-sm">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            <span class="surface" style="padding:0.5rem 1rem;font-size:0.88rem;border-radius:var(--r-md);">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">Next</a>
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-ghost">Next</a>
             {% endif %}
         </div>
         {% endif %}
     </div>
 </section>
 {% else %}
-<section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-        <p class="text-ink3 mb-4">No blog posts yet. Publish your first post from the admin panel.</p>
-        <a href="/admin/blog/post/add/" class="btn-primary">Write a post</a>
+<section class="section">
+    <div class="container" style="text-align:center;">
+        <p class="text-ink3" style="margin-bottom:1rem;">No blog posts yet. Publish your first post from the admin panel.</p>
+        <a href="/admin/blog/post/add/" class="btn btn-dark">Write a post</a>
     </div>
 </section>
 {% endif %}

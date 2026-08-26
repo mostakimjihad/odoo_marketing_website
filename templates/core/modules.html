@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
+{% load core_extras %}
 
 {% block title %}Modules — {{ site_settings.full_name }}{% endblock %}
 
 {% block content %}
 
-<section class="pt-12 pb-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="section section-cream" style="padding-top:5rem;">
+    <div class="container">
         <div class="eyebrow">Modules</div>
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Every module I implement</h1>
-        <p class="text-lg text-ink2 max-w-2xl">
-            Each module is implemented end-to-end — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.
-        </p>
+        <h1 class="h1 reveal">Every module I implement</h1>
+        <p class="lead reveal" data-delay="1">Each module is implemented end-to-end — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.</p>
     </div>
 </section>
 
-<section class="pb-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+<section class="section">
+    <div class="container">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for module in modules %}
             <a href="{% url 'module_detail' module.slug %}" class="module-tile">
-                <div class="p-3 pb-0 bg-card">
-                    {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag image_url=module.image_url %}
+                <div class="module-tile-media module-tile-icon">
+                    <img src="{{ media_url }}Odoo-icons/icon only/png/{{ module_icons|get_item:module.demo_code }}"
+                         alt="{{ module.name }} — Odoo icon" loading="lazy">
                 </div>
-                <div class="meta">
+                <div class="module-tile-meta">
                     <div>
-                        <div class="tag">{{ module.short_tag }} · {{ module.get_category_display }}</div>
-                        <div class="name mt-0.5">{{ module.name }}</div>
+                        <div class="module-tile-tag">{{ module.short_tag }} · {{ module.get_category_display }}</div>
+                        <div class="module-tile-name">{{ module.name }}</div>
                     </div>
-                    <span class="arrow">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <span class="module-tile-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </span>
                 </div>
             </a>
@@ -37,15 +37,17 @@
     </div>
 </section>
 
-<section class="py-12 border-t border-line bg-surface/30">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink tracking-tight mb-3">
-            Need a module you don't see here?
-        </h2>
-        <p class="text-ink2 mb-6 max-w-xl mx-auto">
-            Odoo ships with 40+ official modules and thousands of community ones. If you need something specific, ask — there's a good chance I've worked with it.
-        </p>
-        <a href="{% url 'contact' %}" class="btn-primary">Ask about a module</a>
+<section class="section section-dark section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Need something specific?</div>
+            <h2 class="h2">Need a module you don't see here?</h2>
+            <p>Odoo ships with 40+ official modules and thousands of community ones. If you need something specific, ask — there's a good chance I've worked with it.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">Ask about a module →</a>
+                <a href="{% url 'products' %}" class="btn btn-secondary">See all products</a>
+            </div>
+        </div>
     </div>
 </section>
 

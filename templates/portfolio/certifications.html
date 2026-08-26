@@ -4,20 +4,18 @@
 
 {% block content %}
 
-<section class="pt-12 pb-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="section section-cream" style="padding-top:5rem;">
+    <div class="container">
         <div class="eyebrow">Credentials</div>
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Certifications</h1>
-        <p class="text-lg text-ink2 max-w-2xl">
-            Industry-recognized certifications validating my expertise in Odoo and related technologies.
-        </p>
+        <h1 class="h1 reveal">Certifications</h1>
+        <p class="lead reveal" data-delay="1">Industry-recognized certifications validating my expertise in Odoo and related technologies.</p>
     </div>
 </section>
 
 {% if certifications %}
-<section class="pb-20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-3">
+<section class="section">
+    <div class="container">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for cert in certifications %}
                 {% include 'partials/_certification_card.html' with cert=cert %}
             {% endfor %}
@@ -25,10 +23,10 @@
     </div>
 </section>
 {% else %}
-<section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 text-center">
+<section class="section">
+    <div class="container" style="text-align:center;">
         <p class="text-ink3">No certifications listed yet. Add your Odoo certifications via the admin panel.</p>
-        <a href="/admin/portfolio/certification/add/" class="inline-block mt-4 btn-primary">Add certification</a>
+        <a href="/admin/portfolio/certification/add/" class="btn btn-dark" style="margin-top:1rem;display:inline-block;">Add certification</a>
     </div>
 </section>
 {% endif %}

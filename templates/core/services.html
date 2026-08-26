@@ -4,38 +4,24 @@
 
 {% block content %}
 
-<section class="pt-12 pb-12">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="section section-cream" style="padding-top:5rem;">
+    <div class="container">
         <div class="eyebrow">Capabilities</div>
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">Services</h1>
-        <p class="text-lg text-ink2 max-w-2xl">
-            Flexible engagements covering the full Odoo/ERP lifecycle — from first install to production-grade optimization, with fixed-price scoping and 30-day post-launch support on every project.
-        </p>
+        <h1 class="h1 reveal">Services</h1>
+        <p class="lead reveal" data-delay="1">Flexible engagements covering the full Odoo/ERP lifecycle — from first install to production-grade optimization, with fixed-price scoping and 30-day post-launch support on every project.</p>
 
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-ink3">
-            <span class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                Fixed scope, no surprise invoices
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                NDA-friendly
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                30-day post-launch support
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                Audit &amp; rescue of existing builds
-            </span>
+        <div class="hero-trust reveal" data-delay="2">
+            <span><span class="dot"></span> Fixed scope, no surprise invoices</span>
+            <span><span class="dot"></span> NDA-friendly</span>
+            <span><span class="dot"></span> 30-day post-launch support</span>
+            <span><span class="dot"></span> Audit &amp; rescue of existing builds</span>
         </div>
     </div>
 </section>
 
-<section class="pb-16 md:pb-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+<section class="section">
+    <div class="container">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for service in services %}
                 {% include 'partials/_service_card.html' with service=service %}
             {% empty %}
@@ -45,17 +31,16 @@
     </div>
 </section>
 
-<section class="py-12 md:py-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="surface p-8 md:p-12 text-center">
-            <div class="eyebrow text-center mx-auto w-fit justify-center">Not sure what you need?</div>
-            <h2 class="font-sans text-3xl md:text-4xl font-semibold text-ink mb-4 tracking-tight">
-                Let's talk it through.
-            </h2>
-            <p class="text-ink2 text-lg mb-8 max-w-xl mx-auto">
-                Tell me about your situation — I'll suggest the most cost-effective path forward.
-            </p>
-            <a href="{% url 'contact' %}" class="btn-primary">Schedule a free consultation</a>
+<section class="section section-dark section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Free 60-min consult</div>
+            <h2 class="h2">Not sure what you need?</h2>
+            <p>Tell me about your situation — I'll suggest the most cost-effective path forward.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">Schedule a free consultation</a>
+                <a href="{% url 'pricing' %}" class="btn btn-secondary">See pricing</a>
+            </div>
         </div>
     </div>
 </section>

@@ -81,6 +81,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Force browsers to never cache static files during development —
+# avoids stale CSS/JS when the user hard-refreshes but the server
+# returns a 304 based on Last-Modified.
+MIDDLEWARE = [
+    'core.middleware.NoCacheStaticMiddleware',
+] + MIDDLEWARE
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

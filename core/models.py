@@ -173,6 +173,43 @@ class ERPModule(models.Model):
     def get_industries_list(self):
         return [s.strip() for s in self.industries.split(',') if s.strip()]
 
+    @property
+    def theme(self):
+        """Map demo_code / category to a CSS theme class for visual variety on the
+        products page. Returns one of: blue, green, purple, cyan, amber, rose,
+        orange. Falls back to blue for unknown codes."""
+        # Map by demo_code first (most specific)
+        code_themes = {
+            'pos':          'green',
+            'inventory':    'cyan',
+            'purchase':     'cyan',
+            'mrp':          'orange',
+            'accounting':   'purple',
+            'hr':           'rose',
+            'crm':          'blue',
+            'ecommerce':    'green',
+            'project':      'amber',
+            'website':      'rose',
+            'helpdesk':     'amber',
+            'field-service':'blue',
+            'subscriptions':'purple',
+            'marketing':    'rose',
+            'quality':      'orange',
+            'expenses':     'amber',
+        }
+        if self.demo_code and self.demo_code in code_themes:
+            return code_themes[self.demo_code]
+        # Fallback to category
+        cat_themes = {
+            'operations':  'cyan',
+            'sales':       'blue',
+            'finance':     'purple',
+            'people':      'rose',
+            'web':         'green',
+            'productivity':'amber',
+        }
+        return cat_themes.get(self.category, 'blue')
+
 
 class PricingConfig(models.Model):
     """Singleton holding the pricing calculator catalog + exchange rate.

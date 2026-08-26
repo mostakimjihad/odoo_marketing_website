@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.files.base import ContentFile
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -9,6 +10,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 
 from .forms import ContactForm
 from .models import Service, ERPModule, PricingConfig, QuoteLead
+from .module_data import get_module_icon, get_module_details
 
 
 # End-to-end workflow shown on the home page for each service.
@@ -205,6 +207,12 @@ class ModuleListView(ListView):
     def get_queryset(self):
         return ERPModule.objects.filter(is_published=True)
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['module_icons'] = {m.demo_code: get_module_icon(m.demo_code) for m in ctx['modules']}
+        ctx['media_url'] = settings.MEDIA_URL
+        return ctx
+
 
 class ModuleDetailView(DetailView):
     model = ERPModule
@@ -217,7 +225,12 @@ class ModuleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         # Group other modules for the "more modules" footer
-        ctx['other_modules'] = ERPModule.objects.filter(is_published=True).exclude(pk=self.object.pk)[:6]
+        others = list(ERPModule.objects.filter(is_published=True).exclude(pk=self.object.pk)[:6])
+        ctx['other_modules'] = others
+        ctx['module_icon'] = get_module_icon(self.object.demo_code)
+        ctx['module_details'] = get_module_details(self.object.demo_code)
+        ctx['other_module_icons'] = {m.demo_code: get_module_icon(m.demo_code) for m in others}
+        ctx['media_url'] = settings.MEDIA_URL
         return ctx
 
 

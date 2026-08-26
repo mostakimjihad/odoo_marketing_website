@@ -1,121 +1,241 @@
 {% extends 'base.html' %}
+{% load core_extras %}
 
 {% block title %}{{ module.name }} — {{ site_settings.full_name }}{% endblock %}
 {% block meta_description %}{{ module.tagline }}{% endblock %}
 
 {% block content %}
 
-<section class="pt-10 pb-12">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'modules' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-7">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+{% comment %}
+============================================================
+HERO — clean editorial, no top borders, subtle line backdrop
+============================================================
+{% endcomment %}
+<section class="section module-hero">
+    <div class="container module-container">
+        <a href="{% url 'modules' %}" class="module-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             All modules
         </a>
 
-        <div class="flex items-start gap-3 mb-4 flex-wrap">
-            <span class="text-[11px] font-medium uppercase tracking-wider text-indigo-300 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/30">{{ module.short_tag }}</span>
-            <span class="text-[11px] font-medium uppercase tracking-wider text-ink3 px-2.5 py-1 rounded-full bg-surface border border-line">{{ module.get_category_display }}</span>
+        <div class="module-hero-head reveal">
+            <div class="module-hero-icon">
+                <img src="{{ media_url }}Odoo-icons/icon only/png/{{ module_icon }}"
+                     alt="{{ module.name }} — Odoo icon" loading="eager">
+            </div>
+            <div class="module-hero-text">
+                <div class="module-tags">
+                    <span class="module-tag module-tag--accent">{{ module.short_tag }}</span>
+                    <span class="module-tag">{{ module.get_category_display }}</span>
+                </div>
+                <h1 class="module-title">{{ module.name }}</h1>
+                <p class="module-tagline">{{ module_details.tagline|default:module.tagline }}</p>
+            </div>
         </div>
 
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ module.name }}</h1>
-
-        <p class="text-xl text-ink2 leading-relaxed max-w-3xl">{{ module.tagline }}</p>
+        <div class="module-meta-pills reveal" data-delay="2">
+            <span class="module-meta-pill">
+                <span class="module-pulse"></span>
+                Available · replies &lt; 4h
+            </span>
+            <span class="module-meta-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                NDA-friendly
+            </span>
+            <span class="module-meta-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                Fixed scope
+            </span>
+        </div>
     </div>
 </section>
 
-<section class="pb-10">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+{% comment %}
+============================================================
+PRODUCT PREVIEW — big visual, eyebrow label, no borders
+============================================================
+{% endcomment %}
+<section class="section module-preview-section">
+    <div class="container module-container">
+        <div class="section-head reveal">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Product preview</div>
+                <h2 class="h2">What {{ module.name }} looks like in production.</h2>
+            </div>
+        </div>
+
         {% if module.demo_video %}
-            <div class="rounded-lg overflow-hidden border border-line">
+            <div class="module-preview-frame reveal" data-delay="1">
                 <video class="w-full h-auto block" autoplay loop muted playsinline>
                     <source src="{{ module.demo_video.url }}" type="video/mp4">
                 </video>
             </div>
         {% elif module.thumbnail %}
-            <div class="rounded-lg overflow-hidden border border-line">
+            <div class="module-preview-frame reveal" data-delay="1">
                 <img src="{{ module.thumbnail.url }}" alt="{{ module.name }}" class="w-full h-auto block">
             </div>
         {% else %}
-            <div class="max-w-2xl">
+            <div class="reveal" data-delay="1" style="max-width:640px;">
                 {% include 'partials/_module_mockup.html' with code=module.demo_code tag=module.short_tag %}
             </div>
         {% endif %}
     </div>
 </section>
 
-<section class="pb-12">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-12 gap-8">
+{% comment %}
+============================================================
+KEY METRICS — 3 stat tiles (only if data present)
+============================================================
+{% endcomment %}
+{% if module_details.metrics %}
+<section class="section module-metrics-section">
+    <div class="container module-container">
+        <div class="module-metrics-grid reveal">
+            {% for value, label in module_details.metrics %}
+            <div class="module-metric">
+                <div class="module-metric-value">{{ value }}</div>
+                <div class="module-metric-label">{{ label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 
-        <div class="md:col-span-8">
+{% comment %}
+============================================================
+FEATURES HIGHLIGHTS — 2-column bulleted list with eyebrow
+============================================================
+{% endcomment %}
+{% if module_details.highlights %}
+<section class="section module-features-section">
+    <div class="container module-container module-features-grid">
+        <div>
+            <div class="eyebrow">What it does</div>
+            <h2 class="h2">Every feature, end to end.</h2>
+            <p class="module-features-lead">A working system you can hand to your team on day one — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.</p>
+            {% if module_details.integrates_with %}
+            <div class="module-integrates">
+                <div class="eyebrow" style="margin-bottom:0.75rem;">Plays well with</div>
+                <div class="module-chip-row">
+                    {% for mod in module_details.integrates_with %}
+                    <span class="module-chip module-chip--accent">{{ mod }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <ul class="module-features-list">
+            {% for feature in module_details.highlights %}
+            <li>
+                <span class="module-feature-bullet" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                </span>
+                <span>{{ feature }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endif %}
+
+{% comment %}
+============================================================
+MAIN CONTENT + HIRE-ME ASIDE — clean two-column, no borders
+============================================================
+{% endcomment %}
+<section class="section module-body-section">
+    <div class="container module-container module-grid">
+        <div class="module-content">
             <div class="eyebrow">How it works</div>
-            <div class="prose-content text-lg">
+            <div class="prose-content">
                 {{ module.description|linebreaks }}
             </div>
 
             {% if module.get_industries_list %}
-            <div class="mt-8 pt-8 border-t border-line">
-                <div class="eyebrow text-ink3">Industries</div>
-                <div class="flex flex-wrap gap-1.5">
+            <div class="module-sub-block">
+                <div class="eyebrow">Industries</div>
+                <div class="module-industries">
                     {% for ind in module.get_industries_list %}
-                    <span class="px-2.5 py-1 rounded-full text-[12px] bg-surface text-ink2 border border-line">{{ ind }}</span>
+                    <span class="module-chip">{{ ind }}</span>
                     {% endfor %}
                 </div>
             </div>
             {% endif %}
         </div>
 
-        <aside class="md:col-span-4">
-            <div class="surface p-6 sticky top-24">
-                <div class="eyebrow">Hire me for this</div>
-                <h3 class="font-semibold text-ink text-lg mb-2 tracking-tight">Need {{ module.name }} implemented?</h3>
-                <p class="text-sm text-ink2 mb-5">Send a brief describing your business, the workflow, and your deadline. I'll reply within 24 hours with a scope and quote.</p>
+        <aside class="module-aside">
+            <div class="module-aside-card">
+                <div class="module-aside-eyebrow">Hire me for this</div>
+                <h3 class="module-aside-title">Need {{ module.name }} implemented?</h3>
+                <p class="module-aside-text">Send a brief describing your business, the workflow, and your deadline. I'll reply within 24 hours with a written scope and a fixed quote.</p>
 
-                <a href="{% url 'contact' %}" class="btn-primary w-full justify-center mb-2">
+                <a href="{% url 'contact' %}" class="btn btn-primary module-aside-cta">
                     Send a brief
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </a>
+
                 {% if site_settings.fiverr_url %}
-                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-ghost w-full justify-center text-sm">
+                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="module-aside-secondary">
                     Or hire on Fiverr
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                 </a>
                 {% endif %}
 
-                <div class="mt-5 pt-5 border-t border-line space-y-2.5">
-                    <div class="flex items-center gap-2 text-[12px]">
-                        <span class="dot-pulse"></span>
-                        <span class="text-ink2">Available · replies &lt; 4h</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[12px]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
-                        <span class="text-ink2">Module-specific scoping</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[12px]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-                        <span class="text-ink2">Post-handover support</span>
-                    </div>
-                </div>
+                <ul class="module-aside-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        Module-specific scoping
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        30 days post-handover support
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        Working staging server weekly
+                    </li>
+                </ul>
             </div>
         </aside>
     </div>
 </section>
 
+{% comment %}
+============================================================
+OTHER MODULES — clean grid with Odoo icons, no top border
+============================================================
+{% endcomment %}
 {% if other_modules %}
-<section class="py-12 border-t border-line bg-surface/30">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="eyebrow text-ink3">Other modules</div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
+<section class="section module-others-section">
+    <div class="container module-container">
+        <div class="section-head reveal">
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">More modules</div>
+                <h2 class="h2">Other ways I can ship this for you.</h2>
+            </div>
+        </div>
+
+        <div class="module-others-grid reveal" data-delay="1">
             {% for m in other_modules %}
             <a href="{% url 'module_detail' m.slug %}" class="module-tile">
-                <div class="p-3 pb-0 bg-card">
-                    {% include 'partials/_module_mockup.html' with code=m.demo_code tag=m.short_tag %}
+                <div class="module-tile-media module-tile-icon">
+                    <img src="{{ media_url }}Odoo-icons/icon only/png/{{ other_module_icons|get_item:m.demo_code }}"
+                         alt="{{ m.name }} — Odoo icon" loading="lazy">
                 </div>
-                <div class="meta">
+                <div class="module-tile-meta">
                     <div>
-                        <div class="tag">{{ m.short_tag }}</div>
-                        <div class="name mt-0.5">{{ m.name }}</div>
+                        <div class="module-tile-tag">{{ m.short_tag }}</div>
+                        <div class="module-tile-name">{{ m.name }}</div>
                     </div>
-                    <span class="arrow">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <span class="module-tile-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </span>
                 </div>
             </a>
