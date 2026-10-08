@@ -3,7 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from portfolio.views import ClientListView, CertificationListView
+from core.views import ClientListView
+from portfolio.views import CertificationListView
 
 
 urlpatterns = [

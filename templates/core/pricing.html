@@ -7,37 +7,29 @@
 
 {% comment %}
 ============================================================
-HERO — editorial, no top borders, subtle line backdrop
+HERO — section-icon head + availability pill
 ============================================================
 {% endcomment %}
-<section class="section module-hero">
+<section class="section section-cream module-hero" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2rem, 4vw, 3rem);">
     <div class="container module-container">
-        <div class="pricing-hero-row">
-            <div>
-                <div class="eyebrow reveal">Pricing calculator</div>
-                <h1 class="module-title reveal" data-delay="1" style="margin-top:1rem;">{{ pricing.intro_title }}</h1>
-                <p class="module-tagline reveal" data-delay="2">{{ pricing.intro_subtitle }}</p>
+        <div class="section-head reveal">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <div class="currency-toggle reveal" data-delay="2">
+            <div class="head-text" style="flex:1;">
+                <div class="eyebrow">Pricing calculator</div>
+                <h1 class="h1" style="margin:0;">{{ pricing.intro_title }}</h1>
+                <p class="lead" style="margin:1rem 0 0;max-width:64ch;">{{ pricing.intro_subtitle }}</p>
+            </div>
+            <div class="currency-toggle reveal" data-delay="2" style="align-self:center;">
                 <button type="button" class="currency-pill is-active" data-currency="USD">USD ($)</button>
                 <button type="button" class="currency-pill" data-currency="BDT">BDT (৳)</button>
             </div>
         </div>
 
-        <div class="module-meta-pills reveal" data-delay="3">
-            <span class="module-meta-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Fixed-price quotes
-            </span>
-            <span class="module-meta-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Bundle 3+ add-ons &amp; save 10%
-            </span>
-            <span class="module-meta-pill">
-                <span class="module-pulse"></span>
-                Replies &lt; 4h, 6 days/week
-            </span>
-        </div>
+        <span class="hero-pill reveal" data-delay="3" style="margin-top:1.5rem;">
+            <span class="dot"></span> Fixed-price quotes · Bundle 3+ add-ons &amp; save 10% · Replies &lt; 4h, 6 days/week
+        </span>
     </div>
 </section>
 
@@ -143,23 +135,23 @@ CALCULATOR — tier picker + add-ons + sticky summary
 
 {% comment %}
 ============================================================
-DOWNLOADABLE PDF QUOTE — full lead form
+DOWNLOADABLE PDF QUOTE — full lead form, with section-icon head
 ============================================================
 {% endcomment %}
 <section id="get-quote" class="section module-others-section">
     <div class="container module-container">
-        <div class="quote-card">
-            <div class="quote-head">
-                <span class="quote-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                </span>
-                <div>
-                    <div class="eyebrow">PDF quote</div>
-                    <h2 class="contact-form-title" style="margin:0.5rem 0 0.4rem;">Download a branded PDF of this estimate.</h2>
-                    <p class="quote-lead">Shareable, audit-friendly, and I'll also follow up within 24 hours to lock the scope.</p>
-                </div>
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--emerald); --accent-soft: var(--soft-green-bg); color: var(--emerald);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
+            <div class="head-text">
+                <div class="eyebrow" style="color: var(--emerald);">PDF quote</div>
+                <h2 class="h2">Download a branded PDF of this estimate.</h2>
+                <p>Shareable, audit-friendly, and I'll also follow up within 24 hours to lock the scope.</p>
+            </div>
+        </div>
 
+        <div class="quote-card">
             <form id="quote-form" class="contact-form" novalidate>
                 <div class="contact-row contact-row-2">
                     <div class="contact-field">
@@ -194,6 +186,125 @@ DOWNLOADABLE PDF QUOTE — full lead form
 
                 <div id="quote-status" class="quote-status hidden"></div>
             </form>
+        </div>
+    </div>
+</section>
+
+{% comment %}
+============================================================
+FAQ — split layout (matches home)
+============================================================
+{% endcomment %}
+<section class="section section-soft section-faq">
+    <div class="container">
+        <div class="faq-split">
+            <div class="faq-aside reveal">
+                <div class="faq-aside-img" style="background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop');"></div>
+                <div class="faq-aside-content">
+                    <div class="faq-aside-eyebrow">FAQ</div>
+                    <div class="faq-aside-title">Pricing questions, answered</div>
+                    <p class="faq-aside-text">How the calculator works, what's included, what's an add-on, and how the final quote gets locked.</p>
+                    <div class="faq-aside-tags">
+                        <span class="faq-aside-tag">2+ yrs</span>
+                        <span class="faq-aside-tag">Fixed price</span>
+                        <span class="faq-aside-tag">Audit-ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="pfq-a-1">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+                        <span class="faq-q-text">Is the calculator quote final?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="pfq-a-1" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">It's a <strong>tight estimate</strong>. After a 15-min call to confirm scope and timeline, I send a fixed-price quote valid for 14 days. The calculator is designed to be within ±10% of the final price.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="pfq-a-2">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                        <span class="faq-q-text">Why USD and BDT?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="pfq-a-2" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Most of my GCC, EU and US clients invoice in USD. Bangladesh-based clients prefer BDT. The toggle switches between them at a fixed rate; the underlying scope and deliverables are identical.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="pfq-a-3">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                        <span class="faq-q-text">What's the bundle discount?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="pfq-a-3" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Pick 3 or more add-ons (or a base package + 2 add-ons) and the total gets <strong>10% off</strong>. More combinations unlock higher discounts — the calculator applies the best tier automatically.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="pfq-a-4">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                        <span class="faq-q-text">Is post-launch support included?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="pfq-a-4" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Yes — <strong>30 days of post-go support</strong> is included in every engagement. After that, you can move to a monthly retainer or a per-task engagement. There is no auto-renewal or surprise charge.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="pfq-a-5">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                        <span class="faq-q-text">What if the scope changes mid-project?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="pfq-a-5" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">You get a written change order before any out-of-scope work starts — including the additional cost and timeline. No silent scope-creep, no surprise invoices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %}
+============================================================
+CLOSING CTA — dark band, mirrors home
+============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Free 60-min scoping call</div>
+            <h2 class="h2">Have an estimate you want to lock?</h2>
+            <p>Send me your calculator output as a brief — I'll review it, suggest anything you missed, and reply within 24 hours with a fixed quote.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Start a conversation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'services' %}" class="btn btn-secondary">See the services</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
         </div>
     </div>
 </section>

@@ -1,74 +1,113 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static core_extras %}
 
 {% block title %}{{ service.title }} — {{ site_settings.full_name }}{% endblock %}
 {% block meta_description %}{{ service.short_description }}{% endblock %}
 
 {% block content %}
 
-<section class="pt-10 pb-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'services' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-8">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+{% comment %}
+ ============================================================
+   HERO — section-icon head, availability pill
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+
+        <a href="{% url 'services' %}" class="module-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             All services
         </a>
 
-        <div class="flex items-start gap-5 mb-7">
-            <div class="w-16 h-16 bg-surface rounded-lg flex items-center justify-center flex-shrink-0 border border-line2">
-                <img src="{% static 'images/icons/' %}{{ service.icon }}" alt="{{ service.title }}" class="w-9 h-9 icon-tint">
+        <div class="module-hero-head reveal">
+            <div class="module-hero-icon">
+                <img src="{% static 'images/icons/' %}{{ service.icon }}" alt="{{ service.title }}">
             </div>
-            <div>
-                <div class="eyebrow">Service</div>
-                <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight">{{ service.title }}</h1>
+            <div class="module-hero-text">
+                <div class="module-tags">
+                    <span class="module-tag module-tag--accent">Service</span>
+                </div>
+                <h1 class="module-title">{{ service.title }}</h1>
+                <p class="module-tagline">{{ service.short_description }}</p>
             </div>
         </div>
 
-        <p class="text-xl text-ink2 leading-relaxed">{{ service.short_description }}</p>
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> Available · replies &lt; 4h · NDA-friendly · Fixed scope
+        </span>
     </div>
 </section>
 
-<section class="pb-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {% if service.description %}
-        <div class="prose-content text-lg mb-10">
-            {{ service.description|linebreaks }}
+{% comment %}
+ ============================================================
+   BODY — section-icon head + prose + features card
+   ============================================================
+{% endcomment %}
+<section class="section module-body-section">
+    <div class="container module-container module-grid">
+        <div>
+            <div class="section-head reveal" style="margin-bottom:1.5rem;">
+                <div class="section-icon" style="--accent: var(--blue); --accent-soft: var(--soft-blue-bg); color: var(--blue);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color: var(--blue);">How it works</div>
+                    <h2 class="h2">The engagement, end to end.</h2>
+                </div>
+            </div>
+
+            {% if service.description %}
+            <div class="prose-content text-lg">
+                {{ service.description|linebreaks }}
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
 
         {% if service.get_features_list %}
-        <div class="surface p-8 md:p-10">
-            <h2 class="font-semibold text-xl text-ink mb-6 flex items-center gap-3">
-                <span class="w-7 h-7 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-[13px] font-bold">✓</span>
-                What's included
-            </h2>
-            <ul class="space-y-3">
-                {% for feature in service.get_features_list %}
-                <li class="flex items-start">
-                    <span class="w-5 h-5 rounded-md bg-surface border border-indigo-300 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
-                        <svg class="w-3 h-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                    </span>
-                    <span class="text-ink2">{{ feature }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+        <aside class="module-aside">
+            <div class="module-aside-card">
+                <div class="module-aside-eyebrow">What's included</div>
+                <h3 class="module-aside-title">Every feature, delivered.</h3>
+                <p class="module-aside-text">Everything below is included in the standard engagement — no upsells, no add-ons, no surprises.</p>
 
-        <div class="mt-10 surface p-8 md:p-12 text-center">
-            <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink mb-3 tracking-tight">
-                Interested in {{ service.title }}?
-            </h2>
-            <p class="text-ink2 mb-8">Tell me about your project — get a response within 24 hours.</p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <a href="{% url 'contact' %}" class="btn-primary">
+                <ul class="module-aside-list" style="margin-top:1rem;">
+                    {% for feature in service.get_features_list %}
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        {{ feature }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% endif %}
+    </div>
+</section>
+
+{% comment %}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Available · replies &lt; 4h</div>
+            <h2 class="h2">Interested in {{ service.title }}?</h2>
+            <p>Tell me about your project — get a response within 24 hours. NDA before the first call, always.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
                     Send a message
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </a>
                 {% if site_settings.fiverr_url %}
-                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn-fiverr">
-                    Order on Fiverr
-                </a>
+                <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn btn-secondary">Order on Fiverr</a>
                 {% endif %}
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
             </div>
         </div>
     </div>

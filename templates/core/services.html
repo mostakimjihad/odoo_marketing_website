@@ -1,45 +1,106 @@
 {% extends 'base.html' %}
 
 {% block title %}Services — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}Flexible engagements covering the full Odoo / ERP lifecycle — from first install to production-grade optimization. Fixed scope, fixed price.{% endblock %}
 
 {% block content %}
 
-<section class="section section-cream" style="padding-top:5rem;">
-    <div class="container">
-        <div class="eyebrow">Capabilities</div>
-        <h1 class="h1 reveal">Services</h1>
-        <p class="lead reveal" data-delay="1">Flexible engagements covering the full Odoo/ERP lifecycle — from first install to production-grade optimization, with fixed-price scoping and 30-day post-launch support on every project.</p>
+{% comment %}
+ ============================================================
+   HERO — section-icon head, availability pill, trust row
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Capabilities</div>
+                <h1 class="h1" style="margin:0;">Every service,<br><span class="accent">end to end.</span></h1>
+            </div>
+        </div>
 
-        <div class="hero-trust reveal" data-delay="2">
+        <p class="lead reveal" data-delay="1" style="max-width:64ch;margin:0 0 1.5rem;">
+            Flexible engagements covering the full Odoo / ERP lifecycle — from first install to production-grade optimization, with fixed-price scoping and 30-day post-launch support on every project.
+        </p>
+
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> {{ services|length }} services · Fixed scope · NDA-friendly
+        </span>
+
+        <div class="hero-trust reveal" data-delay="3">
             <span><span class="dot"></span> Fixed scope, no surprise invoices</span>
             <span><span class="dot"></span> NDA-friendly</span>
             <span><span class="dot"></span> 30-day post-launch support</span>
             <span><span class="dot"></span> Audit &amp; rescue of existing builds</span>
         </div>
-    </div>
-</section>
 
-<section class="section">
-    <div class="container">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {% for service in services %}
-                {% include 'partials/_service_card.html' with service=service %}
-            {% empty %}
-                <p class="col-span-full text-center text-ink3 py-12">No services available yet.</p>
-            {% endfor %}
+        <div class="reveal" data-delay="4" style="margin-top:2.25rem;display:flex;gap:0.85rem;flex-wrap:wrap;align-items:center;">
+            <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">
+                Schedule a free consultation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'pricing' %}" class="btn btn-secondary btn-lg">See pricing</a>
         </div>
     </div>
 </section>
 
-<section class="section section-dark section-cta">
+{% comment %}
+ ============================================================
+   SERVICES GRID — themed cards, mirrors home pattern
+   ============================================================
+{% endcomment %}
+<section class="section section-services" id="services">
+    <div class="container">
+        <div class="section-head reveal" style="margin-bottom:2.5rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">All services</div>
+                <h2 class="h2">Pick what fits. Ship what matters.</h2>
+                <p>Every engagement is fixed-price, fixed-scope, with 30 days of post-launch support included.</p>
+            </div>
+        </div>
+
+        {% if services %}
+        <div class="svc-grid reveal" data-delay="1">
+            {% for service in services %}
+                {% include 'partials/_service_card.html' with service=service %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="reveal" style="text-align:center;padding:3rem 0;">
+            <p class="text-ink3">No services available yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% comment %}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
     <div class="container">
         <div class="cta-band reveal">
             <div class="cta-pill"><span class="dot"></span> Free 60-min consult</div>
             <h2 class="h2">Not sure what you need?</h2>
             <p>Tell me about your situation — I'll suggest the most cost-effective path forward.</p>
             <div class="flex gap-2 wrap" style="justify-content:center;">
-                <a href="{% url 'contact' %}" class="btn btn-primary">Schedule a free consultation</a>
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Schedule a free consultation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
                 <a href="{% url 'pricing' %}" class="btn btn-secondary">See pricing</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
             </div>
         </div>
     </div>

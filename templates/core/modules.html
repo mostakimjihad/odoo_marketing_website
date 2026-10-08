@@ -2,22 +2,72 @@
 {% load core_extras %}
 
 {% block title %}Modules — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}Every Odoo / ERPNext module I implement end-to-end: configured to your business, integrated with your stack, handed over with training.{% endblock %}
 
 {% block content %}
 
-<section class="section section-cream" style="padding-top:5rem;">
-    <div class="container">
-        <div class="eyebrow">Modules</div>
-        <h1 class="h1 reveal">Every module I implement</h1>
-        <p class="lead reveal" data-delay="1">Each module is implemented end-to-end — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.</p>
+{% comment %}
+ ============================================================
+   HERO — section-icon head, availability pill, trust row
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Modules</div>
+                <h1 class="h1" style="margin:0;">Every module<br>I implement.</h1>
+            </div>
+        </div>
+
+        <p class="lead reveal" data-delay="1" style="max-width:64ch;margin:0 0 1.5rem;">
+            Each module is implemented end-to-end — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.
+        </p>
+
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> {{ modules|length }} modules · Odoo v12 → v17 · ERPNext v13/14
+        </span>
+
+        <div class="hero-trust reveal" data-delay="3">
+            <span><span class="dot"></span> Configured to your workflow</span>
+            <span><span class="dot"></span> Integrated end-to-end</span>
+            <span><span class="dot"></span> Training &amp; docs included</span>
+        </div>
+
+        <div class="reveal" data-delay="4" style="margin-top:2.25rem;display:flex;gap:0.85rem;flex-wrap:wrap;align-items:center;">
+            <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">
+                Ask about a module
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'products' %}" class="btn btn-secondary btn-lg">Browse by category</a>
+        </div>
     </div>
 </section>
 
-<section class="section">
+{% comment %}
+ ============================================================
+   MODULE GRID
+   ============================================================
+{% endcomment %}
+<section class="section" style="padding-top:clamp(3rem, 5vw, 4rem);">
     <div class="container">
+        <div class="section-head reveal" style="margin-bottom:2.5rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">All modules</div>
+                <h2 class="h2">Browse every Odoo module.</h2>
+                <p>Pick the modules you need — I'll configure each to your workflow and integrate them with the rest of your stack.</p>
+            </div>
+        </div>
+
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for module in modules %}
-            <a href="{% url 'module_detail' module.slug %}" class="module-tile">
+            <a href="{% url 'module_detail' module.slug %}" class="module-tile reveal" data-delay="{{ forloop.counter0 }}">
                 <div class="module-tile-media module-tile-icon">
                     <img src="{{ media_url }}Odoo-icons/icon only/png/{{ module_icons|get_item:module.demo_code }}"
                          alt="{{ module.name }} — Odoo icon" loading="lazy">
@@ -32,20 +82,37 @@
                     </span>
                 </div>
             </a>
+            {% empty %}
+            <div style="grid-column:1 / -1; text-align:center; padding:3rem 0;">
+                <p class="text-ink3">No modules yet. Add some from the admin panel.</p>
+            </div>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="section section-dark section-cta">
+{% comment %}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
     <div class="container">
         <div class="cta-band reveal">
             <div class="cta-pill"><span class="dot"></span> Need something specific?</div>
             <h2 class="h2">Need a module you don't see here?</h2>
             <p>Odoo ships with 40+ official modules and thousands of community ones. If you need something specific, ask — there's a good chance I've worked with it.</p>
             <div class="flex gap-2 wrap" style="justify-content:center;">
-                <a href="{% url 'contact' %}" class="btn btn-primary">Ask about a module →</a>
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Ask about a module
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
                 <a href="{% url 'products' %}" class="btn btn-secondary">See all products</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min scoping</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
             </div>
         </div>
     </div>

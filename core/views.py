@@ -1,16 +1,25 @@
 from django.contrib import messages
 from django.core.files.base import ContentFile
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_POST
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils import timezone
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.views.decorators.http import require_POST, require_GET
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView, FormView
+from datetime import datetime as dt_cls, timedelta
 
 from .forms import ContactForm
-from .models import Service, ERPModule, PricingConfig, QuoteLead
+from .models import (
+    Service, ERPModule, PricingConfig, QuoteLead,
+    Appointment, AvailabilityRule, BlockedDate,
+    SiteSettings, get_available_slots,
+)
 from .module_data import get_module_icon, get_module_details
+from . import booking_emails
 
 
 # End-to-end workflow shown on the home page for each service.
@@ -169,6 +178,9 @@ class HomeView(TemplateView):
         ctx['featured_clients'] = Client.objects.filter(is_featured=True)
         ctx['testimonials'] = Client.objects.exclude(testimonial__isnull=True).exclude(testimonial__exact='')[:6]
         ctx['latest_posts'] = Post.objects.filter(is_published=True)[:3]
+        # Real client list (ordered: Project Manager → Developer → Other) for the trusted-by marquee
+        ctx['marquee_clients'] = CLIENTS
+        return ctx
         return ctx
 
 
@@ -181,6 +193,234 @@ class AboutView(TemplateView):
         return ctx
 
 
+# Curated list of companies / projects I've undertaken, ordered by role
+# (Project Manager first), then size of engagement, then alphabetical.
+# Sourced from /media/project_taken.txt and /media/project_taken_comp_logo/.
+CLIENTS = [
+    {
+        "name": "Smart Distribution (Pvt.) Ltd.",
+        "url": "https://smartdistributionbd.com",
+        "logo": "/static/images/clients/SDPL.png",
+        "industry": "Import & Distribution",
+        "role": "Project Manager, Technical Lead",
+        "profile": "Smart Distribution (Pvt.) Ltd. is a rapidly growing one of the leading enterprises with business in import of quality consumer goods in Bangladesh.",
+        "scope": "Medium ERP — Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), Foreign Purchase, LC Management.",
+    },
+    {
+        "name": "SMS Corporation Ltd.",
+        "url": "https://smserp.uslbd.com/",
+        "logo": "/static/images/clients/sms.png",
+        "industry": "Hardware Distribution",
+        "role": "Project Manager, Technical Lead",
+        "profile": "SMS Corporation Ltd. — hardware distribution in Uttara, Dhaka, operating since 2001.",
+        "scope": "Small ERP — Sales, Accounting, Inventory.",
+    },
+    {
+        "name": "Smart Technologies (BD) Ltd.",
+        "url": "https://smartbd.com",
+        "logo": "/static/images/clients/smart.png",
+        "industry": "ICT Distribution (100+ global brands)",
+        "role": "Developer, Maintainer",
+        "profile": "Smart Technologies (BD) Ltd. is one of the largest and most trusted ICT distribution companies in Bangladesh. Established in 1998, the company distributes, integrates, and delivers IT products, consumer electronics, networking, security, and enterprise solutions nationwide. Authorised distributor of 100+ global brands including Microsoft, Intel, Google, Apple, Samsung, HP, Dell, Lenovo, Sony, Acer, HPE, Fortinet, Kaspersky, Oracle, Logitech, Hikvision and Dahua.",
+        "scope": "Large ERP — Foreign Purchase, LC Management, Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), HR, HR APP API, External Portals, External APIs.",
+    },
+    {
+        "name": "Smart Printing Solution Ltd. (SPSL)",
+        "url": "https://spslbd.com",
+        "logo": "/static/images/clients/spsl_logo.webp",
+        "industry": "Printing Solutions · 9 branches",
+        "role": "Developer, Maintainer",
+        "profile": "Smart Printing Solution Ltd. (SPSL) is Bangladesh's leading authorised printing technology solutions provider — 12 world-leading brands, 9 branches nationwide, trusted by over 1,000 organisations.",
+        "scope": "Medium ERP — Foreign Purchase, LC Management, Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), HR, HR APP API, External Portals, External APIs.",
+    },
+    {
+        "name": "Global Office Automation Limited",
+        "url": "https://globaloffice.com.bd/",
+        "logo": "/static/images/clients/Global.png",
+        "industry": "Stationery & Office Supplies",
+        "role": "Developer, Maintainer",
+        "profile": "GOAL is dedicated to delivering premium stationery and office supplies across Bangladesh, offering exceptional quality at reasonable prices. Brands include FABER-CASTELL, CASIO, Mitsubishi Pencil Co. (Uni-ball), Pentonic, and Staedtler.",
+        "scope": "Medium ERP — Foreign Purchase, LC Management, Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), HR, HR APP API, External Portals, External APIs.",
+    },
+    {
+        "name": "1000FIX Services",
+        "url": "https://1000fix.com",
+        "logo": "/static/images/clients/1000fix.png",
+        "industry": "IT Service Network · 50+ centres · 300+ corporate clients",
+        "role": "Developer, Maintainer",
+        "profile": "Founded in 2017, 1000FiX Services Limited is one of Bangladesh's leading IT service providers, operating as a distinguished service arm of Smart Technologies (BD) Ltd. 50+ service centres nationwide, 400+ engineers, 600,000+ units serviced annually. Authorised service partner for 45+ global brands (HP, Dell, Lenovo, Samsung, Acer, Toshiba, Xiaomi). ISO 9001:2015 certified, 97% first-time fix rate.",
+        "scope": "Medium ERP — Service Management, QC Management, Foreign Purchase, LC Management, Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), HR, HR APP API, External Portals, External APIs.",
+    },
+    {
+        "name": "Digital Equipment Limited",
+        "url": "https://digitalequipment.com.bd",
+        "logo": "/static/images/clients/digital.png",
+        "industry": "ICT Solutions & Distribution",
+        "role": "Developer, Maintainer",
+        "profile": "Digital Equipment Limited is one of the largest ICT solution and service companies in Bangladesh — a New Generation Turnkey IT Infrastructure Distribution, Solutions & Services Provider focused on Data Storage & Backup, Security Surveillance, Networking, and IT Security. Operating since 2001.",
+        "scope": "Medium ERP — Sales, Inventory (multi-warehouse, multi-company, multi-branch, multi-business unit), HR, HR APP API, External Portals, External APIs.",
+    },
+    {
+        "name": "Smart Safety & Automations Ltd.",
+        "url": "https://smartsafety.com.bd",
+        "logo": "/static/images/clients/Smart-Safety-Automations-Ltd-logo.png",
+        "industry": "Safety, Security & Automation",
+        "role": "Developer, Maintainer",
+        "profile": "Smart Safety & Automations Ltd., a sister concern of Smart Technologies (BD) Ltd., is a premier provider of advanced safety, security, and automation solutions — fire alarm systems, CCTV surveillance, access control, building management systems, and other state-of-the-art automation technologies.",
+        "scope": "Medium ERP — Sales, Inventory (multi-warehouse, multi-company, multi-branch), HR, HR APP API, External Portals, External APIs, Purchase Requisition.",
+    },
+    {
+        "name": "Bangladesh Police — Highway Police",
+        "url": "https://www.police.gov.bd",
+        "logo": "/static/images/clients/high_way_police.jpeg",
+        "industry": "Government",
+        "role": "Developer",
+        "profile": "Bangladesh Police — Highway Police division. A confidential government engagement.",
+        "scope": "Confidential development work for the Highway Police division under Bangladesh Police — built as a Developer. Specifics under NDA.",
+    },
+    {
+        "name": "Link3 Technologies Ltd.",
+        "url": "https://www.link3.net",
+        "logo": "/static/images/clients/link3.png",
+        "industry": "ISP & Telecom",
+        "role": "Developer",
+        "profile": "Link3 Technologies Ltd. — ISP and telecom operator in Bangladesh. Known for fibre-to-the-home connectivity and enterprise services.",
+        "scope": "Built an AI-powered network issue resolver for Link3 — browser-automation AI that handles customer network troubleshooting end-to-end.",
+    },
+    {
+        "name": "Litmond Shipping Ltd.",
+        "url": "",
+        "logo": "/static/images/clients/litmond.jpeg",
+        "industry": "Shipping",
+        "role": "Developer",
+        "profile": "Litmond Shipping Ltd. — shipping company operating in Bangladesh.",
+        "scope": "Built Litmond Shipping's business website — public-facing web presence for their shipping services.",
+    },
+]
+# Sourced from https://apps.odoo.com/apps/modules/browse?author=Mostakim%20Jihad
+APP_STORE_MODULES = [
+    {
+        "slug": "hr_performance_kpi",
+        "name": "KPI Management",
+        "version": "19.0.1.0.1",
+        "category": "Human Resources",
+        "subcategory": "Performance",
+        "tagline": "Define, assign and track KPI metrics with RAG scoring and dashboards.",
+        "summary": "A complete KPI management module — define metrics, assign them to employees or departments, track periodic results with an approval workflow, and monitor performance on a real-time dashboard.",
+        "features": [
+            "Hierarchical KPI categories with parent/child trees",
+            "Quantitative or qualitative KPI templates with RAG thresholds",
+            "Three calculation methods: Manual Entry, ORM Query, Formula",
+            "Assignments to employee or department with state machine",
+            "Draft → Submitted → Reviewed → Approved workflow",
+            "Real-time dashboard with summary cards and RAG distribution",
+            "Pivot and graph views for cross-tab analysis",
+            "Multi-company ready with record rules",
+        ],
+        "depends": ["hr", "mail"],
+        "license": "LGPL-3",
+        "price": "Free",
+        "downloads": 21,
+        "store_url": "https://apps.odoo.com/apps/modules/19.0/hr_performance_kpi",
+        "icon_url": "/static/images/store/hr_performance_kpi.png",
+    },
+    {
+        "slug": "salon_booking_pro",
+        "name": "Salon Management",
+        "version": "19.0.1.0.0",
+        "category": "Human Resources",
+        "subcategory": "Salon",
+        "tagline": "Modern salon & spa booking portal with multi-branch support.",
+        "summary": "A complete salon & spa management module with a modern customer-facing booking portal — branches, stylists, services, appointments, and a multi-step booking wizard for guests.",
+        "features": [
+            "Multiple branches with opening hours, manager and team",
+            "Service catalog with categories, duration, price and per-branch availability",
+            "Stylists with services, weekly schedule and public bio",
+            "Full booking lifecycle: draft → confirmed → in progress → done",
+            "Customer-facing booking portal with hero and category browse",
+            "Multi-step booking wizard with live availability check",
+            "Guest booking with optional signup after confirmation",
+            "Customer appointment history and cancellation via token link",
+            "Pivot and graph analytics by branch, service, stylist, status",
+        ],
+        "depends": ["auth_signup", "hr", "mail", "portal"],
+        "license": "LGPL-3",
+        "price": "Free",
+        "downloads": 13,
+        "store_url": "https://apps.odoo.com/apps/modules/19.0/salon_booking_pro",
+        "icon_url": "/static/images/store/salon_booking_pro.png",
+    },
+    {
+        "slug": "petty_cash_daily",
+        "name": "Petty Cash Daily",
+        "version": "19.0.1.0.0",
+        "category": "Finance",
+        "subcategory": "Accounting",
+        "tagline": "Daily cash box management with a beautiful expense dashboard.",
+        "summary": "A daily-first petty cash module — define cash boxes, record money in/out, open and close daily sessions, and watch a real-time expense dashboard that an office manager can open every morning.",
+        "features": [
+            "Cash boxes with custodian, opening balance and currency",
+            "Money in / money out transactions with receipt attachments",
+            "Configurable per-fund approval limit auto-routes expenses",
+            "Daily session with expected vs actual balance and variance alert",
+            "Replenishment requests with full approval workflow",
+            "Daily expense dashboard: income, expenses, net change, balance",
+            "Seven-day cash-flow trend and top categories for the month",
+            "Funds kanban with color-coded custodian and category budgets",
+            "Chatter on every stateful model with Draft → Paid transitions",
+            "Integration with account, hr and mail modules",
+        ],
+        "depends": ["account", "hr", "mail"],
+        "license": "LGPL-3",
+        "price": "Free",
+        "downloads": 6,
+        "store_url": "https://apps.odoo.com/apps/modules/19.0/petty_cash_daily",
+        "icon_url": "/static/images/store/petty_cash_daily.png",
+    },
+]
+
+
+class StoreView(TemplateView):
+    """Public catalogue of free Odoo App Store modules authored by Mostakim Jihad."""
+
+    template_name = "core/store.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["store_modules"] = APP_STORE_MODULES
+        ctx["total_downloads"] = sum(m["downloads"] for m in APP_STORE_MODULES)
+        return ctx
+
+
+class ProjectsView(TemplateView):
+    """Projects I've undertaken across my career — ordered by role (Project Manager first)."""
+
+    template_name = "core/projects.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["clients"] = CLIENTS
+        # group by role for the section heads
+        ctx["clients_by_role"] = {
+            "manager": [c for c in CLIENTS if "Project Manager" in c["role"]],
+            "developer": [c for c in CLIENTS if "Project Manager" not in c["role"] and ("Developer" in c["role"] or "Maintainer" in c["role"])],
+            "other": [c for c in CLIENTS if "Project Manager" not in c["role"] and "Developer" not in c["role"] and "Maintainer" not in c["role"]],
+        }
+        return ctx
+
+
+class ClientListView(TemplateView):
+    """Lightweight client logos grid backed by the same CLIENTS dict."""
+
+    template_name = "portfolio/clients.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["clients"] = CLIENTS
+        ctx["clients_with_testimonials"] = [c for c in CLIENTS if c.get("testimonial")]
+        return ctx
+
+
 class ServiceListView(ListView):
     model = Service
     template_name = 'core/services.html'
@@ -188,6 +428,12 @@ class ServiceListView(ListView):
 
     def get_queryset(self):
         return Service.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['service_workflows'] = SERVICE_WORKFLOWS_VISUAL
+        ctx['service_themes'] = SERVICE_THEMES
+        return ctx
 
 
 class ServiceDetailView(DetailView):
@@ -245,6 +491,8 @@ PRODUCT_CATEGORIES = [
         "key": "hrm",
         "label": "HRM Systems",
         "tagline": "People, payroll, attendance — your team, on one record.",
+        "description": "Run payroll, attendance, leaves, and contracts on a single employee record that HR, managers, and finance all share.",
+        "theme": "pink",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>""",
         "module_slugs": ["human-resources", "expenses-approvals", "subscriptions"],
     },
@@ -252,6 +500,8 @@ PRODUCT_CATEGORIES = [
         "key": "crm",
         "label": "CRM & Sales",
         "tagline": "Quote-to-cash in one pipeline — leads, deals, renewals, support.",
+        "description": "Every lead, quote, and renewal in one pipeline with stage automation, forecasting, and a helpdesk that closes the loop.",
+        "theme": "purple",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="m22 11-3 3-2-2"/></svg>""",
         "module_slugs": ["sales", "crm", "subscriptions", "helpdesk"],
     },
@@ -259,6 +509,8 @@ PRODUCT_CATEGORIES = [
         "key": "scm",
         "label": "Supply Chain & Operations",
         "tagline": "From supplier to shop floor to customer — stock you can trust.",
+        "description": "Multi-warehouse inventory, barcoded picking, dropship routes, and routing-aware manufacturing — stock that always matches the books.",
+        "theme": "orange",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><path d="M3 9V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M9 22V12h6v10"/></svg>""",
         "module_slugs": ["inventory", "purchase", "manufacturing", "quality-maintenance", "field-service"],
     },
@@ -266,6 +518,8 @@ PRODUCT_CATEGORIES = [
         "key": "finance",
         "label": "Finance & Accounting",
         "tagline": "Books that close themselves — multi-entity, multi-currency, audit-ready.",
+        "description": "Multi-entity ledgers, inter-company invoicing, automatic FX revaluation, and consolidated reporting — books an auditor can sign off on.",
+        "theme": "green",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 9h20M9 21V9"/></svg>""",
         "module_slugs": ["accounting", "expenses-approvals"],
     },
@@ -273,6 +527,8 @@ PRODUCT_CATEGORIES = [
         "key": "commerce",
         "label": "Digital Commerce",
         "tagline": "Sell anywhere — counter, online, marketplace — one inventory, one truth.",
+        "description": "POS, storefront, marketplaces, and fulfilment on a single inventory. Sell across every channel without overselling.",
+        "theme": "blue",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>""",
         "module_slugs": ["point-of-sale", "ecommerce", "website", "marketing-automation"],
     },
@@ -280,6 +536,8 @@ PRODUCT_CATEGORIES = [
         "key": "productivity",
         "label": "Projects & Productivity",
         "tagline": "Bill by the hour, not the guess — timesheets, projects, support.",
+        "description": "Timesheets, project billing, retainer contracts, and field-service scheduling — billable work tracked from start to invoice.",
+        "theme": "yellow",
         "icon": """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>""",
         "module_slugs": ["project", "field-service", "helpdesk"],
     },
@@ -398,3 +656,232 @@ def quote_submit(request):
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     response['X-Quote-Lead-Id'] = str(lead.id)
     return response
+
+
+# ---------------------------------------------------------------------------
+# Booking / appointment API
+# ---------------------------------------------------------------------------
+
+def _client_ip(request):
+    fwd = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip()
+    return fwd or request.META.get('REMOTE_ADDR') or None
+
+
+@require_GET
+def booking_calendar(request):
+    """Return availability info for a given month so the picker can light up
+    days that have any open slots.
+
+    Query params: year (int), month (1-12). Returns:
+        {
+          "year": ..., "month": ...,
+          "days": ["2026-08-30", ...]  // dates that have any open slot,
+          "blocked": ["2026-09-04", ...],  // full-day BlockedDate entries
+          "today": "2026-08-30",
+        }
+    """
+    from datetime import date as date_cls
+
+    today = timezone.localdate()
+    try:
+        year = int(request.GET.get('year') or today.year)
+        month = int(request.GET.get('month') or today.month)
+    except (TypeError, ValueError):
+        return HttpResponseBadRequest('Invalid year/month.')
+
+    if month < 1 or month > 12:
+        return HttpResponseBadRequest('Month must be 1-12.')
+
+    advance = getattr(settings, 'BOOKING_ADVANCE_DAYS', 60)
+    horizon = today + timedelta(days=advance)
+
+    days_with_slots = []
+    cursor = date_cls(year, month, 1)
+    while cursor.month == month:
+        if today <= cursor <= horizon:
+            slots = get_available_slots(cursor, slot_minutes=getattr(settings, 'BOOKING_SLOT_MINUTES', 30))
+            if slots:
+                days_with_slots.append(cursor.isoformat())
+        cursor += timedelta(days=1)
+
+    blocked = list(
+        BlockedDate.objects.filter(
+            date__year=year, date__month=month, is_full_day=True,
+        ).values_list('date', flat=True)
+    )
+    blocked = [d.isoformat() if hasattr(d, 'isoformat') else str(d) for d in blocked]
+
+    return JsonResponse({
+        'year': year,
+        'month': month,
+        'days': days_with_slots,
+        'blocked': blocked,
+        'today': today.isoformat(),
+        'horizon': horizon.isoformat(),
+    })
+
+
+@require_GET
+def booking_slots(request):
+    """Return the open slot start-times for a single date.
+
+    Query params: date=YYYY-MM-DD.
+
+    Returns: {
+        "date": "2026-08-30",
+        "slot_minutes": 30,
+        "slots": ["2026-08-30T10:00:00+06:00", ...]  // ISO in project TZ
+    }
+    """
+    date_str = request.GET.get('date')
+    if not date_str:
+        return HttpResponseBadRequest('Missing date.')
+
+    try:
+        target = dt_cls.strptime(date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return HttpResponseBadRequest('Invalid date format (YYYY-MM-DD).')
+
+    today = timezone.localdate()
+    advance = getattr(settings, 'BOOKING_ADVANCE_DAYS', 60)
+    horizon = today + timedelta(days=advance)
+    if target < today or target > horizon:
+        return JsonResponse({'slots': [], 'date': date_str})
+
+    slots = get_available_slots(target, slot_minutes=getattr(settings, 'BOOKING_SLOT_MINUTES', 30))
+    return JsonResponse({
+        'date': date_str,
+        'slot_minutes': getattr(settings, 'BOOKING_SLOT_MINUTES', 30),
+        'slots': [s.isoformat() for s in slots],
+    })
+
+
+@csrf_protect
+@require_POST
+def booking_create(request):
+    """Create an Appointment from the modal form.
+
+    Body (JSON): { name, email, phone?, company?, notes?,
+                    start_iso, slot_minutes, timezone }
+    """
+    import json
+
+    try:
+        data = json.loads(request.body.decode('utf-8') or '{}')
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+
+    name = (data.get('name') or '').strip()
+    email = (data.get('email') or '').strip().lower()
+    phone = (data.get('phone') or '').strip()
+    company = (data.get('company') or '').strip()
+    notes = (data.get('notes') or '').strip()
+    start_iso = (data.get('start_iso') or '').strip()
+    slot_minutes = int(data.get('slot_minutes') or getattr(settings, 'BOOKING_SLOT_MINUTES', 30))
+    visitor_tz = (data.get('timezone') or '').strip() or 'Asia/Dhaka'
+
+    # --- validate ---
+    errors = {}
+    if not name:
+        errors['name'] = 'Name is required.'
+    if len(name) > 120:
+        errors['name'] = 'Name is too long.'
+    if not email:
+        errors['email'] = 'Email is required.'
+    elif '@' not in email or '.' not in email.split('@')[-1]:
+        errors['email'] = 'Enter a valid email address.'
+    if not start_iso:
+        errors['start_iso'] = 'Please pick a time slot.'
+
+    if errors:
+        return JsonResponse({'errors': errors}, status=400)
+
+    # --- parse start ---
+    try:
+        start_dt = dt_cls.fromisoformat(start_iso.replace('Z', '+00:00'))
+        if timezone.is_naive(start_dt):
+            start_dt = timezone.make_aware(start_dt, timezone.utc)
+        start_dt = start_dt.astimezone(timezone.get_current_timezone())
+    except (ValueError, TypeError):
+        return JsonResponse({'error': 'Invalid start time.'}, status=400)
+
+    end_dt = start_dt + timedelta(minutes=slot_minutes)
+
+    # --- race-condition guard: re-check availability at write time ---
+    if Appointment.objects.filter(
+        status='confirmed',
+        start_datetime=start_dt,
+    ).exists():
+        return JsonResponse({
+            'error': 'Sorry, that slot was just booked. Please pick another time.',
+        }, status=409)
+
+    if start_dt <= timezone.now():
+        return JsonResponse({'error': 'Cannot book a slot in the past.'}, status=400)
+
+    # --- save ---
+    try:
+        appt = Appointment.objects.create(
+            name=name[:120],
+            email=email,
+            phone=phone[:40],
+            company=company[:120],
+            notes=notes,
+            start_datetime=start_dt,
+            end_datetime=end_dt,
+            timezone=visitor_tz[:64],
+            ip=_client_ip(request),
+            user_agent=request.META.get('HTTP_USER_AGENT', '')[:400],
+        )
+    except Exception as e:
+        return JsonResponse({'error': f'Could not save booking: {e}'}, status=500)
+
+    # --- emails ---
+    booking_emails.send_confirmation_to_visitor(appt)
+    booking_emails.send_notification_to_owner(appt)
+
+    cancel_url = request.build_absolute_uri(
+        reverse('booking_cancel', args=[appt.cancel_token])
+    )
+    confirm_url = request.build_absolute_uri(
+        reverse('booking_confirmed', args=[appt.cancel_token])
+    )
+
+    return JsonResponse({
+        'ok': True,
+        'id': appt.id,
+        'cancel_url': cancel_url,
+        'confirm_url': confirm_url,
+        'start_datetime': start_dt.isoformat(),
+        'end_datetime': end_dt.isoformat(),
+        'visitor_tz': visitor_tz,
+    })
+
+
+def booking_confirmed(request, token):
+    """Public 'thanks, your call is booked' page reached via the modal."""
+    try:
+        appt = Appointment.objects.get(cancel_token=token)
+    except Appointment.DoesNotExist:
+        raise Http404('Booking not found.')
+
+    return render(request, 'core/booking_confirmed.html', {
+        'appointment': appt,
+    })
+
+
+def booking_cancel(request, token):
+    """Public cancellation page — GET shows confirm, POST marks cancelled."""
+    try:
+        appt = Appointment.objects.get(cancel_token=token)
+    except Appointment.DoesNotExist:
+        raise Http404('Booking not found.')
+
+    if request.method == 'POST':
+        reason = (request.POST.get('reason') or '')[:2000]
+        if appt.status != 'cancelled':
+            appt.cancel(reason)
+            booking_emails.send_cancellation_notice(appt)
+        return render(request, 'core/booking_cancelled.html', {'appointment': appt})
+
+    return render(request, 'core/booking_cancel.html', {'appointment': appt})

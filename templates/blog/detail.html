@@ -5,32 +5,55 @@
 
 {% block content %}
 
-<article class="py-12 md:py-16">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'blog:list' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-6">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            All posts
-        </a>
-        {% if post.published_at %}<p class="text-[12px] text-ink3 mb-3 uppercase tracking-wider">{{ post.published_at|date:"Y.m.d" }}</p>{% endif %}
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ post.title }}</h1>
+{% comment %}
+ ============================================================
+   HERO — section-icon head, eyebrow + meta + back link
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(3rem, 6vw, 5rem); padding-bottom:clamp(2rem, 4vw, 3rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;max-width:780px;">
+
+        <a href="{% url 'blog:list' %}" class="module-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                All posts
+            </a>
+
+        <div class="section-head reveal" style="margin-bottom:1.5rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Article {% if post.published_at %} · {{ post.published_at|date:"M j, Y" }}{% endif %}</div>
+                <h1 class="h1" style="margin:0;">{{ post.title }}</h1>
+            </div>
+        </div>
+
         {% if post.excerpt %}
-        <p class="text-xl text-ink2 mb-8 italic">{{ post.excerpt }}</p>
+        <p class="lead reveal" data-delay="1" style="margin:0;color:var(--text-2);font-style:italic;">{{ post.excerpt }}</p>
         {% endif %}
+    </div>
+</section>
 
-        {% if post.cover_image %}
-        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full rounded-lg mb-10 border border-line">
-        {% endif %}
+{% if post.cover_image %}
+<section style="padding:0;">
+    <div class="container" style="max-width:920px;">
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="reveal" style="width:100%;border-radius:var(--r-2xl);border:1px solid var(--line);">
+    </div>
+</section>
+{% endif %}
 
+<article class="section" style="padding-top:clamp(2rem, 4vw, 3rem);">
+    <div class="container" style="max-width:780px;">
         <div class="prose-content text-lg">
             {{ post.body|linebreaks }}
         </div>
 
         {% if post.get_tags_list %}
-        <div class="mt-12 pt-6 border-t border-line">
-            <h3 class="text-[11px] font-medium uppercase tracking-[0.12em] text-ink3 mb-3">Tags</h3>
-            <div class="flex flex-wrap gap-1.5">
+        <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);">
+            <div class="eyebrow" style="margin-bottom:0.75rem;">Tags</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
                 {% for tag in post.get_tags_list %}
-                <span class="px-2.5 py-1 rounded-full text-[11px] bg-surface text-ink2 border border-line">{{ tag }}</span>
+                <span style="display:inline-flex;align-items:center;padding:0.3rem 0.75rem;background:var(--surface-low);color:var(--text-2);border:1px solid var(--line);border-radius:var(--r-full);font-size:0.78rem;font-weight:500;">{{ tag }}</span>
                 {% endfor %}
             </div>
         </div>
@@ -39,14 +62,29 @@
 </article>
 
 {% if recent_posts %}
-<section class="py-10 border-t border-line bg-surface/30">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 class="text-[11px] font-medium uppercase tracking-[0.12em] text-ink3 mb-5">More posts</h3>
-        <div class="space-y-2">
+<section class="section section-soft">
+    <div class="container" style="max-width:780px;">
+        <div class="section-head reveal">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">More posts</div>
+                <h2 class="h2">Keep reading</h2>
+                <p>More articles on Odoo, ERPNext, and ERP engineering in production.</p>
+            </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0.75rem;">
             {% for rp in recent_posts %}
-            <a href="{% url 'blog:detail' rp.slug %}" class="block surface hover-lift p-4">
-                <p class="font-semibold text-ink">{{ rp.title }}</p>
-                {% if rp.published_at %}<p class="text-[11px] text-ink3 mt-1">{{ rp.published_at|date:"M j, Y" }}</p>{% endif %}
+            <a href="{% url 'blog:detail' rp.slug %}" class="surface hover-lift reveal" style="padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;text-decoration:none;color:inherit;">
+                <div>
+                    <p style="font-weight:600;color:var(--text-1);margin:0;font-size:0.95rem;">{{ rp.title }}</p>
+                    {% if rp.published_at %}<p style="font-size:0.72rem;color:var(--text-3);margin:0.25rem 0 0;text-transform:uppercase;letter-spacing:0.06em;">{{ rp.published_at|date:"M j, Y" }}</p>{% endif %}
+                </div>
+                <span style="color:var(--text-3);flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
             {% endfor %}
         </div>

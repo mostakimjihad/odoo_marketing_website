@@ -47,6 +47,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.site_settings',
+                'core.context_processors.mega_menu',
             ],
         },
     },
@@ -109,3 +110,25 @@ MESSAGE_TAGS = {
     messages.WARNING: 'bg-yellow-50 text-yellow-800 border-yellow-300',
     messages.ERROR: 'bg-red-50 text-red-800 border-red-300',
 }
+
+# ---------------------------------------------------------------------------
+# Booking / appointment settings
+# ---------------------------------------------------------------------------
+BOOKING_SLOT_MINUTES = config('BOOKING_SLOT_MINUTES', default=30, cast=int)
+BOOKING_ADVANCE_DAYS = config('BOOKING_ADVANCE_DAYS', default=60, cast=int)
+BOOKING_OWNER_EMAIL = config(
+    'BOOKING_OWNER_EMAIL',
+    default='mostakimjihad652001@gmail.com',
+)
+
+# Email (console in dev; SMTP via env in prod). Reasonable defaults below
+# so `manage.py runserver` Just Works without extra config.
+EMAIL_BACKEND = config(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.console.EmailBackend',
+)
+DEFAULT_FROM_EMAIL = config(
+    'DEFAULT_FROM_EMAIL',
+    default='Mostakim Jihad <mostakimjihad652001@gmail.com>',
+)
+EMAIL_SUBJECT_PREFIX = '[Booking] '

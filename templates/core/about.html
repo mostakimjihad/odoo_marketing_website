@@ -5,48 +5,123 @@
 {% block content %}
 
 <!-- ============================================================
-     HEADER — Cream toned page header
+     HERO — Compact profile + bio (not a marketing splash)
      ============================================================ -->
-<section class="section section-cream" style="padding-top:5rem;padding-bottom:3rem;">
-    <div class="container">
-        <div class="grid md:grid-cols-12 gap-10 items-start">
-            <div class="md:col-span-4 reveal">
-                <div class="surface" style="padding:1rem;max-width:18rem;">
-                    <div class="aspect-square w-full rounded-lg overflow-hidden flex items-center justify-center border border-line">
+<section class="section section-cream" style="padding-top:clamp(3rem, 6vw, 4.5rem); padding-bottom:clamp(2rem, 4vw, 3rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="about-hero">
+            <div class="about-hero-head">
+                <div class="eyebrow">About me</div>
+                <h1 class="about-h1">{{ site_settings.about_title|default:"ERP &amp; Odoo Engineer" }}</h1>
+                <span class="hero-pill">
+                    <span class="dot"></span> Available · 2+ yrs · Odoo v12 → v17 · NDA-friendly
+                </span>
+            </div>
+
+            <div class="about-hero-body">
+                <div class="about-photo">
+                    <div class="about-photo-frame">
                         {% if site_settings.profile_image %}
-                            <img src="{{ site_settings.profile_image.url }}" alt="{{ site_settings.full_name }}" class="w-full h-full object-cover">
+                            <img src="{{ site_settings.profile_image.url }}" alt="{{ site_settings.full_name }}">
                         {% else %}
-                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&q=80&auto=format&fit=crop&crop=faces" alt="{{ site_settings.full_name|default:'Mostakim Jihad' }}" class="w-full h-full object-cover" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&q=80&auto=format&fit=crop&crop=faces" alt="{{ site_settings.full_name|default:'Mostakim Jihad' }}" loading="lazy">
                         {% endif %}
                     </div>
-                    <div style="margin-top:1rem;">
-                        <div class="font-semibold text-ink">{{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
-                        <div class="text-[12px] text-ink3 mt-1">Senior ERP &amp; Odoo Engineer</div>
-                        <div class="text-[12px] text-ink3">12 yrs · integrations · full-stack · ERP engineering</div>
+                    <div class="about-photo-meta">
+                        <div class="about-photo-name">{{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
+                        <div class="about-photo-role">ERP &amp; Odoo Engineer</div>
+                        <div class="about-photo-tag">2+ yrs · integrations · full-stack · ERP engineering</div>
+                    </div>
+                </div>
+
+                <div class="about-bio">
+                    <div class="prose-content about-prose">
+                        {{ site_settings.about_body|linebreaks }}
+                    </div>
+
+                    <div class="about-cta">
+                        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">
+                            Get in touch
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                        {% if site_settings.cv_file %}
+                        <a href="{{ site_settings.cv_file.url }}" target="_blank" rel="noopener" class="btn btn-secondary btn-lg">
+                            Download CV
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
-            <div class="md:col-span-8 reveal" data-delay="1">
-                <div class="eyebrow">About me</div>
-                <h1 class="h1">{{ site_settings.about_title|default:"Senior ERP &amp; Odoo Engineer" }}</h1>
-                <div class="prose-content text-lg" style="color:var(--text-2);">
-                    {{ site_settings.about_body|linebreaks }}
-                </div>
-
-                <div class="flex flex-wrap gap-3 mt-8">
-                    <a href="{% url 'contact' %}" class="btn btn-dark">Get in touch</a>
-                    {% if site_settings.cv_file %}
-                    <a href="{{ site_settings.cv_file.url }}" target="_blank" rel="noopener" class="btn btn-secondary">
-                        Download CV
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    </a>
-                    {% endif %}
-                </div>
+            <div class="about-hero-trust">
+                <span><span class="dot"></span> Manufacturing · Retail · Distribution</span>
+                <span><span class="dot"></span> Multi-company, multi-currency</span>
+                <span><span class="dot"></span> Audit &amp; rescue of existing builds</span>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+/* About page hero — compact, professional profile layout */
+.about-hero { display: flex; flex-direction: column; gap: 1.75rem; }
+.about-hero-head { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+.about-h1 {
+    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    color: var(--text-1);
+    margin: 0;
+    max-width: 28ch;
+}
+.about-hero-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.25rem;
+}
+@media (min-width: 768px) {
+    .about-hero-body {
+        grid-template-columns: 200px 1fr;
+        gap: 2.5rem;
+    }
+}
+.about-photo { display: flex; flex-direction: column; gap: 0.85rem; }
+.about-photo-frame {
+    width: 140px;
+    height: 140px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-cream-2);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+}
+.about-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-photo-name { font-weight: 700; color: var(--text-1); font-size: 0.95rem; line-height: 1.3; }
+.about-photo-role { font-size: 0.8rem; color: var(--brand); font-weight: 600; margin-top: 0.15rem; }
+.about-photo-tag { font-size: 0.78rem; color: var(--text-3); margin-top: 0.25rem; line-height: 1.45; }
+
+.about-bio { display: flex; flex-direction: column; gap: 1.5rem; }
+.about-prose { color: var(--text-2); font-size: 1rem; line-height: 1.7; }
+.about-prose p { margin: 0 0 1rem; }
+.about-prose p:last-child { margin-bottom: 0; }
+.about-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.about-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-3);
+}
+.about-hero-trust > span { display: inline-flex; align-items: center; gap: 0.5rem; }
+</style>
 
 <!-- ============================================================
      CREDIBILITY STRIP — 4 colored cards
@@ -60,7 +135,7 @@
             <div class="head-text">
                 <div class="eyebrow">Credibility</div>
                 <h2 class="h2">What I bring to the table</h2>
-                <p>Twelve years of ERP engineering across every layer — modules, integrations, infrastructure, and team leadership.</p>
+                <p>2+ years of ERP engineering across every layer — modules, integrations, infrastructure, and client delivery.</p>
             </div>
         </div>
 
@@ -121,6 +196,7 @@
             <div class="head-text">
                 <div class="eyebrow" style="color:var(--purple);">Education</div>
                 <h2 class="h2">Academic background</h2>
+                <p>Foundations that shaped the engineering practice — algorithms, systems, and writing things down properly.</p>
             </div>
         </div>
 
@@ -171,13 +247,28 @@
             <div class="head-text">
                 <div class="eyebrow">Experience</div>
                 <h2 class="h2">Where I've worked</h2>
+                <p>Production ERP, government chatbots, and the kinds of integrations you only learn by shipping them.</p>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-3 gap-4">
             <div class="surface hover-lift" style="padding:1.75rem;">
                 <div style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:700;color:var(--emerald);background:var(--emerald-soft);padding:0.25rem 0.7rem;border-radius:var(--r-full);margin-bottom:0.75rem;">May 2024 – Present</div>
-                <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-1);margin-bottom:0.25rem;">Senior ERP &amp; Odoo Engineer</h3>
+                <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-1);margin-bottom:0.25rem;">Software Engineer · Odoo Developer</h3>
+                <div style="color:var(--brand);font-weight:600;margin-bottom:0.85rem;">Unisoft Systems Ltd.</div>
+                <p style="color:var(--text-2);font-size:0.92rem;line-height:1.55;margin:0 0 1rem;">Building and customizing Odoo ERP solutions for clients across manufacturing, retail, and distribution. Owning module development, third-party integrations, performance tuning, and deployment across multi-company, multi-currency environments.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+                    <span class="industry-tile-tag">Odoo</span>
+                    <span class="industry-tile-tag">Python</span>
+                    <span class="industry-tile-tag">PostgreSQL</span>
+                    <span class="industry-tile-tag">XML / OWL</span>
+                    <span class="industry-tile-tag">REST APIs</span>
+                    <span class="industry-tile-tag">Docker</span>
+                </div>
+            </div>
+            <div class="surface hover-lift" style="padding:1.75rem;">
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:700;color:var(--brand);background:var(--brand-soft);padding:0.25rem 0.7rem;border-radius:var(--r-full);margin-bottom:0.75rem;">Jan 2024 – Apr 2024</div>
+                <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-1);margin-bottom:0.25rem;">ERP &amp; Odoo Engineer</h3>
                 <div style="color:var(--brand);font-weight:600;margin-bottom:0.85rem;">Mysoftheaven (BD) Ltd.</div>
                 <p style="color:var(--text-2);font-size:0.92rem;line-height:1.55;margin:0 0 1rem;">Implemented a full-scale ERP solution covering CRM, HRM, Accounts, and Project Management. Developed a Bangla chatbot for the government project LDTax.</p>
                 <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
@@ -217,6 +308,7 @@
             <div class="head-text">
                 <div class="eyebrow" style="color:#B06000;">Achievements</div>
                 <h2 class="h2">Awards &amp; recognition</h2>
+                <p>Awards, conference papers, and competitive programming — the kind of work that sharpens the engineering.</p>
             </div>
         </div>
 
@@ -248,12 +340,16 @@
 {% if certifications %}
 <section class="section">
     <div class="container">
-        <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
-            <div>
+        <div class="section-head reveal">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div class="head-text">
                 <div class="eyebrow">Credentials</div>
                 <h2 class="h2">Certifications</h2>
+                <p>Industry-recognized certifications validating my expertise in Odoo and related technologies.</p>
             </div>
-            <a href="{% url 'certifications' %}" class="btn btn-ghost">View all →</a>
+            <a href="{% url 'certifications' %}" class="btn btn-ghost btn-sm" style="align-self:center;">View all →</a>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
             {% for cert in certifications %}
@@ -263,5 +359,30 @@
     </div>
 </section>
 {% endif %}
+
+<!-- ============================================================
+     CLOSING CTA — dark band, mirrors home
+     ============================================================ -->
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Available · 2 slots left</div>
+            <h2 class="h2">Want to work together?</h2>
+            <p>Send a brief about your business, the workflow that hurts, and your deadline. You'll get a written scope, a fixed quote, and a reply within 24 hours.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Start a conversation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'services' %}" class="btn btn-secondary">See the services</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

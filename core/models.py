@@ -1,5 +1,9 @@
+import uuid
+from datetime import timedelta
+
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 class SiteSettings(models.Model):
@@ -21,7 +25,7 @@ class SiteSettings(models.Model):
     full_name = models.CharField(max_length=120, default="Mostakim Jihad")
     tagline = models.CharField(
         max_length=200,
-        default="Senior ERP & Odoo Engineer · 12 yrs building business systems",
+        default="ERP & Odoo Engineer · 2+ yrs building business systems",
     )
     phone = models.CharField(max_length=40, blank=True, default="+8801870460323")
     email = models.EmailField(blank=True, default="mostakimjihad652001@gmail.com")
@@ -31,9 +35,9 @@ class SiteSettings(models.Model):
     codeforces = models.URLField(blank=True)
     fiverr_url = models.URLField(blank=True, default="https://www.fiverr.com/your_gig")
 
-    years_experience = models.PositiveIntegerField(default=12)
-    projects_completed = models.PositiveIntegerField(default=80)
-    happy_clients = models.PositiveIntegerField(default=40)
+    years_experience = models.PositiveIntegerField(default=2)
+    projects_completed = models.PositiveIntegerField(default=8)
+    happy_clients = models.PositiveIntegerField(default=10)
 
     class Meta:
         verbose_name = "Site Settings"
@@ -358,4 +362,253 @@ class QuoteLead(models.Model):
 
     def item_count(self):
         return len(self.items or [])
+
+
+# ---------------------------------------------------------------------------
+# Booking / Appointment system
+# ---------------------------------------------------------------------------
+
+class AvailabilityRule(models.Model):
+    """Recurring weekly availability — one row per (weekday, time-range).
+
+    Example: Sun-Thu 10:00-12:00 and 14:00-17:00 = 6 rows for those weekdays.
+    """
+
+    WEEKDAY_CHOICES = [
+        (0, 'Monday'),
+        (1, 'Tuesday'),
+        (2, 'Wednesday'),
+        (3, 'Thursday'),
+        (4, 'Friday'),
+        (5, 'Saturday'),
+        (6, 'Sunday'),
+    ]
+
+    weekday = models.IntegerField(choices=WEEKDAY_CHOICES)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['weekday', 'start_time']
+        verbose_name = 'Availability rule'
+        verbose_name_plural = 'Availability rules'
+
+    def __str__(self):
+        return f"{self.get_weekday_display()} {self.start_time:%H:%M} – {self.end_time:%H:%M}"
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.start_time and self.end_time and self.start_time >= self.end_time:
+            raise ValidationError('start_time must be before end_time.')
+
+
+class BlockedDate(models.Model):
+    """A specific date (or partial day) when the owner is unavailable.
+
+    Used for holidays, vacations, conferences. is_full_day = True blocks the
+    entire date; otherwise the row is treated as a full-day block for now
+    (partial-day support intentionally omitted to keep the model simple).
+    """
+
+    date = models.DateField(unique=True)
+    label = models.CharField(
+        max_length=120, blank=True,
+        help_text='Optional reason, e.g. "Public holiday" or "Vacation".',
+    )
+    is_full_day = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['date']
+        verbose_name = 'Blocked date'
+        verbose_name_plural = 'Blocked dates'
+
+    def __str__(self):
+        return f"{self.date} — {self.label or 'Blocked'}"
+
+
+class Appointment(models.Model):
+    """A confirmed (or cancelled) booking made through the calendar modal.
+
+    `start_datetime` / `end_datetime` are stored in the project timezone
+    (settings.TIME_ZONE, default Asia/Dhaka) and are timezone-aware.
+    The `timezone` field captures the visitor's detected IANA zone so the
+    confirmation email can show the booking in their local time.
+    """
+
+    STATUS_CHOICES = [
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    # Customer
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    company = models.CharField(max_length=120, blank=True)
+    notes = models.TextField(blank=True, help_text='What they want to discuss on the call.')
+
+    # Schedule
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+    timezone = models.CharField(
+        max_length=64, default='Asia/Dhaka',
+        help_text="The visitor's IANA timezone, e.g. 'Europe/London'.",
+    )
+
+    # Lifecycle
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default='confirmed')
+    cancel_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    cancelled_at = models.DateTimeField(null=True, blank=True)
+    cancellation_reason = models.TextField(blank=True)
+
+    # Tracking
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.CharField(max_length=400, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['start_datetime']
+        verbose_name = 'Appointment'
+        verbose_name_plural = 'Appointments'
+        indexes = [
+            models.Index(fields=['start_datetime', 'status']),
+            models.Index(fields=['status']),
+        ]
+        constraints = [
+            # A confirmed appointment may not share its exact start_datetime
+            # with another confirmed appointment (no double-booking).
+            models.UniqueConstraint(
+                fields=['start_datetime'],
+                condition=models.Q(status='confirmed'),
+                name='unique_confirmed_start',
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.name} — {self.start_datetime:%Y-%m-%d %H:%M} ({self.get_status_display()})"
+
+    @property
+    def duration_minutes(self):
+        return int((self.end_datetime - self.start_datetime).total_seconds() // 60)
+
+    @property
+    def is_upcoming(self):
+        return self.status == 'confirmed' and self.start_datetime > timezone.now()
+
+    def cancel(self, reason=''):
+        self.status = 'cancelled'
+        self.cancelled_at = timezone.now()
+        self.cancellation_reason = reason[:2000]
+        self.save(update_fields=['status', 'cancelled_at', 'cancellation_reason', 'updated_at'])
+
+
+# ---------------------------------------------------------------------------
+# Slot helpers — pure functions used by views. Keep models thin.
+# ---------------------------------------------------------------------------
+
+def get_available_slots(target_date, slot_minutes=30):
+    """Return a sorted list of slot start-times (timezone-aware datetimes)
+    for `target_date` that are NOT blocked or already booked.
+
+    All datetimes returned are in the project timezone (settings.TIME_ZONE).
+    Past slots (relative to now) and slots that overlap any confirmed
+    Appointment or BlockedDate are dropped.
+    """
+    from django.conf import settings as dj_settings
+
+    tz = timezone.get_current_timezone()
+    weekday = target_date.weekday()
+
+    rules = AvailabilityRule.objects.filter(
+        weekday=weekday, is_active=True,
+    ).order_by('start_time')
+
+    if not rules.exists():
+        return []
+
+    # Bookings + blocked dates that intersect this calendar day.
+    day_start = timezone.make_aware(
+        timezone.datetime.combine(target_date, timezone.datetime.min.time()),
+        tz,
+    ) if timezone.is_naive(timezone.datetime.combine(target_date, timezone.datetime.min.time())) \
+        else timezone.datetime.combine(target_date, timezone.datetime.min.time()).replace(tzinfo=tz)
+
+    day_end = day_start + timedelta(days=1)
+
+    booked = set(
+        Appointment.objects.filter(
+            status='confirmed',
+            start_datetime__lt=day_end,
+            end_datetime__gt=day_start,
+        ).values_list('start_datetime', 'end_datetime')
+    )
+
+    is_blocked = BlockedDate.objects.filter(date=target_date, is_full_day=True).exists()
+
+    if is_blocked:
+        return []
+
+    now = timezone.now()
+    step = timedelta(minutes=slot_minutes)
+    slots = []
+
+    for rule in rules:
+        cursor = timezone.make_aware(
+            timezone.datetime.combine(target_date, rule.start_time), tz,
+        ) if timezone.is_naive(
+            timezone.datetime.combine(target_date, rule.start_time)
+        ) else timezone.datetime.combine(target_date, rule.start_time).replace(tzinfo=tz)
+
+        rule_end = timezone.make_aware(
+            timezone.datetime.combine(target_date, rule.end_time), tz,
+        ) if timezone.is_naive(
+            timezone.datetime.combine(target_date, rule.end_time)
+        ) else timezone.datetime.combine(target_date, rule.end_time).replace(tzinfo=tz)
+
+        # Snap the cursor forward to the next step boundary relative to rule start.
+        # We assume rule start_time is already on a slot boundary (admin enforces this).
+        while cursor + step <= rule_end:
+            slot_start = cursor
+            slot_end = cursor + step
+
+            # Skip past slots
+            if slot_start <= now:
+                cursor += step
+                continue
+
+            # Skip overlapping bookings
+            overlaps = any(
+                b_start < slot_end and b_end > slot_start
+                for b_start, b_end in booked
+            )
+            if overlaps:
+                cursor += step
+                continue
+
+            slots.append(slot_start)
+            cursor += step
+
+    return slots
+
+
+def month_has_any_availability(year, month):
+    """Cheap check: does this month have *any* availability at all?
+
+    Used to dim out months in the calendar picker that are entirely empty.
+    """
+    from calendar import monthrange
+
+    _, last_day = monthrange(year, month)
+    for day in range(1, last_day + 1):
+        try:
+            d = timezone.datetime(year, month, day).date()
+        except ValueError:
+            continue
+        if d.weekday() in set(
+            AvailabilityRule.objects.filter(is_active=True).values_list('weekday', flat=True)
+        ) and not BlockedDate.objects.filter(date=d, is_full_day=True).exists():
+            return True
+    return False
 

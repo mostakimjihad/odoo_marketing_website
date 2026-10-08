@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import path, reverse
+from django.utils import timezone
 
-from .models import SiteSettings, Service, ContactInquiry, ERPModule, PricingConfig, QuoteLead
+from .models import (
+    SiteSettings, Service, ContactInquiry, ERPModule, PricingConfig, QuoteLead,
+    AvailabilityRule, BlockedDate, Appointment,
+)
 
 
 @admin.register(SiteSettings)
@@ -172,3 +176,85 @@ class ERPModuleAdmin(admin.ModelAdmin):
             'fields': ('is_featured', 'is_published'),
         }),
     )
+
+
+# ---------------------------------------------------------------------------
+# Booking admin
+# ---------------------------------------------------------------------------
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    """Bookings made via the 'Book a free call' modal."""
+
+    list_display = (
+        'start_datetime', 'duration_minutes_col', 'name', 'email', 'phone',
+        'company', 'timezone', 'status',
+    )
+    list_filter = ('status', 'timezone', 'start_datetime')
+    list_editable = ('status',)
+    search_fields = ('name', 'email', 'phone', 'company', 'notes')
+    date_hierarchy = 'start_datetime'
+    ordering = ('-start_datetime',)
+    readonly_fields = (
+        'cancel_token', 'created_at', 'updated_at', 'ip', 'user_agent',
+        'duration_minutes_col',
+    )
+
+    fieldsets = (
+        ('When', {
+            'fields': ('start_datetime', 'end_datetime', 'duration_minutes_col', 'timezone', 'status'),
+        }),
+        ('Customer', {
+            'fields': ('name', 'email', 'phone', 'company', 'notes'),
+        }),
+        ('Cancellation', {
+            'fields': ('cancel_token', 'cancelled_at', 'cancellation_reason'),
+            'classes': ('collapse',),
+        }),
+        ('Tracking', {
+            'fields': ('ip', 'user_agent', 'created_at', 'updated_at'),
+            'classes': ('collapse',),
+        }),
+    )
+
+    actions = ['mark_confirmed', 'mark_cancelled']
+
+    @admin.display(description='Duration')
+    def duration_minutes_col(self, obj):
+        return f"{obj.duration_minutes} min"
+
+    @admin.action(description='Mark selected as confirmed')
+    def mark_confirmed(self, request, queryset):
+        queryset.update(status='confirmed', cancelled_at=None)
+
+    @admin.action(description='Cancel selected appointments')
+    def mark_cancelled(self, request, queryset):
+        queryset.update(status='cancelled', cancelled_at=timezone.now())
+
+    def has_add_permission(self, request):
+        # Bookings come in through the public form, not the admin.
+        return False
+
+
+@admin.register(AvailabilityRule)
+class AvailabilityRuleAdmin(admin.ModelAdmin):
+    """Weekly availability windows."""
+
+    list_display = ('weekday', 'start_time', 'end_time', 'is_active')
+    list_editable = ('start_time', 'end_time', 'is_active')
+    list_filter = ('weekday', 'is_active')
+    ordering = ('weekday', 'start_time')
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+@admin.register(BlockedDate)
+class BlockedDateAdmin(admin.ModelAdmin):
+    """Specific dates when the owner is unavailable."""
+
+    list_display = ('date', 'label', 'is_full_day')
+    list_editable = ('label', 'is_full_day')
+    search_fields = ('date', 'label')
+    date_hierarchy = 'date'
+    ordering = ('date',)

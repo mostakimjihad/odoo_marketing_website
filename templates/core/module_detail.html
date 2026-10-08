@@ -8,11 +8,12 @@
 
 {% comment %}
 ============================================================
-HERO — clean editorial, no top borders, subtle line backdrop
+HERO — clean editorial, section-icon head + availability pill
 ============================================================
 {% endcomment %}
-<section class="section module-hero">
-    <div class="container module-container">
+<section class="section section-cream module-hero" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container module-container" style="position:relative;z-index:1;">
+
         <a href="{% url 'modules' %}" class="module-back">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             All modules
@@ -33,37 +34,27 @@ HERO — clean editorial, no top borders, subtle line backdrop
             </div>
         </div>
 
-        <div class="module-meta-pills reveal" data-delay="2">
-            <span class="module-meta-pill">
-                <span class="module-pulse"></span>
-                Available · replies &lt; 4h
-            </span>
-            <span class="module-meta-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                NDA-friendly
-            </span>
-            <span class="module-meta-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
-                Fixed scope
-            </span>
-        </div>
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> Available · replies &lt; 4h · NDA-friendly · Fixed scope
+        </span>
     </div>
 </section>
 
 {% comment %}
 ============================================================
-PRODUCT PREVIEW — big visual, eyebrow label, no borders
+PRODUCT PREVIEW — big visual, section-icon head, subtle line backdrop
 ============================================================
 {% endcomment %}
 <section class="section module-preview-section">
     <div class="container module-container">
         <div class="section-head reveal">
-            <div class="section-icon">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
             </div>
             <div class="head-text">
                 <div class="eyebrow">Product preview</div>
                 <h2 class="h2">What {{ module.name }} looks like in production.</h2>
+                <p>Configured to your business, integrated with the rest of your stack, handed over with training and docs.</p>
             </div>
         </div>
 
@@ -91,7 +82,7 @@ KEY METRICS — 3 stat tiles (only if data present)
 ============================================================
 {% endcomment %}
 {% if module_details.metrics %}
-<section class="section module-metrics-section">
+<section class="section section-soft module-metrics-section">
     <div class="container module-container">
         <div class="module-metrics-grid reveal">
             {% for value, label in module_details.metrics %}
@@ -107,16 +98,24 @@ KEY METRICS — 3 stat tiles (only if data present)
 
 {% comment %}
 ============================================================
-FEATURES HIGHLIGHTS — 2-column bulleted list with eyebrow
+FEATURES HIGHLIGHTS — 2-column with section-icon head
 ============================================================
 {% endcomment %}
 {% if module_details.highlights %}
 <section class="section module-features-section">
     <div class="container module-container module-features-grid">
         <div>
-            <div class="eyebrow">What it does</div>
-            <h2 class="h2">Every feature, end to end.</h2>
-            <p class="module-features-lead">A working system you can hand to your team on day one — configured to your business, integrated with the rest of your stack, and handed over with training and documentation.</p>
+            <div class="section-head reveal" style="margin-bottom:1.5rem;">
+                <div class="section-icon" style="--accent: var(--emerald); --accent-soft: var(--soft-green-bg); color: var(--emerald);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color: var(--emerald);">What it does</div>
+                    <h2 class="h2">Every feature, end to end.</h2>
+                    <p>A working system you can hand to your team on day one.</p>
+                </div>
+            </div>
+            <p class="module-features-lead">Configured to your business, integrated with the rest of your stack, and handed over with training and documentation.</p>
             {% if module_details.integrates_with %}
             <div class="module-integrates">
                 <div class="eyebrow" style="margin-bottom:0.75rem;">Plays well with</div>
@@ -147,10 +146,19 @@ FEATURES HIGHLIGHTS — 2-column bulleted list with eyebrow
 MAIN CONTENT + HIRE-ME ASIDE — clean two-column, no borders
 ============================================================
 {% endcomment %}
-<section class="section module-body-section">
+<section class="section section-cream module-body-section">
     <div class="container module-container module-grid">
         <div class="module-content">
-            <div class="eyebrow">How it works</div>
+            <div class="section-head reveal" style="margin-bottom:1.25rem;">
+                <div class="section-icon" style="--accent: var(--blue); --accent-soft: var(--soft-blue-bg); color: var(--blue);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color: var(--blue);">How it works</div>
+                    <h2 class="h2">The implementation story.</h2>
+                </div>
+            </div>
+
             <div class="prose-content">
                 {{ module.description|linebreaks }}
             </div>
@@ -213,12 +221,13 @@ OTHER MODULES — clean grid with Odoo icons, no top border
 <section class="section module-others-section">
     <div class="container module-container">
         <div class="section-head reveal">
-            <div class="section-icon">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
             </div>
             <div class="head-text">
                 <div class="eyebrow">More modules</div>
                 <h2 class="h2">Other ways I can ship this for you.</h2>
+                <p>Pick a starting point — or send me a brief and I'll suggest the right mix.</p>
             </div>
         </div>
 
@@ -244,5 +253,32 @@ OTHER MODULES — clean grid with Odoo icons, no top border
     </div>
 </section>
 {% endif %}
+
+{% comment %}
+============================================================
+CLOSING CTA — dark band, mirrors home
+============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Currently accepting Q4 engagements · 2 slots left</div>
+            <h2 class="h2">Ready to ship {{ module.name }}?</h2>
+            <p>Send a brief with your business, the workflow, and your deadline. You'll get a written scope, a fixed quote, and a reply within 24 hours.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Send a brief
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'pricing' %}" class="btn btn-secondary">See pricing</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

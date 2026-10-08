@@ -4,7 +4,7 @@
         <img src="{{ cert.image.url }}" alt="{{ cert.title }}" class="w-14 h-14 object-contain flex-shrink-0 rounded-lg bg-surface p-1.5 border border-line">
         {% else %}
         <div class="w-14 h-14 bg-surface rounded-lg flex items-center justify-center flex-shrink-0 border border-line">
-            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
         {% endif %}
         <div class="flex-1 min-w-0">
@@ -12,13 +12,13 @@
             <p class="text-sm text-ink3 mb-3">{{ cert.issuer }}</p>
             <div class="flex flex-wrap gap-1.5 text-[11px]">
                 {% if cert.issue_date %}
-                <span class="px-2 py-0.5 rounded-full bg-surface text-ink3 border border-line">{{ cert.issue_date|date:"M Y" }}</span>
+                <span style="display:inline-flex;align-items:center;padding:0.2rem 0.6rem;background:var(--surface-low);color:var(--text-3);border:1px solid var(--line);border-radius:var(--r-full);">{{ cert.issue_date|date:"M Y" }}</span>
                 {% endif %}
                 {% if cert.credential_id %}
-                <span class="px-2 py-0.5 rounded-full bg-surface text-ink3 border border-line">ID: {{ cert.credential_id }}</span>
+                <span style="display:inline-flex;align-items:center;padding:0.2rem 0.6rem;background:var(--surface-low);color:var(--text-3);border:1px solid var(--line);border-radius:var(--r-full);">ID: {{ cert.credential_id }}</span>
                 {% endif %}
                 {% if cert.credential_url %}
-                <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 border border-indigo-400/30 hover:bg-indigo-500 hover:text-white transition">Verify →</a>
+                <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:0.2rem 0.6rem;background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);border-radius:var(--r-full);text-decoration:none;font-weight:600;transition:background 0.15s;">Verify →</a>
                 {% endif %}
             </div>
         </div>

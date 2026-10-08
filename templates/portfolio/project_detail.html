@@ -6,55 +6,100 @@
 {% block content %}
 
 {% if project.cover_image %}
-<section class="pt-8">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="aspect-[21/9] rounded-lg overflow-hidden border border-line">
-            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover">
+<section style="padding-top:clamp(2rem, 4vw, 3rem);">
+    <div class="container" style="max-width:1100px;">
+        <div class="aspect-[21/9] reveal" style="border-radius:var(--r-2xl);overflow:hidden;border:1px solid var(--line);">
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" style="width:100%;height:100%;object-fit:cover;">
         </div>
     </div>
 </section>
 {% endif %}
 
-<section class="pt-10 pb-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'portfolio:portfolio' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-6">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            All portfolio
-        </a>
-        <div class="eyebrow">Project</div>
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ project.title }}</h1>
-        {% if project.completed_at %}<p class="text-[12px] text-ink3">Completed {{ project.completed_at|date:"M Y" }}</p>{% endif %}
+{% comment%}
+ ============================================================
+   HERO — section-icon head + meta row
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(2.5rem, 5vw, 4rem); padding-bottom:clamp(2rem, 4vw, 3rem);">
+    <div class="container" style="max-width:780px;">
+        <a href="{% url 'portfolio:portfolio' %}" class="module-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                All portfolio
+            </a>
+
+        <div class="section-head reveal" style="margin-bottom:1.5rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Project {% if project.completed_at %} · {{ project.completed_at|date:"M Y" }}{% endif %}</div>
+                <h1 class="h1" style="margin:0;">{{ project.title }}</h1>
+            </div>
+        </div>
+
+        {% if project.description %}
+        <p class="lead reveal" data-delay="1" style="margin:0;color:var(--text-2);">{{ project.description }}</p>
+        {% endif %}
     </div>
 </section>
 
-<section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="prose-content text-lg mb-10">{{ project.description|linebreaks }}</div>
+<section class="section" style="padding-top:0;">
+    <div class="container" style="max-width:780px;">
+        <div class="prose-content text-lg">
+            {{ project.description|linebreaks }}
+        </div>
 
         {% if project.get_tech_list %}
-        <div class="mb-10">
-            <h3 class="text-[11px] font-medium uppercase tracking-[0.12em] text-ink3 mb-3">Technologies</h3>
-            <div class="flex flex-wrap gap-1.5">
+        <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);">
+            <div class="eyebrow" style="margin-bottom:0.75rem;">Technologies</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
                 {% for tech in project.get_tech_list %}
-                <span class="px-2.5 py-1 rounded-full text-[11px] bg-surface text-ink2 border border-line">{{ tech }}</span>
+                <span style="display:inline-flex;align-items:center;padding:0.3rem 0.75rem;background:var(--surface-low);color:var(--text-2);border:1px solid var(--line);border-radius:var(--r-full);font-size:0.78rem;font-weight:500;">{{ tech }}</span>
                 {% endfor %}
             </div>
         </div>
         {% endif %}
 
-        <div class="flex flex-wrap gap-3">
+        <div style="margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:0.75rem;">
             {% if project.project_url %}
-            <a href="{{ project.project_url }}" target="_blank" rel="noopener" class="btn-primary">
+            <a href="{{ project.project_url }}" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
                 Live project
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
             {% endif %}
             {% if project.github_url %}
-            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn-ghost">
+            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-secondary btn-lg">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.42-4.04-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 View on GitHub
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.42-4.04-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             </a>
             {% endif %}
+        </div>
+    </div>
+</section>
+
+{% comment%}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Want to build something similar?</div>
+            <h2 class="h2">Have a similar project?</h2>
+            <p>Send a brief and I'll reply within 24 hours with a written scope and a fixed quote.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Start a conversation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'services' %}" class="btn btn-secondary">See the services</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
         </div>
     </div>
 </section>

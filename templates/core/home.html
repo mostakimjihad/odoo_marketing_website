@@ -4,183 +4,176 @@
 {% block content %}
 
 <!-- ============================================================
-     HERO — Indigo accent
+     HERO — Full-bleed image carousel with text overlay
      ============================================================ -->
-<section class="hero hero-mesh" style="position:relative;overflow:hidden;padding-top:4.5rem;padding-bottom:3.5rem;">
+<section id="hero" class="hero-fullbleed">
+    <!-- Background carousel — fills the entire section -->
+    <div class="hero-carousel" aria-label="ERP implementations and integrations">
+        <div class="hero-carousel-track" data-hero-carousel>
+            <!-- Slide 1: ERP dashboard analytics -->
+            <div class="hero-carousel-slide is-active">
+                <img alt="Real-time ERP dashboard and analytics on screen" loading="lazy" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=2000&h=1200&q=80&auto=format&fit=crop" />
+            </div>
+            <!-- Slide 2: Successful client delivery / business meeting -->
+            <div class="hero-carousel-slide">
+                <img alt="Successful ERP rollout — client delivery meeting" loading="lazy" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=2000&h=1200&q=80&auto=format&fit=crop" />
+            </div>
+            <!-- Slide 3: Engineering team -->
+            <div class="hero-carousel-slide">
+                <img alt="Engineering team reviewing code" loading="lazy" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=2000&h=1200&q=80&auto=format&fit=crop" />
+            </div>
+            <!-- Slide 4: Warehouse / inventory -->
+            <div class="hero-carousel-slide">
+                <img alt="Warehouse and inventory operations" loading="lazy" src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=2000&h=1200&q=80&auto=format&fit=crop" />
+            </div>
+            <!-- Slide 5: Manufacturing -->
+            <div class="hero-carousel-slide">
+                <img alt="Manufacturing production line" loading="lazy" src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=2000&h=1200&q=80&auto=format&fit=crop" />
+            </div>
+        </div>
+        <div class="hero-carousel-dots" role="tablist" aria-label="Carousel navigation">
+            <button class="hero-carousel-dot is-active" type="button" data-slide="0" aria-label="Slide 1 — ERP dashboard analytics"></button>
+            <button class="hero-carousel-dot" type="button" data-slide="1" aria-label="Slide 2 — Client delivery meeting"></button>
+            <button class="hero-carousel-dot" type="button" data-slide="2" aria-label="Slide 3 — Engineering team"></button>
+            <button class="hero-carousel-dot" type="button" data-slide="3" aria-label="Slide 4 — Warehouse"></button>
+            <button class="hero-carousel-dot" type="button" data-slide="4" aria-label="Slide 5 — Manufacturing"></button>
+        </div>
+    </div>
+
+    <!-- Text overlay -->
     <div class="container">
-        <div class="hero-grid">
-            <div>
-                <span class="hero-badge"><span class="dot"></span> Available · Q4 2026 — 2 slots left</span>
-                <h1 class="h1 reveal">
-                    I connect every tool
-                    <span class="accent">your business runs on.</span>
-                </h1>
-                <p class="lead">
-                    ERP implementation, complex engineering, and full-stack integrations — sales, inventory, accounting, manufacturing, eCommerce, HRM and the systems that talk to them, all on one data layer.
-                </p>
+        <div style="max-width:680px;">
+            <span class="hero-pill reveal">
+                <span class="dot"></span> Available · Q4 2026 — 2 slots left
+            </span>
 
-                <div class="flex gap-2 wrap">
-                    <a href="{% url 'contact' %}" class="btn btn-dark btn-lg">
-                        Book a free call
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </a>
-                    <a href="#services" class="btn btn-secondary btn-lg">See the services</a>
-                    {% if site_settings.fiverr_url %}
-                    <a href="{{ site_settings.fiverr_url }}" target="_blank" rel="noopener" class="btn btn-ghost">or Fiverr →</a>
-                    {% endif %}
-                </div>
+            <h1 class="reveal" style="margin-top:0;">
+                I connect every tool <span class="accent">your business runs on.</span>
+            </h1>
 
-                <div class="hero-trust reveal" data-delay="2">
-                    <span><span class="dot"></span> Odoo v12 → v17 migrations</span>
-                    <span><span class="dot"></span> Multi-company · multi-currency</span>
-                    <span><span class="dot"></span> NDA · audit-ready</span>
-                </div>
+            <p class="hero-lead reveal" style="margin-bottom:2.25rem;">
+                ERP implementation, complex engineering, and full-stack integrations — sales, inventory, accounting, manufacturing, eCommerce, HRM and the systems that talk to them, all on one data layer.
+            </p>
+
+            <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;">
+                <a href="{% url 'contact' %}" class="btn btn-primary btn-lg" data-book-trigger>
+                    Book a free call
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="#services" class="btn btn-secondary btn-lg">See the services</a>
             </div>
 
-            <div class="hero-cluster reveal reveal-rise">
-                <div class="hero-photo p1">
-                    <img alt="Developer workspace" loading="eager"
-                         src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80&auto=format&fit=crop">
-                </div>
-                <div class="hero-photo p2">
-                    <img alt="Team collaboration" loading="lazy"
-                         src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop">
-                </div>
-                <div class="hero-photo p3">
-                    <img alt="Mostakim Jihad — Senior ERP & Odoo Engineer" loading="eager"
-                         src="{% static 'images/profile.png' %}">
-                </div>
-                <div class="hero-stat-card s1">
-                    <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-                    <div>
-                        <div class="num">12+ yrs</div>
-                        <div class="lbl">ERP Experience</div>
-                    </div>
-                </div>
-                <div class="hero-stat-card s2">
-                    <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
-                    <div>
-                        <div class="num">80+ ships</div>
-                        <div class="lbl">ERP systems</div>
-                    </div>
-                </div>
-                <div class="hero-stat-card s3">
-                    <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                    <div>
-                        <div class="num">40+</div>
-                        <div class="lbl">Happy clients</div>
-                    </div>
-                </div>
-                <div class="hero-stat-card s4">
-                    <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-                    <div>
-                        <div class="num">100+</div>
-                        <div class="lbl">Tech stack</div>
-                    </div>
-                </div>
+            <div class="hero-trust reveal">
+                <span><span class="dot"></span> Odoo v12 → v17 migrations</span>
+                <span><span class="dot"></span> Multi-company · multi-currency</span>
+                <span><span class="dot"></span> NDA · audit-ready</span>
             </div>
-        </div>
-
-<div class="divider-wave" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/></svg>
-</div>
-
-        <!-- Stats row — circular rings -->
-        <div class="stats reveal" data-delay="1" style="margin-top:3.5rem;">
-            <div class="stat-circle" style="--accent: var(--cyan); --accent-soft: var(--cyan-soft);">
-                <div class="stat-ring">
-                    <svg viewBox="0 0 120 120">
-                        <circle class="ring-bg" cx="60" cy="60" r="52"/>
-                        <circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="40"/>
-                    </svg>
-                    <div class="ring-center">
-                        <div class="ring-num">{{ site_settings.years_experience }}+</div>
-                        <div class="ring-suffix">yrs</div>
-                    </div>
-                </div>
-                <div class="stat-label">Years in business &amp; ERP</div>
-            </div>
-            <div class="stat-circle" style="--accent: var(--emerald); --accent-soft: var(--emerald-soft);">
-                <div class="stat-ring">
-                    <svg viewBox="0 0 120 120">
-                        <circle class="ring-bg" cx="60" cy="60" r="52"/>
-                        <circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="20"/>
-                    </svg>
-                    <div class="ring-center">
-                        <div class="ring-num">{{ site_settings.projects_completed }}+</div>
-                        <div class="ring-suffix">ships</div>
-                    </div>
-                </div>
-                <div class="stat-label">ERP systems shipped</div>
-            </div>
-            <div class="stat-circle" style="--accent: var(--purple); --accent-soft: var(--purple-soft);">
-                <div class="stat-ring">
-                    <svg viewBox="0 0 120 120">
-                        <circle class="ring-bg" cx="60" cy="60" r="52"/>
-                        <circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="65"/>
-                    </svg>
-                    <div class="ring-center">
-                        <div class="ring-num">{{ site_settings.happy_clients }}+</div>
-                        <div class="ring-suffix">clients</div>
-                    </div>
-                </div>
-                <div class="stat-label">Happy clients</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Client logo marquee — infinite scroll -->
-    <div class="container" style="margin-top:4rem;">
-        <p style="text-align:center;font-size:0.78rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:0.5rem;">Trusted by teams shipping production ERP</p>
-    </div>
-    <div class="marquee reveal" aria-label="Trusted by">
-        <div class="marquee-track">
-            <span class="marquee-item">Mysoftheaven</span>
-            <span class="marquee-item">LDTax</span>
-            <span class="marquee-item">JanataWifi</span>
-            <span class="marquee-item">GreenU</span>
-            <span class="marquee-item">Azerion</span>
-            <span class="marquee-item">Klikit</span>
-            <span class="marquee-item">Flarie</span>
-            <span class="marquee-item">Goava</span>
-            <span class="marquee-item">Talrock</span>
-            <span class="marquee-item">Stickler</span>
-            <!-- duplicate for seamless loop -->
-            <span class="marquee-item" aria-hidden="true">Mysoftheaven</span>
-            <span class="marquee-item" aria-hidden="true">LDTax</span>
-            <span class="marquee-item" aria-hidden="true">JanataWifi</span>
-            <span class="marquee-item" aria-hidden="true">GreenU</span>
-            <span class="marquee-item" aria-hidden="true">Azerion</span>
-            <span class="marquee-item" aria-hidden="true">Klikit</span>
-            <span class="marquee-item" aria-hidden="true">Flarie</span>
-            <span class="marquee-item" aria-hidden="true">Goava</span>
-            <span class="marquee-item" aria-hidden="true">Talrock</span>
-            <span class="marquee-item" aria-hidden="true">Stickler</span>
         </div>
     </div>
 </section>
 
 <!-- ============================================================
-     SERVICES — Cartoonic illustrated card grid
+     PROJECTS — horizontal slider (showcase of recent work)
+     ============================================================ -->
+<section class="section projects-slider-section" style="padding-top:clamp(3rem, 5vw, 4rem); padding-bottom:clamp(3rem, 5vw, 4rem); background:#FFFFFF;">
+    <div class="container">
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7l9-4 9 4M5 21V11M19 21V11M9 21v-6h6v6"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Selected projects</div>
+                <h2 class="h2">Where the work landed.</h2>
+                <p>From multi-branch distribution groups to AI-powered telecom tools — drag to scroll through recent engagements.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="projects-slider reveal" data-delay="1">
+        <div class="projects-slider-track">
+            {% for c in marquee_clients %}
+            <article class="projects-slider-card">
+                <div class="projects-slider-card-media">
+                    {% if c.logo %}
+                    <img src="{{ c.logo }}" alt="{{ c.name }} logo" loading="lazy">
+                    {% else %}
+                    <span class="projects-slider-card-fallback">{{ c.name|slice:":2" }}</span>
+                    {% endif %}
+                </div>
+                <div class="projects-slider-card-body">
+                    <div class="projects-slider-card-meta">
+                        <span class="projects-slider-card-num">{{ forloop.counter|stringformat:"02d" }}</span>
+                        <span class="projects-slider-card-industry">{{ c.industry }}</span>
+                    </div>
+                    <h3 class="projects-slider-card-name">{{ c.name }}</h3>
+                    <div class="projects-slider-card-role">{{ c.role }}</div>
+                    <p class="projects-slider-card-scope">{{ c.scope }}</p>
+                    {% if c.url %}
+                    <a href="{{ c.url }}" target="_blank" rel="noopener" class="projects-slider-card-link">
+                        Visit
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                    </a>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container" style="margin-top:1.5rem;">
+        <div style="text-align:center;">
+            <a href="{% url 'projects' %}" class="btn btn-secondary btn-sm">
+                See all {{ marquee_clients|length }} projects
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     STATS — Simple horizontal numbers
+     ============================================================ -->
+<section style="padding:3.5rem 0;background:#FFFFFF;">
+    <div class="container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;">
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);"><span class="counter" data-counter="2">2</span><span style="color:var(--brand);">+</span></div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Years building ERP &amp; integrations</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);"><span class="counter" data-counter="5">5</span><span style="color:var(--brand);">+</span></div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">ERP systems shipped</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);"><span class="counter" data-counter="10">10</span><span style="color:var(--brand);">+</span></div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Happy clients</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">3</div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Modules on the App Store</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
      ============================================================ -->
 <section id="services" class="section section-services">
-    {# Subtle line-grid background handled by CSS ::before #}
-
     <div class="container">
-        <div class="section-head reveal" style="margin-bottom:3.5rem;">
-            <div class="section-icon" style="--accent: var(--cream-700); --accent-soft: var(--soft-yellow); color: var(--cream-700); border-color: var(--line);">
+        <div class="section-head reveal" style="margin-bottom:3rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             </div>
             <div class="head-text">
                 <div class="eyebrow">What I do</div>
                 <h2 class="h2">Every service, end to end</h2>
-                <p>11 services. Pick one to see the workflow — no scrolling marathon.</p>
+                <p>Eleven services covering the full ERP lifecycle — from initial audit to multi-year support contracts.</p>
             </div>
         </div>
 
-        <!-- ERP Rescue callout (Amber) — refined -->
-        <div class="rescue-card mb-3 reveal" data-delay="1">
-            <div class="rescue-icon" style="background: var(--cream-700); color: var(--cream-100);">
+        <div class="rescue-card mb-3 reveal" data-aos="blur" data-delay="1">
+            <div class="rescue-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
             </div>
             <div style="flex:1;">
@@ -226,12 +219,12 @@
 </section>
 
 <!-- ============================================================
-     PROCESS — Blue accent
+     HOW I WORK — Simple 4-step grid (no sticky scrolltelling)
      ============================================================ -->
-<section class="section section-process" style="position:relative;overflow:hidden;">
+<section id="how" class="section section-cream" style="position:relative;overflow:hidden;">
     <div class="container" style="position:relative;z-index:1;">
         <div class="section-head reveal">
-            <div class="section-icon">
+            <div class="section-icon" style="--accent: var(--blue); --accent-soft: var(--soft-blue-bg); color: var(--blue);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
             <div class="head-text">
@@ -241,34 +234,34 @@
             </div>
         </div>
 
-        <div class="process-grid reveal" data-delay="1">
-            <div class="process-step bg-tint-rose shape-arrow text-tint-rose" data-delay="1">
-                <div class="process-num"><span>01</span></div>
-                <div class="process-icon">
+        <div class="how-grid reveal">
+            <div class="how-step">
+                <div class="how-step-num">01</div>
+                <div class="how-step-icon" style="background:var(--soft-blue-bg);color:var(--blue);">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                 </div>
                 <h3>Discovery</h3>
                 <p>60-minute scoping call. I learn your business, the workflow that hurts, and what success looks like. No commitment.</p>
             </div>
-            <div class="process-step bg-tint-amber shape-arrow text-tint-amber" data-delay="2">
-                <div class="process-num"><span>02</span></div>
-                <div class="process-icon">
+            <div class="how-step">
+                <div class="how-step-num">02</div>
+                <div class="how-step-icon" style="background:var(--soft-yellow-bg);color:var(--soft-yellow-dark);">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 </div>
                 <h3>Fixed scope</h3>
                 <p>Written scope, line-item quote, fixed milestones. You know exactly what you're getting and when.</p>
             </div>
-            <div class="process-step bg-tint-blue shape-arrow text-tint-blue" data-delay="3">
-                <div class="process-num"><span>03</span></div>
-                <div class="process-icon">
+            <div class="how-step">
+                <div class="how-step-num">03</div>
+                <div class="how-step-icon" style="background:var(--soft-purple-bg);color:var(--brand);">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                 </div>
                 <h3>Implementation</h3>
                 <p>Configuration, custom modules, data migration, UAT. You see working software every week on a staging server.</p>
             </div>
-            <div class="process-step bg-tint-emerald shape-arrow text-tint-emerald" data-delay="4">
-                <div class="process-num"><span>04</span></div>
-                <div class="process-icon">
+            <div class="how-step">
+                <div class="how-step-num">04</div>
+                <div class="how-step-icon" style="background:var(--soft-green-bg);color:var(--emerald);">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
                 <h3>Handover &amp; support</h3>
@@ -279,7 +272,30 @@
 </section>
 
 <!-- ============================================================
-     INDUSTRIES — Orange accent
+     ABOUT ME — Photo + bio
+     ============================================================ -->
+<section class="section" style="background:#FFFFFF;">
+    <div class="container">
+        <div style="display:grid;grid-template-columns:1fr;gap:3rem;align-items:center;">
+            <div class="reveal">
+                <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft); margin-bottom:1rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="eyebrow">About me</div>
+                <h2 class="h2">Two years in, building ERP for businesses that outgrew spreadsheets.</h2>
+                <p style="font-size:1.05rem;color:var(--text-2);line-height:1.65;max-width:60ch;margin:0 0 1rem;">I came into Odoo through hands-on client work and have spent the last 2+ years shipping ERPs for clothing brands, 3PL logistics, manufacturing groups, and D2C storefronts on Shopify and WooCommerce. Quick to ramp, sharp on the builds teams hand off because nothing else worked.</p>
+                <p style="font-size:1.05rem;color:var(--text-2);line-height:1.65;max-width:60ch;margin:0 0 1.5rem;">My work spans the full stack — Python, OWL, QWeb, PostgreSQL performance tuning, REST and GraphQL APIs, Docker and Kubernetes. I take ownership of the system end-to-end so the handoff is clean and your team isn't left holding an unsupportable build.</p>
+                <a href="{% url 'about' %}" class="btn btn-secondary">
+                    More about me
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     INDUSTRIES — With real cover images
      ============================================================ -->
 <section class="section section-cream section-industries" style="position:relative;overflow:hidden;">
     <div class="container" style="position:relative;z-index:1;">
@@ -397,90 +413,197 @@
 </section>
 
 <!-- ============================================================
-     IMPACT — Green accent
+     IMPACT — Without ERP vs With ERP
      ============================================================ -->
 <div class="divider-wave cream flip" aria-hidden="true">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/></svg>
 </div>
 
-<section class="section section-impact">
-    {# Subtle line-grid background handled by CSS ::before #}
-
+<section id="impact" class="section section-impact">
     <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head reveal" style="margin-bottom:2.5rem;">
             <div class="section-icon" style="--accent: var(--emerald); --accent-soft: var(--emerald-soft); color: var(--emerald);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="head-text">
                 <div class="eyebrow" style="color: var(--emerald);">The business case</div>
                 <h2 class="h2">What ERP actually does to your numbers</h2>
-                <p style="color: var(--text-3);">Same business, same market — but with one operating system running the order-to-cash cycle.</p>
+                <p style="color: var(--text-3);max-width:60ch;">Same business, same market — but with one operating system running the order-to-cash cycle.</p>
             </div>
         </div>
 
-        <div class="impact-showcase">
-            <div class="impact-panel bad reveal" data-delay="1">
-                <span class="impact-panel-label bad">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-                    Without ERP
-                </span>
-                <div class="impact-big">$180K</div>
-                <div class="muted" style="font-size:0.85rem;margin-bottom:1.25rem;">Annual revenue · 12 people · 35% productive</div>
-                <div class="impact-meta-row">
-                    <div class="impact-meta-cell"><div class="v">12</div><div class="l">Team size</div></div>
-                    <div class="impact-meta-cell"><div class="v">35%</div><div class="l">Productive hours</div></div>
-                    <div class="impact-meta-cell"><div class="v">1 week</div><div class="l">Month-end close</div></div>
-                    <div class="impact-meta-cell"><div class="v">3 tools</div><div class="l">Manual entry</div></div>
+        <div class="impact-grid-v2 reveal">
+            <div class="impact-card-v2 bad">
+                <div class="impact-photo">
+                    <span class="impact-photo-badge">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                        Without ERP
+                    </span>
+                    <img alt="Stressed team looking at declining sales reports" loading="lazy" src="https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=900&h=400&q=80&auto=format&fit=crop" />
                 </div>
-                <ul class="impact-list">
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 9l-6 6M9 9l6 6"/></svg> Manual data entry into three tools</li>
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 9l-6 6M9 9l6 6"/></svg> Stock discrepancies everywhere</li>
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 9l-6 6M9 9l6 6"/></svg> Month-end close takes a week</li>
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 9l-6 6M9 9l6 6"/></svg> Customer follow-ups fall through</li>
-                </ul>
+                <div class="impact-body">
+                    <div class="impact-headline">
+                        <span class="big">$180K</span>
+                        <span class="small">/ year</span>
+                    </div>
+                    <p class="impact-subtitle">Twelve people. Three disconnected tools. Most of the week spent entering the same data twice.</p>
+                    <div class="impact-bars">
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Team size</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:100%"></div></div>
+                            <span class="impact-bar-value">12</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Productive</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:38%"></div></div>
+                            <span class="impact-bar-value">35%</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Close books</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:100%"></div></div>
+                            <span class="impact-bar-value">7 d</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Manual entry</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:100%"></div></div>
+                            <span class="impact-bar-value">3 tools</span>
+                        </div>
+                    </div>
+                    <ul class="impact-points">
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 9l-6 6M9 9l6 6"/></svg></span> Manual data entry into three tools</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 9l-6 6M9 9l6 6"/></svg></span> Stock discrepancies in every channel</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 9l-6 6M9 9l6 6"/></svg></span> Month-end close takes a full week</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="impact-connector reveal" data-delay="1.5" aria-hidden="true">
-                <span class="impact-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <div class="impact-connector-v2" aria-hidden="true">
+                <span class="arrow-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </span>
             </div>
 
-            <div class="impact-panel good reveal" data-delay="2">
-                <span class="impact-panel-label good">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12l3 3 5-6"/></svg>
-                    With ERP
-                </span>
-                <div class="impact-big">$620K</div>
-                <div class="muted" style="font-size:0.85rem;margin-bottom:1.25rem;">Annual revenue · 4 people · 92% productive</div>
-                <div class="impact-meta-row">
-                    <div class="impact-meta-cell"><div class="v">4</div><div class="l">Team size</div></div>
-                    <div class="impact-meta-cell"><div class="v">92%</div><div class="l">Productive hours</div></div>
-                    <div class="impact-meta-cell"><div class="v">1–2 days</div><div class="l">Month-end close</div></div>
-                    <div class="impact-meta-cell"><div class="v">1 source</div><div class="l">Single entry</div></div>
+            <div class="impact-card-v2 good">
+                <div class="impact-photo">
+                    <span class="impact-photo-badge">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 12l3 3 5-6"/></svg>
+                        With ERP
+                    </span>
+                    <img alt="Team celebrating business growth with raised hands" loading="lazy" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&h=400&q=80&auto=format&fit=crop" />
                 </div>
-                <ul class="impact-list">
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12l3 3 5-6"/></svg> One entry, every team updated</li>
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12l3 3 5-6"/></svg> Real stock, real-time, everywhere</li>
-                    <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12l3 3 5-6"/></svg> Books close in a day or two</li>
-                    <li><svg class="ico" viewBox="0 0 24 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12l3 3 5-6"/></svg> Every order has live status</li>
-                </ul>
+                <div class="impact-body">
+                    <div class="impact-headline">
+                        <span class="big">$620K</span>
+                        <span class="small">/ year</span>
+                    </div>
+                    <p class="impact-subtitle">Four people running a single source of truth. Sales, ops, finance, and fulfilment all on one dataset.</p>
+                    <div class="impact-bars">
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Team size</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:33%"></div></div>
+                            <span class="impact-bar-value">4</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Productive</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:100%"></div></div>
+                            <span class="impact-bar-value">92%</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Close books</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:21%"></div></div>
+                            <span class="impact-bar-value">1–2 d</span>
+                        </div>
+                        <div class="impact-bar">
+                            <span class="impact-bar-label">Manual entry</span>
+                            <div class="impact-bar-track"><div class="impact-bar-fill" style="--bar-width:0%"></div></div>
+                            <span class="impact-bar-value">0</span>
+                        </div>
+                    </div>
+                    <ul class="impact-points">
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 12l3 3 5-6"/></svg></span> One entry updates every team</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 12l3 3 5-6"/></svg></span> Real stock, real-time, everywhere</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 12l3 3 5-6"/></svg></span> Books close in a day or two</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div style="text-align:center;margin-top:3rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
-            <span class="impact-transform">Result · <strong>3.4× revenue</strong></span>
-            <span class="impact-summary" style="margin:0;">
-                <span><strong>−67%</strong> headcount</span>
-                <span><strong>2.6×</strong> productivity</span>
-                <span><strong>−90%</strong> manual errors</span>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;margin-top:3rem;">
+
+            <div class="impact-chart reveal">
+                <div class="impact-chart-head">
+                    <div>
+                        <h3>Growth trajectory</h3>
+                        <p>Same business. Same market. One operating system flips the curve.</p>
+                    </div>
+                    <div class="impact-chart-legend">
+                        <span><span class="swatch bad"></span>Without ERP — $180K, flat</span>
+                        <span><span class="swatch good"></span>With ERP — $620K, growing</span>
+                    </div>
+                </div>
+                <svg class="impact-chart-svg" viewBox="0 0 800 320" preserveAspectRatio="none" role="img" aria-label="Annual revenue growth over 12 months: Without ERP stays flat around $180K; With ERP grows from $180K to $620K">
+                    <defs>
+                        <linearGradient id="goodFill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#10B981" stop-opacity="0.18"/>
+                            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                    <!-- Grid lines -->
+                    <line x1="60" y1="40" x2="780" y2="40" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3 4"/>
+                    <line x1="60" y1="130" x2="780" y2="130" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3 4"/>
+                    <line x1="60" y1="220" x2="780" y2="220" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3 4"/>
+                    <!-- X axis -->
+                    <line x1="60" y1="280" x2="780" y2="280" stroke="#D1D5DB" stroke-width="1.5"/>
+                    <!-- Y axis labels -->
+                    <text x="48" y="44" text-anchor="end" font-size="11" font-weight="700" fill="#6B7280">$700K</text>
+                    <text x="48" y="134" text-anchor="end" font-size="11" font-weight="700" fill="#6B7280">$400K</text>
+                    <text x="48" y="224" text-anchor="end" font-size="11" font-weight="700" fill="#6B7280">$100K</text>
+                    <text x="48" y="284" text-anchor="end" font-size="11" font-weight="700" fill="#6B7280">$0</text>
+                    <!-- Without ERP line (flat around $180K, declining slightly) -->
+                    <polyline points="60,200 130,202 200,205 270,207 340,208 410,210 480,212 550,215 620,217 690,219 760,221"
+                              fill="none" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4"/>
+                    <!-- Without ERP endpoint dot + label -->
+                    <circle cx="760" cy="221" r="4" fill="#94A3B8"/>
+                    <text x="760" y="208" text-anchor="end" font-size="11" font-weight="800" fill="#475569">$180K</text>
+                    <!-- With ERP fill area -->
+                    <path d="M 60,200 C 130,200 160,198 200,195 C 250,190 280,180 340,165 C 400,140 430,120 480,90 C 540,55 580,40 620,35 L 760,32 L 760,280 L 60,280 Z" fill="url(#goodFill)"/>
+                    <!-- With ERP line (rising) -->
+                    <path d="M 60,200 C 130,200 160,198 200,195 C 250,190 280,180 340,165 C 400,140 430,120 480,90 C 540,55 580,40 620,35 L 760,32"
+                          fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- With ERP endpoint dot + label -->
+                    <circle cx="760" cy="32" r="5" fill="#10B981" stroke="#fff" stroke-width="2"/>
+                    <text x="760" y="22" text-anchor="end" font-size="13" font-weight="800" fill="#047857">$620K</text>
+                    <!-- X axis month labels -->
+                    <text x="60" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M1</text>
+                    <text x="200" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M3</text>
+                    <text x="340" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M5</text>
+                    <text x="480" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M7</text>
+                    <text x="620" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M9</text>
+                    <text x="760" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#9CA3AF">M12</text>
+                    <!-- ERP go-live marker -->
+                    <line x1="200" y1="40" x2="200" y2="280" stroke="#10B981" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+                    <text x="206" y="56" font-size="10" font-weight="800" fill="#10B981" text-transform="uppercase" letter-spacing="0.06em">Go-live</text>
+                </svg>
+            </div>
+
+            <span style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.5rem;background:var(--text-1);color:#fff;border-radius:9999px;font-size:1rem;font-weight:700;letter-spacing:-0.01em;">
+                Result · 3.4× revenue
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.5rem;background:var(--surface-lowest);border:1px solid var(--line);border-radius:9999px;font-size:0.9rem;font-weight:600;color:var(--text-2);">
+                <span style="color:var(--emerald);font-weight:800;">−67%</span> headcount
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.5rem;background:var(--surface-lowest);border:1px solid var(--line);border-radius:9999px;font-size:0.9rem;font-weight:600;color:var(--text-2);">
+                <span style="color:var(--emerald);font-weight:800;">2.6×</span> productivity
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.5rem;background:var(--surface-lowest);border:1px solid var(--line);border-radius:9999px;font-size:0.9rem;font-weight:600;color:var(--text-2);">
+                <span style="color:var(--emerald);font-weight:800;">−90%</span> manual errors
             </span>
         </div>
     </div>
 </section>
 
 <!-- ============================================================
-     TESTIMONIALS — Rose accent
+     TESTIMONIALS
      ============================================================ -->
 <section class="section section-testimonials" style="position:relative;overflow:hidden;">
     <div class="container">
@@ -496,7 +619,7 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:1.5rem;">
-            <div class="testimonial-pullquote reveal">
+            <div class="testimonial-pullquote reveal-left" data-aos="fade-left">
                 <div class="testimonial-portrait" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80&auto=format&fit=crop&crop=faces');">
                     <div class="testimonial-portrait-overlay">
                         <div class="name">Sarah R.</div>
@@ -517,7 +640,7 @@
                 </div>
             </div>
 
-            <div class="testimonial-pullquote flip reveal" data-delay="1">
+            <div class="testimonial-pullquote flip reveal-right" data-aos="fade-right" data-delay="1">
                 <div class="testimonial-portrait" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&auto=format&fit=crop&crop=faces');">
                     <div class="testimonial-portrait-overlay">
                         <div class="name">Tanvir M.</div>
@@ -538,7 +661,7 @@
                 </div>
             </div>
 
-            <div class="testimonial-pullquote reveal" data-delay="2">
+            <div class="testimonial-pullquote reveal-left" data-aos="fade-left" data-delay="2">
                 <div class="testimonial-portrait" style="background-image:url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80&auto=format&fit=crop&crop=faces');">
                     <div class="testimonial-portrait-overlay">
                         <div class="name">Faisal R.</div>
@@ -563,7 +686,7 @@
 </section>
 
 <!-- ============================================================
-     CTA — Dark Indigo
+     CTA — Simple dark band
      ============================================================ -->
 <section class="section section-cta">
     <div class="container">
@@ -588,13 +711,13 @@
 </section>
 
 <!-- ============================================================
-     FAQ — Indigo accent
+     FAQ
      ============================================================ -->
 <div class="divider-wave dark flip" aria-hidden="true">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/></svg>
 </div>
 
-<section class="section section-soft section-faq">
+<section id="faq" class="section section-soft section-faq">
     <div class="container">
         <div class="faq-split">
             <div class="faq-aside reveal">
@@ -604,7 +727,7 @@
                     <div class="faq-aside-title">Common questions, answered</div>
                     <p class="faq-aside-text">Everything you need to know about working with me — pricing, NDA, support, and how an actual engagement runs from scoping call to handover.</p>
                     <div class="faq-aside-tags">
-                        <span class="faq-aside-tag">12+ yrs</span>
+                        <span class="faq-aside-tag">2+ yrs</span>
                         <span class="faq-aside-tag">NDA-friendly</span>
                         <span class="faq-aside-tag">Audit-ready</span>
                     </div>
@@ -695,15 +818,12 @@
 </section>
 
 <!-- ============================================================
-     TECH STACK — Cartoonic grouped by category, with real brand logos
+     TECH STACK — Clean grouped grid
      ============================================================ -->
-{% comment %}Simple Icons CDN — brand SVG logos{% endcomment %}
 <section class="section section-tech">
-    {# Subtle diagonal-line pattern handled by CSS ::before #}
-
     <div class="container">
         <div class="section-head reveal">
-            <div class="section-icon" style="--accent: var(--cream-700); --accent-soft: var(--soft-blue-bg); color: var(--cream-700); border-color: var(--line);">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft); color: var(--brand); border-color: var(--line);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             <div class="head-text">
@@ -715,7 +835,6 @@
 
         <div class="tech-categories">
 
-            {# Backend & Frameworks #}
             <div class="tech-cat cat-blue reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -735,11 +854,6 @@
                         <span class="tech-item-name">Odoo</span>
                         <span class="tech-item-sub">v17</span>
                     </a>
-                    <a href="https://erpnext.com" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/erlang.svg" alt="ERPNext">
-                        <span class="tech-item-name">ERPNext</span>
-                        <span class="tech-item-sub">Frappe</span>
-                    </a>
                     <a href="https://www.djangoproject.com" target="_blank" rel="noopener" class="tech-item">
                         <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/django.svg" alt="Django">
                         <span class="tech-item-name">Django</span>
@@ -750,10 +864,14 @@
                         <span class="tech-item-name">FastAPI</span>
                         <span class="tech-item-sub">async</span>
                     </a>
+                    <a href="https://qweb.readthedocs.io" target="_blank" rel="noopener" class="tech-item">
+                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/xml.svg" alt="QWeb">
+                        <span class="tech-item-name">QWeb</span>
+                        <span class="tech-item-sub">Odoo XML</span>
+                    </a>
                 </div>
             </div>
 
-            {# Databases #}
             <div class="tech-cat cat-green reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -773,11 +891,6 @@
                         <span class="tech-item-name">MySQL</span>
                         <span class="tech-item-sub">MariaDB</span>
                     </a>
-                    <a href="https://www.sqlite.org" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/sqlite.svg" alt="SQLite">
-                        <span class="tech-item-name">SQLite</span>
-                        <span class="tech-item-sub">dev</span>
-                    </a>
                     <a href="https://redis.io" target="_blank" rel="noopener" class="tech-item">
                         <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/redis.svg" alt="Redis">
                         <span class="tech-item-name">Redis</span>
@@ -788,16 +901,20 @@
                         <span class="tech-item-name">MongoDB</span>
                         <span class="tech-item-sub">docs</span>
                     </a>
+                    <a href="https://www.sqlite.org" target="_blank" rel="noopener" class="tech-item">
+                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/sqlite.svg" alt="SQLite">
+                        <span class="tech-item-name">SQLite</span>
+                        <span class="tech-item-sub">dev</span>
+                    </a>
                 </div>
             </div>
 
-            {# Frontend #}
-            <div class="tech-cat cat-orange reveal">
+            <div class="tech-cat cat-purple reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                     </span>
-                    <h3 class="tech-cat-title">Frontend &amp; QWeb</h3>
+                    <h3 class="tech-cat-title">Frontend</h3>
                     <span class="tech-cat-count">5 tools</span>
                 </div>
                 <div class="tech-items">
@@ -821,16 +938,15 @@
                         <span class="tech-item-name">Tailwind</span>
                         <span class="tech-item-sub">CSS</span>
                     </a>
-                    <a href="https://qweb.readthedocs.io" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/xml.svg" alt="QWeb">
-                        <span class="tech-item-name">QWeb</span>
-                        <span class="tech-item-sub">Odoo XML</span>
+                    <a href="https://react.dev" target="_blank" rel="noopener" class="tech-item">
+                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/react.svg" alt="React">
+                        <span class="tech-item-name">React</span>
+                        <span class="tech-item-sub">SPA</span>
                     </a>
                 </div>
             </div>
 
-            {# DevOps & Cloud #}
-            <div class="tech-cat cat-purple reveal">
+            <div class="tech-cat cat-orange reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
@@ -867,7 +983,6 @@
                 </div>
             </div>
 
-            {# Version control & CI/CD #}
             <div class="tech-cat cat-pink reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -900,7 +1015,6 @@
                 </div>
             </div>
 
-            {# Payments & APIs #}
             <div class="tech-cat cat-cyan reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -920,11 +1034,6 @@
                         <span class="tech-item-name">PayPal</span>
                         <span class="tech-item-sub">global</span>
                     </a>
-                    <a href="https://www.visa.com" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/visa.svg" alt="Visa">
-                        <span class="tech-item-name">Visa</span>
-                        <span class="tech-item-sub">cards</span>
-                    </a>
                     <a href="https://www.bkash.com" target="_blank" rel="noopener" class="tech-item">
                         <span class="tech-item-logo tech-item-mark" style="background:#E2136E;color:#fff;font-weight:800;line-height:1;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;">bK</span>
                         <span class="tech-item-name">bKash</span>
@@ -940,10 +1049,14 @@
                         <span class="tech-item-name">GraphQL</span>
                         <span class="tech-item-sub">API</span>
                     </a>
+                    <a href="https://restfulapi.net" target="_blank" rel="noopener" class="tech-item">
+                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/json.svg" alt="REST">
+                        <span class="tech-item-name">REST</span>
+                        <span class="tech-item-sub">API</span>
+                    </a>
                 </div>
             </div>
 
-            {# BI & Analytics #}
             <div class="tech-cat cat-yellow reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -976,7 +1089,6 @@
                 </div>
             </div>
 
-            {# Security &amp; Dev Tools #}
             <div class="tech-cat cat-red reveal">
                 <div class="tech-cat-head">
                     <span class="tech-cat-icon">
@@ -1009,42 +1121,121 @@
                 </div>
             </div>
 
-            {# AI &amp; Automation #}
-            <div class="tech-cat cat-teal reveal">
-                <div class="tech-cat-head">
-                    <span class="tech-cat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H7a3 3 0 0 0-3 3v3a3 3 0 0 0 1 2.2A3 3 0 0 0 4 16v3a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3a3 3 0 0 0-1-2.2A3 3 0 0 0 20 9a3 3 0 0 0-3-3h-2V5a3 3 0 0 0-3-3z"/><path d="M9 13h6M9 17h6"/></svg>
-                    </span>
-                    <h3 class="tech-cat-title">AI &amp; automation</h3>
-                    <span class="tech-cat-count">4 tools</span>
-                </div>
-                <div class="tech-items">
-                    <a href="https://openai.com" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/openai.svg" alt="OpenAI">
-                        <span class="tech-item-name">OpenAI</span>
-                        <span class="tech-item-sub">GPT-4</span>
-                    </a>
-                    <a href="https://www.anthropic.com" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/anthropic.svg" alt="Anthropic">
-                        <span class="tech-item-name">Anthropic</span>
-                        <span class="tech-item-sub">Claude</span>
-                    </a>
-                    <a href="https://n8n.io" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/n8n.svg" alt="n8n">
-                        <span class="tech-item-name">n8n</span>
-                        <span class="tech-item-sub">workflows</span>
-                    </a>
-                    <a href="https://zapier.com" target="_blank" rel="noopener" class="tech-item">
-                        <img class="tech-item-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/zapier.svg" alt="Zapier">
-                        <span class="tech-item-name">Zapier</span>
-                        <span class="tech-item-sub">automation</span>
-                    </a>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>
 
-{% endblock %}
+<!-- ============================================================
+     TRUSTED BY — bottom of the page
+     ============================================================ -->
+<div style="padding:2rem 0;background:#FAFAFA;border-top:1px solid var(--line);">
+    <div class="container">
+        <p style="text-align:center;font-size:0.78rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:1rem;">Trusted by teams shipping production ERP</p>
+        <div class="marquee" aria-label="Trusted by">
+            <div class="marquee-track">
+                {% for c in marquee_clients %}
+                <span class="marquee-item">{{ c.name }}</span>
+                {% endfor %}
+                {% for c in marquee_clients %}
+                <span class="marquee-item" aria-hidden="true">{{ c.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
+<style>
+/* ============================================================
+   PROJECTS SLIDER — horizontal scroll on the home page
+   ============================================================ */
+.projects-slider {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.5rem 1.25rem 1.5rem;
+    cursor: grab;
+}
+.projects-slider:active { cursor: grabbing; }
+.projects-slider::-webkit-scrollbar { display: none; }
+.projects-slider-track {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0 max(1.25rem, calc((100vw - 1200px) / 2));
+}
+.projects-slider-card {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+    background: var(--surface-lowest);
+    border: 1px solid var(--line);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.projects-slider-card:hover {
+    border-color: var(--text-1);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -12px rgba(15, 23, 42, 0.18);
+}
+.projects-slider-card-media {
+    background: var(--surface-low);
+    height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--line);
+}
+.projects-slider-card-media img {
+    max-height: 60px; max-width: 70%;
+    object-fit: contain;
+}
+.projects-slider-card-fallback {
+    font-size: 1.5rem; font-weight: 800; color: var(--brand);
+}
+.projects-slider-card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.projects-slider-card-meta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.65rem;
+}
+.projects-slider-card-num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem; font-weight: 800;
+    color: var(--brand);
+}
+.projects-slider-card-industry {
+    font-size: 0.7rem; font-weight: 700;
+    color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+}
+.projects-slider-card-name {
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+}
+.projects-slider-card-role {
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+}
+.projects-slider-card-scope {
+    font-size: 0.85rem; line-height: 1.55;
+    color: var(--text-3); margin: 0 0 1rem; flex: 1;
+}
+.projects-slider-card-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--brand);
+    text-decoration: none;
+}
+.projects-slider-card-link:hover { color: var(--brand-strong); }
+@media (min-width: 768px) {
+    .projects-slider-card { flex-basis: 360px; }
+}
+</style>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Your call is confirmed</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f3f0;font-family:'Inter',Helvetica,Arial,sans-serif;color:#1f2937;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3f0;padding:32px 16px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;max-width:560px;width:100%;">
+        <tr>
+          <td style="padding:28px 32px 8px 32px;border-bottom:1px solid #f3f4f6;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#714B67;">Confirmed</div>
+            <h1 style="margin:6px 0 0 0;font-size:22px;line-height:1.3;color:#111827;font-weight:700;">Your call is booked.</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <p style="margin:0 0 14px 0;font-size:15px;line-height:1.55;color:#374151;">
+              Hi {{ appointment.name }},
+            </p>
+            <p style="margin:0 0 18px 0;font-size:15px;line-height:1.55;color:#374151;">
+              Thanks for booking time with me. Looking forward to our conversation.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f4;border:1px solid #efeae3;border-radius:10px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#714B67;">When</div>
+                  <div style="font-size:17px;font-weight:600;color:#111827;margin-top:4px;">{{ visitor_when }}</div>
+                  <div style="font-size:12px;color:#6b7280;margin-top:2px;">{{ duration_minutes }} minutes · your local time</div>
+                  {% if owner_when %}
+                  <div style="font-size:12px;color:#6b7280;margin-top:8px;">Owner time: {{ owner_when }}</div>
+                  {% endif %}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        {% if appointment.notes %}
+        <tr>
+          <td style="padding:18px 32px 0 32px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#714B67;">Your notes</div>
+            <p style="margin:6px 0 0 0;font-size:14px;line-height:1.55;color:#374151;white-space:pre-wrap;">{{ appointment.notes }}</p>
+          </td>
+        </tr>
+        {% endif %}
+        {% if cancel_url %}
+        <tr>
+          <td style="padding:18px 32px 0 32px;">
+            <a href="{{ cancel_url }}" style="display:inline-block;padding:11px 18px;background:#ffffff;border:1px solid #d1d5db;border-radius:8px;color:#374151;text-decoration:none;font-size:13px;font-weight:600;">Cancel or reschedule</a>
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td style="padding:24px 32px 28px 32px;">
+            <p style="margin:0;font-size:13px;line-height:1.55;color:#6b7280;">
+              You'll get the meeting link by email before the call. Questions? Reply to this message.
+            </p>
+            <p style="margin:14px 0 0 0;font-size:14px;line-height:1.55;color:#111827;font-weight:600;">— Mostakim Jihad</p>
+          </td>
+        </tr>
+      </table>
+      <div style="font-size:11px;color:#9ca3af;margin-top:14px;">
+        Sent from <a href="https://mostakimjihad.com" style="color:#9ca3af;">mostakimjihad.com</a>
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

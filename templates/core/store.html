@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}App Store — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}Free Odoo 19 modules by Mostakim Jihad — KPI Management, Salon Management and Petty Cash Daily, all published on the official Odoo App Store.{% endblock %}
+
+{% block content %}
+
+{% comment %}
+ ============================================================
+   HERO — section-icon head, App Store badge, trust row
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-4h15L21 9"/><path d="M3 9v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/><path d="M3 9h18"/><circle cx="9" cy="14" r="1.5"/><circle cx="15" cy="14" r="1.5"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Odoo App Store · Free · LGPL-3</div>
+                <h1 class="h1" style="margin:0;">Custom Odoo apps,<br><span class="accent">on the App Store.</span></h1>
+            </div>
+        </div>
+
+        <p class="lead reveal" data-delay="1" style="max-width:64ch;margin:0 0 1.5rem;">
+            Three production-grade modules I've built and published on the official Odoo App Store — installable on Odoo 19.0, LGPL-3 licensed, free.
+        </p>
+
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> {{ store_modules|length }} modules · {{ total_downloads }} downloads · Odoo 19.0
+        </span>
+
+        <div class="hero-trust reveal" data-delay="3">
+            <span><span class="dot"></span> Production-ready · LGPL-3</span>
+            <span><span class="dot"></span> Free on the Odoo App Store</span>
+            <span><span class="dot"></span> One-click install</span>
+        </div>
+
+        <div class="reveal" data-delay="4" style="margin-top:2.25rem;display:flex;gap:0.85rem;flex-wrap:wrap;align-items:center;">
+            <a href="https://apps.odoo.com/apps/modules/browse?author=Mostakim%20Jihad" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+                Browse on App Store
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </a>
+            <a href="#modules" class="btn btn-secondary btn-lg">See what's inside</a>
+        </div>
+    </div>
+</section>
+
+{% comment%}
+ ============================================================
+   STATS STRIP — same horizontal counter style as the home
+   ============================================================
+{% endcomment %}
+<section style="padding:3rem 0;background:#FFFFFF;">
+    <div class="container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;">
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">{{ store_modules|length }}</div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Modules published</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">{{ total_downloads }}</div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Downloads to date</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">19.0</div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Odoo version target</div>
+            </div>
+            <div class="reveal" style="padding:1.5rem;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+                <div style="font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">LGPL-3</div>
+                <div style="font-size:0.92rem;color:var(--text-3);margin-top:0.5rem;font-weight:600;">Open-source license</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment%}
+ ============================================================
+   PER-MODULE — magazine-style row (Apple-style visual + features)
+   ============================================================
+{% endcomment %}
+<section id="modules" class="section" style="padding-top:clamp(2rem, 4vw, 3rem);">
+    <div class="container">
+        <div class="section-head reveal" style="margin-bottom:2.5rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">The catalogue</div>
+                <h2 class="h2">Three modules, deeply useful.</h2>
+                <p>Each one solves a real business workflow, ships with full source, and follows Odoo coding standards.</p>
+            </div>
+        </div>
+
+        {% for m in store_modules %}
+        <article class="store-module reveal" data-delay="{{ forloop.counter0 }}" style="display:grid;grid-template-columns:1fr;gap:0;background:var(--surface-lowest);border:1px solid var(--line);border-radius:var(--r-2xl);overflow:hidden;margin-bottom:1.75rem;transition:border-color 0.2s;">
+            <div style="display:grid;grid-template-columns:1fr;gap:0;">
+
+                {% comment %} Module header — icon, title, tags {% endcomment %}
+                <div style="padding:2rem 2rem 1.25rem;display:flex;align-items:flex-start;gap:1.25rem;border-bottom:1px solid var(--line);">
+                    <div style="width:80px;height:80px;border-radius:var(--r-lg);background:#ffffff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--line);box-shadow:0 1px 2px rgba(15,23,42,0.04);overflow:hidden;">
+                        <img src="{{ m.icon_url }}" alt="{{ m.name }} icon" loading="lazy" style="width:100%;height:100%;object-fit:contain;display:block;">
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.6rem;">
+                            <span style="display:inline-flex;align-items:center;padding:0.25rem 0.65rem;background:var(--brand);color:#fff;border-radius:var(--r-full);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">{{ m.category }} · {{ m.subcategory }}</span>
+                            <span style="display:inline-flex;align-items:center;padding:0.25rem 0.65rem;background:var(--surface-low);color:var(--text-2);border:1px solid var(--line);border-radius:var(--r-full);font-size:0.7rem;font-weight:600;">Odoo {{ m.version }}</span>
+                            <span style="display:inline-flex;align-items:center;padding:0.25rem 0.65rem;background:var(--soft-green-bg);color:var(--emerald);border:1px solid color-mix(in srgb, var(--emerald) 25%, transparent);border-radius:var(--r-full);font-size:0.7rem;font-weight:700;">{{ m.price }}</span>
+                        </div>
+                        <h3 class="h3" style="margin:0 0 0.4rem;font-size:clamp(1.5rem, 2.5vw, 1.85rem);">{{ m.name }}</h3>
+                        <p style="margin:0;color:var(--text-2);font-size:0.98rem;line-height:1.55;max-width:62ch;">{{ m.summary }}</p>
+                    </div>
+                </div>
+
+                {% comment %} Body — features + meta {% endcomment %}
+                <div style="display:grid;grid-template-columns:1fr;gap:0;">
+                    <div style="padding:1.75rem 2rem;border-bottom:1px solid var(--line);">
+                        <div class="eyebrow" style="margin-bottom:1rem;">What's inside</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0.6rem 1.5rem;">
+                            {% for feature in m.features %}
+                            <li style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.9rem;color:var(--text-2);line-height:1.5;">
+                                <span style="flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:inline-flex;align-items:center;justify-content:center;margin-top:2px;">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+                                </span>
+                                <span>{{ feature }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div style="padding:1.5rem 2rem;background:var(--surface-low);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem 2rem;align-items:center;">
+                        <div>
+                            <div style="font-size:0.7rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.25rem;">Depends on</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.25rem;">
+                                {% for dep in m.depends %}
+                                <span style="display:inline-flex;align-items:center;padding:0.2rem 0.55rem;background:var(--surface-lowest);color:var(--text-2);border:1px solid var(--line);border-radius:var(--r-full);font-size:0.72rem;font-weight:600;font-family:'JetBrains Mono',ui-monospace,monospace;">{{ dep }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:0.7rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.25rem;">License</div>
+                            <div style="font-size:0.9rem;font-weight:600;color:var(--text-1);font-family:'JetBrains Mono',ui-monospace,monospace;">{{ m.license }}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:0.7rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.25rem;">Downloads</div>
+                            <div style="font-size:0.9rem;font-weight:600;color:var(--text-1);font-family:'JetBrains Mono',ui-monospace,monospace;">{{ m.downloads }}</div>
+                        </div>
+                    </div>
+
+                    <div style="padding:1.25rem 2rem;display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;justify-content:space-between;">
+                        <span style="font-size:0.78rem;color:var(--text-3);font-family:'JetBrains Mono',ui-monospace,monospace;">slug: {{ m.slug }}</span>
+                        <a href="{{ m.store_url }}" target="_blank" rel="noopener" class="btn btn-primary">
+                            View on App Store
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+        {% empty %}
+        <div class="reveal" style="text-align:center;padding:3rem 0;">
+            <p class="text-ink3">No modules published yet. Check the <a href="https://apps.odoo.com/apps/modules/browse?author=Mostakim%20Jihad" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600;">Odoo App Store</a> for the latest.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% comment%}
+ ============================================================
+   FAQ — split layout, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-soft section-faq">
+    <div class="container">
+        <div class="faq-split">
+            <div class="faq-aside reveal">
+                <div class="faq-aside-img" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&auto=format&fit=crop');"></div>
+                <div class="faq-aside-content">
+                    <div class="faq-aside-eyebrow">FAQ</div>
+                    <div class="faq-aside-title">About the modules</div>
+                    <p class="faq-aside-text">Installation, support, customization, and how to commission a module that's not on the App Store yet.</p>
+                    <div class="faq-aside-tags">
+                        <span class="faq-aside-tag">LGPL-3</span>
+                        <span class="faq-aside-tag">Odoo 19.0</span>
+                        <span class="faq-aside-tag">Custom builds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="store-faq-1">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+                        <span class="faq-q-text">How do I install one of these modules?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="store-faq-1" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Sign in to your Odoo 19 database as admin, open <strong>Apps → Update Apps List</strong>, search for the module name, and click <strong>Install</strong>. The dependencies are pulled automatically.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="store-faq-2">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                        <span class="faq-q-text">Will you add other Odoo versions?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="store-faq-2" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Each module currently targets Odoo 19.0 only. Backports to 17.0 / 18.0 are possible as paid engagements — <a href="{% url 'contact' %}">send a brief</a> and I'll quote it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="store-faq-3">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+                        <span class="faq-q-text">Can I get a customization done?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="store-faq-3" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Yes. Most engagements start with one of these modules and add the workflows specific to your business. NDA-friendly, fixed scope, fixed price — <a href="{% url 'contact' %}">send a brief</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-card reveal" data-faq-item>
+                    <button class="faq-q" type="button" aria-expanded="false" aria-controls="store-faq-4">
+                        <span class="q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                        <span class="faq-q-text">Where do I report bugs?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="faq-a" id="store-faq-4" role="region">
+                        <div class="faq-a-inner">
+                            <p class="answer">Open an issue on the GitHub repo (linked from each App Store listing) or <a href="{% url 'contact' %}">send me a message</a>. Bug fixes are prioritised by impact and shipped as new patch versions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment%}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Custom Odoo module in mind?</div>
+            <h2 class="h2">Need a module that's not on the App Store yet?</h2>
+            <p>Send a brief describing the workflow — I'll reply within 24 hours with a feasibility note, fixed scope, and a fixed quote.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Commission a module
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="https://apps.odoo.com/apps/modules/browse?author=Mostakim%20Jihad" target="_blank" rel="noopener" class="btn btn-secondary">Browse on App Store</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min scoping</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

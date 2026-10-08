@@ -2,7 +2,7 @@
 from django.db import migrations
 
 
-ABOUT_BODY = """I'm an ERP engineer and systems builder with 12 years of experience across business content writing, frontend development, and Odoo/ERPNext engineering. I help companies replace fragmented spreadsheets, disconnected tools, and manual handoffs with a single, integrated ERP that runs the entire business — sales, inventory, accounting, manufacturing, HR, and customer operations on one data layer.
+ABOUT_BODY = """I'm an ERP engineer and systems builder with 2+ years of industry experience across business content writing, frontend development, and Odoo/ERPNext engineering. I help companies replace fragmented spreadsheets, disconnected tools, and manual handoffs with a single, integrated ERP that runs the entire business — sales, inventory, accounting, manufacturing, HR, and customer operations on one data layer.
 
 What I do goes past installing modules. I design the data model, write the integrations, automate the workflows, and ship the dashboards that turn operations into decisions. External payment gateways, eCommerce storefronts, third-party logistics, banks, BI tools — if it needs to talk to your ERP, I make it talk.
 
@@ -20,7 +20,7 @@ def populate_site_settings(apps, schema_editor):
         "Strong ERP engineering, full-stack integrations, and the writing "
         "to translate operational chaos into a working system."
     )
-    obj.tagline = "Senior ERP & Odoo Engineer · 12 yrs building business systems"
+    obj.tagline = "ERP & Odoo Engineer · 2+ yrs building business systems"
     obj.full_name = "Mostakim Jihad"
     obj.linkedin = "https://www.linkedin.com/in/mostakimjihad"
     obj.github = "https://github.com/mostakimjihad"

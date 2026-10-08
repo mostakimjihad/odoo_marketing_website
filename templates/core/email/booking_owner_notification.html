@@ -1,0 +1,52 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New booking</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f3f0;font-family:'Inter',Helvetica,Arial,sans-serif;color:#1f2937;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3f0;padding:32px 16px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;max-width:560px;width:100%;">
+        <tr>
+          <td style="padding:28px 32px 8px 32px;border-bottom:1px solid #f3f4f6;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#714B67;">New booking</div>
+            <h1 style="margin:6px 0 0 0;font-size:22px;line-height:1.3;color:#111827;font-weight:700;">{{ appointment.name }}</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;width:120px;">When (your time)</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;font-weight:600;">{{ owner_when }}</td></tr>
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;">Their time</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;">{{ visitor_when }} ({{ appointment.timezone }})</td></tr>
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;">Duration</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;">{{ duration_minutes }} minutes</td></tr>
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;">Email</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;"><a href="mailto:{{ appointment.email }}" style="color:#714B67;">{{ appointment.email }}</a></td></tr>
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;">Phone</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;">{{ appointment.phone|default:"—" }}</td></tr>
+              <tr><td style="padding:6px 0;font-size:12px;color:#6b7280;">Company</td>
+                  <td style="padding:6px 0;font-size:14px;color:#111827;">{{ appointment.company|default:"—" }}</td></tr>
+            </table>
+            {% if appointment.notes %}
+            <div style="margin-top:14px;padding:14px 16px;background:#faf7f4;border:1px solid #efeae3;border-radius:10px;">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#714B67;">Notes</div>
+              <p style="margin:6px 0 0 0;font-size:14px;line-height:1.55;color:#374151;white-space:pre-wrap;">{{ appointment.notes }}</p>
+            </div>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 32px 28px 32px;">
+            <a href="/admin/core/appointment/{{ appointment.id }}/change/" style="display:inline-block;padding:11px 18px;background:#714B67;border:1px solid #714B67;border-radius:8px;color:#ffffff;text-decoration:none;font-size:13px;font-weight:600;">Open in admin →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,77 @@
+Company Name: Smart Technologies (BD) Ltd.
+URL: https://smartbd.com
+Company info:
+Smart Technologies (BD) Ltd. is one of the largest and most trusted ICT distribution companies in Bangladesh. Established in 1998 with a vision to empower the country with world-class technology solutions, the company has become a leading force in distributing, integrating, and delivering cutting-edge IT products, consumer electronics, networking, security, and enterprise solutions nationwide.
+
+With a commitment to innovation, service excellence, and customer satisfaction, Smart Technologies has built a strong reputation as the official distributor of numerous globally renowned brands. The company caters to a wide range of clients—from corporate organizations, government institutions, and educational sectors to retailers, resellers, and individual customers.
+
+Smart Technologies is the proud authorized distributor of internationally leading more than 100 brands such as Microsoft, Intel, Google, Apple, Samsung, Gigabyte, Dell, HP, Lenovo, Sony, Acer, HPE, Fortinet, TwinMOS, Kaspersky, Oracle, Epson, Logitech, Honor, Edifier, Microlab, Optoma, Netis, Uniview, RealVNC, Hikvision, Dahua, and many more.
+
+Role: Developer, Maintainer
+
+work scope: Large ERP, foreign purchase, LC Management, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, HR, HR APP API, External Portals, External API's
+
+Company Name: Smart Printing Solution Ltd. (SPSL)
+URL: https://spslbd.com
+Company info:
+Smart Printing Solution Ltd. (SPSL) is Bangladesh's leading authorised printing technology solutions provider. 12 world-leading brands. 9 branches nationwide. Trusted by over 1,000 organisations.
+
+work scope: Medium size ERP, foreign purchase, LC Management, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, HR, HR APP API, External Portals, External API's
+Role: Developer, Maintainer
+
+Company Name: Global Office Automation Limited
+URL: https://globaloffice.com.bd/
+Company Info:
+GOAL is dedicated to delivering premium stationery and office supplies across Bangladesh, offering exceptional quality at reasonable prices. We provide solutions from renowned brands, including FABER-CASTELL, CASIO, Mitsubishi Pencil Co, Ltd.(Uni-ball), Pentonic, and Staedtler, to inspire productivity and creativity while pioneering innovation and service to surpass customer expectations.
+work scope: Medium size ERP, foreign purchase, LC Management, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, HR, HR APP API, External Portals, External API's
+Role: Developer, Maintainer
+
+Company Name: 1000FIX services 
+URL: https://1000fix.com
+Company Info:
+ Founded in 2017, 1000FiX Services Limited is one of Bangladesh's leading IT service providers, operating as a distinguished service arm of Smart Technologies (BD) Ltd. We deliver comprehensive technology solutions, repair services, and after-sales support to individuals and organizations across the country.
+
+Over the years, we have grown into a trusted partner for 300+ corporate clients, servicing more than 600,000 units annually through our network of 50+ service centers nationwide, powered by a team of 400+ experienced engineers and technicians.
+
+As an authorized Service Delivery Partner for 45+ globally recognized brands, including HP, Dell, Lenovo, Samsung, Acer, Toshiba, Xiaomi, and many more, we ensure every repair is backed by genuine spare parts and certified expertise. Our ISO 9001:2015 certification and Dell Operational Excellence recognition reflect our unwavering commitment to quality.
+
+We take pride in our 97% first-time fix rate, a 4.7/5.0 customer satisfaction rating, and an industry-leading repeat repair rate of just 3%, numbers that speak to the trust our customers place in us every day.
+
+Our Mission is to provide reliable, efficient, and customer-focused IT service solutions that exceed expectations, making us Bangladesh's most trusted technology service partner.
+
+Our Vision is to become the most technologically advanced service ecosystem in Bangladesh, setting the national benchmark for quality, reliability, and customer-centric excellence.
+
+Whether you need laptop repairs, mobile servicing, home appliance maintenance, or enterprise IT support, 1000FiX is your complete Technology Lifecycle Partner, where reliability meets service excellence. 
+
+work scope: Medium size ERP, Service Management, QC Management etc. foreign purchase, LC Management, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, HR, HR APP API, External Portals, External API's
+Role: Developer, Maintainer 
+
+
+Comapny Name: Digital Equipment Limited
+URL: https://digitalequipment.com.bd
+Company Info: 
+We (Digital Equipment Limited) are one of the largest ICT Solution and service companies, a New Generation Trunkey IT Infrastructure Distribution, Solutions & Services Provider focused on Data Storage & Backup, Security Surveillance, Networking, and IT Security Solutions. Digital Equipment Limited started its journey in 2001 as a limited company under the company act 1994. It has grown rapidly since then and many people are involved in sales and marketing, of Dhaka city at Jahir Smart Tower, 205/1/A, Begum Rokeya Sharani, Agargaon, Dhaka-1207. With the endeavor of the staff, co-staff, and associates, Digital Equipment has become one of the lead IT peripherals suppliers in Bangladesh. Digital Equipment Ltd. has years of experience in the fields of importing and distributing. The basic function of Digital Equipment is to source, market & Sales at domestic and overseas markets. Digital Equipment Ltd. has years of experience in the fields of importing and distributing. The basic function of Digital Equipment is to source, market & Sales at domestic and overseas markets.
+work scope: Medium size ERP, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, HR, HR APP API, External Portals, External API's
+Role: Developer, Maintainer 
+
+Company Name: Smart Safety & Automations Ltd.
+URL: https://smartsafety.com.bd
+Company Info: Smart Safety & Automations Ltd., a sister concern of Smart Technologies (BD) Ltd., is a premier provider of advanced safety, security, and automation solutions. Our mission is to enhance safety, convenience, and security through innovative automation technologies. We specialize in the design, installation, and maintenance of a wide range of solutions, including fire alarm systems, CCTV surveillance, access control, building management systems, and other state-of-the-art automation technologies. Our comprehensive services encompass consultation, design, installation, and ongoing support to ensure custom solutions that meet the specific needs of individuals, businesses, and institutions.
+work scope: Medium size ERP, Sales, Inventory multi-warehouse multi company multi branch HR, HR APP API, External Portals, External API's, Purchase Requisition
+Role: Developer, Maintainer 
+
+Company Name: Smart Distribution (Pvt.) Ltd.
+URL: https://smartdistributionbd.com
+Company Info: Smart Distribution (Pvt.) Ltd. is a rapidly growing one of the leading enterprise with business in import of quality consumer goods in Bangladesh. 
+work scope: Medium size ERP, Sales, Inventory multi-warehouse multi company multi branch multi buiness unit, foreign purchase, Lc Management
+Role: Project Manager, Technical Lead
+
+Company Name: SMS Corporation Ltd.
+URL: https://smserp.uslbd.com/
+Company Info: Hardware Distribution uttara Dhaka from 2001
+Work Scope: Small ERP, Sales, accounting, inventory
+Role: Project Manager, Technical Lead 
+
+Also worked with https://www.police.gov.bd (High-way Police), link3 technologies ltd (https://www.link3.net)
+
+Litmond Shipping Ltd. 

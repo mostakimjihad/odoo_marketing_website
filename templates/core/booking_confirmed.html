@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking confirmed — {{ site_settings.full_name|default:"Mostakim Jihad" }}{% endblock %}
+{% block meta_description %}Your free consultation call is booked. A confirmation email is on its way.{% endblock %}
+
+{% block content %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(3rem, 5vw, 5rem);">
+    <div class="container" style="max-width:680px;text-align:center;">
+
+        <div style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.45rem 1rem;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:999px;color:#047857;font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:1.5rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            Booking confirmed
+        </div>
+
+        <h1 class="h1" style="margin:0 0 1rem 0;">You're on the calendar.</h1>
+
+        <p class="lead" style="margin:0 auto 2rem;max-width:52ch;">
+            Thanks for booking, {{ appointment.name }}. A confirmation email is on its way to <strong>{{ appointment.email }}</strong> with everything you need.
+        </p>
+
+        <div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;padding:1.5rem 1.75rem;text-align:left;margin:0 auto 2rem;max-width:520px;box-shadow:0 1px 2px rgba(15,23,42,0.04);">
+            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#714B67;margin-bottom:0.5rem;">Your call</div>
+            <div style="font-size:1.2rem;font-weight:600;color:#111827;">{{ appointment.start_datetime|date:"l, d F Y · H:i" }} <span style="font-size:0.85rem;color:#6b7280;font-weight:500;">({{ appointment.timezone }})</span></div>
+            <div style="font-size:0.85rem;color:#6b7280;margin-top:0.4rem;">{{ appointment.duration_minutes }} minutes · with {{ site_settings.full_name|default:"Mostakim Jihad" }}</div>
+
+            <hr style="border:none;border-top:1px solid #f3f4f6;margin:1.1rem 0;">
+
+            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#714B67;margin-bottom:0.4rem;">What's next</div>
+            <ul style="margin:0;padding-left:1.2rem;color:#374151;font-size:0.92rem;line-height:1.55;">
+                <li>Check your inbox for the meeting link</li>
+                <li>Add the time to your calendar using the email</li>
+                <li>Need to reschedule? Use the cancel link in the email</li>
+            </ul>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+            Back to home
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+    </div>
+</section>
+{% endblock %}

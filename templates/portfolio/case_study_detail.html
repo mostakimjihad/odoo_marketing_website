@@ -6,54 +6,100 @@
 {% block content %}
 
 {% if case_study.cover_image %}
-<section class="pt-8">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="aspect-[21/9] rounded-lg overflow-hidden border border-line">
-            <img src="{{ case_study.cover_image.url }}" alt="{{ case_study.title }}" class="w-full h-full object-cover">
+<section style="padding-top:clamp(2rem, 4vw, 3rem);">
+    <div class="container" style="max-width:1100px;">
+        <div class="aspect-[21/9] reveal" style="border-radius:var(--r-2xl);overflow:hidden;border:1px solid var(--line);">
+            <img src="{{ case_study.cover_image.url }}" alt="{{ case_study.title }}" style="width:100%;height:100%;object-fit:cover;">
         </div>
     </div>
 </section>
 {% endif %}
 
-<section class="pt-10 pb-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{% url 'portfolio:portfolio' %}" class="inline-flex items-center text-sm font-medium text-ink3 hover:text-ink transition mb-6">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            All portfolio
-        </a>
-        {% if case_study.industry %}<div class="eyebrow">{{ case_study.industry }}</div>{% endif %}
-        <h1 class="font-sans text-4xl md:text-5xl font-semibold text-ink tracking-tight mb-4">{{ case_study.title }}</h1>
-        <p class="text-ink2 text-sm">
-            <span class="text-ink3">Client:</span> <span class="font-medium text-ink">{{ case_study.client_name }}</span>
-            {% if case_study.completed_at %} <span class="text-ink4 mx-1.5">·</span> <span>{{ case_study.completed_at|date:"M Y" }}</span>{% endif %}
-            {% if case_study.duration %} <span class="text-ink4 mx-1.5">·</span> <span>{{ case_study.duration }}</span>{% endif %}
-        </p>
+{% comment%}
+ ============================================================
+   HERO — section-icon head, eyebrow, meta row
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(2.5rem, 5vw, 4rem); padding-bottom:clamp(2rem, 4vw, 3rem);">
+    <div class="container" style="max-width:780px;">
+        <a href="{% url 'portfolio:portfolio' %}" class="module-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                All portfolio
+            </a>
+
+        <div class="section-head reveal" style="margin-bottom:1.5rem;">
+            <div class="section-icon" style="--accent: var(--rose); --accent-soft: var(--rose-soft); color: var(--rose);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="head-text">
+                {% if case_study.industry %}<div class="eyebrow" style="color:var(--rose);">{{ case_study.industry }}</div>{% endif %}
+                <h1 class="h1" style="margin:0;">{{ case_study.title }}</h1>
+            </div>
+        </div>
+
+        <div class="hero-trust reveal" data-delay="1">
+            <span><span class="dot"></span> Client · {{ case_study.client_name }}</span>
+            {% if case_study.completed_at %}<span><span class="dot"></span> {{ case_study.completed_at|date:"M Y" }}</span>{% endif %}
+            {% if case_study.duration %}<span><span class="dot"></span> {{ case_study.duration }}</span>{% endif %}
+        </div>
     </div>
 </section>
 
-<section class="pb-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
-        <div class="surface p-8 md:p-10">
-            <span class="text-[11px] font-medium uppercase tracking-[0.12em] text-danger">Problem</span>
-            <div class="prose-content mt-3">{{ case_study.problem|linebreaks }}</div>
+{% comment%}
+ ============================================================
+   PROBLEM / SOLUTION / RESULTS — three section-icon blocks
+   ============================================================
+{% endcomment %}
+<section class="section">
+    <div class="container" style="max-width:860px;display:flex;flex-direction:column;gap:1.5rem;">
+
+        <div class="surface reveal" style="padding:2rem;">
+            <div class="section-head" style="margin-bottom:1rem;">
+                <div class="section-icon" style="--accent: var(--red); --accent-soft: var(--soft-red-bg); color: var(--red);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color:var(--red);">Problem</div>
+                    <h2 class="h2" style="margin:0;font-size:1.5rem;">What was broken</h2>
+                </div>
+            </div>
+            <div class="prose-content">{{ case_study.problem|linebreaks }}</div>
         </div>
-        <div class="surface p-8 md:p-10">
-            <span class="text-[11px] font-medium uppercase tracking-[0.12em] text-indigo-600">Solution</span>
-            <div class="prose-content mt-3">{{ case_study.solution|linebreaks }}</div>
+
+        <div class="surface reveal" data-delay="1" style="padding:2rem;">
+            <div class="section-head" style="margin-bottom:1rem;">
+                <div class="section-icon" style="--accent: var(--blue); --accent-soft: var(--soft-blue-bg); color: var(--blue);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color:var(--blue);">Solution</div>
+                    <h2 class="h2" style="margin:0;font-size:1.5rem;">What we shipped</h2>
+                </div>
+            </div>
+            <div class="prose-content">{{ case_study.solution|linebreaks }}</div>
         </div>
+
         {% if case_study.results %}
-        <div class="surface p-8 md:p-10">
-            <span class="text-[11px] font-medium uppercase tracking-[0.12em] text-emerald-500">Results</span>
-            <div class="prose-content mt-3">{{ case_study.results|linebreaks }}</div>
+        <div class="surface reveal" data-delay="2" style="padding:2rem;">
+            <div class="section-head" style="margin-bottom:1rem;">
+                <div class="section-icon" style="--accent: var(--emerald); --accent-soft: var(--soft-green-bg); color: var(--emerald);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="head-text">
+                    <div class="eyebrow" style="color:var(--emerald);">Results</div>
+                    <h2 class="h2" style="margin:0;font-size:1.5rem;">What changed</h2>
+                </div>
+            </div>
+            <div class="prose-content">{{ case_study.results|linebreaks }}</div>
         </div>
         {% endif %}
 
         {% if case_study.get_tech_list %}
-        <div>
-            <h3 class="text-[11px] font-medium uppercase tracking-[0.12em] text-ink3 mb-3">Tech stack</h3>
-            <div class="flex flex-wrap gap-1.5">
+        <div class="reveal" data-delay="3">
+            <div class="eyebrow" style="margin-bottom:0.75rem;">Tech stack</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
                 {% for tech in case_study.get_tech_list %}
-                <span class="px-2.5 py-1 rounded-full text-[11px] bg-surface text-ink2 border border-line">{{ tech }}</span>
+                <span style="display:inline-flex;align-items:center;padding:0.3rem 0.75rem;background:var(--surface-low);color:var(--text-2);border:1px solid var(--line);border-radius:var(--r-full);font-size:0.78rem;font-weight:500;">{{ tech }}</span>
                 {% endfor %}
             </div>
         </div>
@@ -61,12 +107,29 @@
     </div>
 </section>
 
-<section class="py-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="surface p-10 md:p-12 text-center">
-            <h2 class="font-sans text-2xl md:text-3xl font-semibold text-ink mb-3 tracking-tight">Want results like this?</h2>
-            <p class="text-ink2 mb-7">Let's discuss how I can help with your Odoo/ERP project.</p>
-            <a href="{% url 'contact' %}" class="btn-primary">Start a conversation</a>
+{% comment%}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Want results like this?</div>
+            <h2 class="h2">Let's discuss how I can help.</h2>
+            <p>Tell me about your business, the workflow that hurts, and your deadline. I'll reply within 24 hours with a written scope and a fixed quote.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Start a conversation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'services' %}" class="btn btn-secondary">See the services</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
         </div>
     </div>
 </section>

@@ -1,0 +1,68 @@
+{% comment %}
+============================================================
+MEGA MENU — Single panel with three columns: Products,
+Services, Modules. Triggered from the "Explore" nav item.
+JS toggles `is-open` on the wrapper; CSS handles the dropdown.
+============================================================
+{% endcomment %}
+
+<div class="mega-panel" id="mega-panel-explore" data-mega-panel="explore" hidden>
+    <div class="container mega-grid mega-grid--3">
+
+        <div class="mega-col">
+            <div class="mega-col-head">
+                <h4 class="mega-col-title">Products</h4>
+                <a href="{% url 'products' %}" class="mega-col-all">All products →</a>
+            </div>
+            <ul class="mega-col-list">
+                <li><a href="{% url 'products' %}#manufacturing">Manufacturing</a></li>
+                <li><a href="{% url 'products' %}#retail">Retail &amp; apparel</a></li>
+                <li><a href="{% url 'products' %}#distribution">Distribution &amp; 3PL</a></li>
+                <li><a href="{% url 'products' %}#ecommerce">eCommerce &amp; D2C</a></li>
+                <li><a href="{% url 'products' %}#odoo">Odoo v12 → v17 rollouts</a></li>
+                <li><a href="{% url 'products' %}#erpnext">ERPNext deployments</a></li>
+            </ul>
+        </div>
+
+        <div class="mega-col">
+            <div class="mega-col-head">
+                <h4 class="mega-col-title">Services</h4>
+                <a href="{% url 'services' %}" class="mega-col-all">All services →</a>
+            </div>
+            <ul class="mega-col-list">
+                <li><a href="{% url 'services' %}#rollout">Full rollout</a></li>
+                <li><a href="{% url 'services' %}#audit">Audit &amp; rescue</a></li>
+                <li><a href="{% url 'services' %}#migration">Version migration</a></li>
+                <li><a href="{% url 'services' %}#integrations">Integrations</a></li>
+                <li><a href="{% url 'services' %}#training">Team training</a></li>
+                {% if mega_top_services %}
+                    {% for s in mega_top_services|slice:":3" %}
+                    <li><a href="{% url 'service_detail' slug=s.slug %}">{{ s.title }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="mega-col">
+            <div class="mega-col-head">
+                <h4 class="mega-col-title">Modules</h4>
+                <a href="{% url 'modules' %}" class="mega-col-all">All modules →</a>
+            </div>
+            <ul class="mega-col-list">
+                <li><a href="{% url 'modules' %}#operations">Operations</a></li>
+                <li><a href="{% url 'modules' %}#sales">Sales &amp; Commerce</a></li>
+                <li><a href="{% url 'modules' %}#finance">Finance &amp; Accounting</a></li>
+                <li><a href="{% url 'modules' %}#people">People &amp; HR</a></li>
+                <li><a href="{% url 'modules' %}#web">Web &amp; Marketing</a></li>
+                <li><a href="{% url 'modules' %}#productivity">Productivity</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="mega-panel-foot container">
+        <span class="mega-panel-foot-dot"></span>
+        <span>ERP that fits the way your business actually runs — not the other way round.</span>
+        <a href="{% url 'contact' %}" class="mega-panel-foot-cta" data-book-trigger>Book a free call →</a>
+    </div>
+</div>

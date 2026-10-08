@@ -1,19 +1,23 @@
-{% load static %}
-<a href="{% url 'service_detail' service.slug %}" class="group surface hover-lift p-6 block h-full">
-    <div class="flex items-start justify-between mb-5">
-        <div class="w-11 h-11 bg-surface rounded-lg flex items-center justify-center border border-line2">
-            <img src="{% static 'images/icons/' %}{{ service.icon }}" alt="{{ service.title }}" class="w-6 h-6 icon-tint">
-        </div>
-        <span class="text-[11px] font-medium text-ink4 group-hover:text-indigo-600 transition uppercase tracking-wider">0{{ forloop.counter|stringformat:"d" }}</span>
+{% load core_extras %}
+{% with steps=service_workflows|get_item:service.slug theme=service_themes|get_item:service.slug %}
+<a href="{% url 'service_detail' service.slug %}" class="svc-card svc-accent-{{ theme.accent_key }}" aria-label="{{ service.title }}">
+    <div class="svc-card-head">
+        <span class="svc-card-num">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}</span>
+        <div class="svc-card-icon">{{ theme.icon|safe }}</div>
     </div>
-
-    <h3 class="font-semibold text-lg text-ink mb-2 group-hover:text-indigo-600 transition tracking-tight">
-        {{ service.title }}
-    </h3>
-    <p class="text-sm text-ink2 leading-relaxed mb-4">{{ service.short_description }}</p>
-
-    <div class="inline-flex items-center text-[12px] font-medium text-indigo-600 uppercase tracking-wider">
-        <span>Learn more</span>
-        <svg class="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+    <h3 class="svc-card-title">{{ service.title }}</h3>
+    <p class="svc-card-desc">{{ service.short_description|default:service.description|truncatechars:140 }}</p>
+    <div class="svc-card-workflow" aria-hidden="true">
+        {% for step, icon in steps %}
+            <span class="svc-wf-dot{% if forloop.counter0 < 2 %} done{% endif %}"></span>
+        {% endfor %}
+    </div>
+    <div class="svc-card-foot">
+        <span class="svc-card-step">5-step workflow</span>
+        <span class="svc-card-cta">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
     </div>
 </a>
+{% endwith %}

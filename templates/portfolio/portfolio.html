@@ -1,14 +1,34 @@
 {% extends 'base.html' %}
 
 {% block title %}Portfolio — {{ site_settings.full_name }}{% endblock %}
+{% block meta_description %}Case studies of business problems solved, plus a selection of successful Odoo / ERP projects.{% endblock %}
 
 {% block content %}
 
-<section class="section section-cream" style="padding-top:5rem;">
-    <div class="container">
-        <div class="eyebrow">Portfolio</div>
-        <h1 class="h1 reveal">Selected Work</h1>
-        <p class="lead reveal" data-delay="1">Case studies of business problems solved, plus a selection of successful projects.</p>
+{% comment %}
+ ============================================================
+   HERO — section-icon head + availability pill
+   ============================================================
+{% endcomment %}
+<section class="section section-cream" style="padding-top:clamp(4rem, 8vw, 6rem); padding-bottom:clamp(2.5rem, 5vw, 4rem); position:relative; overflow:hidden;">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="section-head reveal" style="margin-bottom:2rem;">
+            <div class="section-icon" style="--accent: var(--brand); --accent-soft: var(--brand-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="head-text">
+                <div class="eyebrow">Portfolio</div>
+                <h1 class="h1" style="margin:0;">Selected <span class="accent">work.</span></h1>
+            </div>
+        </div>
+
+        <p class="lead reveal" data-delay="1" style="max-width:64ch;margin:0 0 1.5rem;">
+            Case studies of business problems solved, plus a selection of successful projects.
+        </p>
+
+        <span class="hero-pill reveal" data-delay="2">
+            <span class="dot"></span> 2+ yrs · 11+ projects shipped · NDA-friendly · Audit-ready
+        </span>
     </div>
 </section>
 
@@ -22,6 +42,7 @@
             <div class="head-text">
                 <div class="eyebrow" style="color:var(--rose);">Case studies</div>
                 <h2 class="h2">Business outcomes</h2>
+                <p>Real problems, real numbers — the kind of work that ships and stays shipped.</p>
             </div>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -43,6 +64,7 @@
             <div class="head-text">
                 <div class="eyebrow" style="color:var(--brand);">Projects</div>
                 <h2 class="h2">Builds &amp; experiments</h2>
+                <p>Side projects, OSS contributions, and the kind of builds that ship on weekends.</p>
             </div>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -61,5 +83,32 @@
     </div>
 </section>
 {% endif %}
+
+{% comment %}
+ ============================================================
+   CLOSING CTA — dark band, mirrors home
+   ============================================================
+{% endcomment %}
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-band reveal">
+            <div class="cta-pill"><span class="dot"></span> Want results like these?</div>
+            <h2 class="h2">Have a similar project on the table?</h2>
+            <p>Send a brief about your business, the workflow, and your deadline. You'll get a written scope, a fixed quote, and a reply within 24 hours.</p>
+            <div class="flex gap-2 wrap" style="justify-content:center;">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    Start a conversation
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="{% url 'services' %}" class="btn btn-secondary">See the services</a>
+            </div>
+            <div class="cta-trust">
+                <span><span class="dot"></span> Free 60-min discovery</span>
+                <span><span class="dot"></span> Fixed price, fixed scope</span>
+                <span><span class="dot"></span> 30-day post-launch support</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

@@ -4,11 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — Senior ERP & Odoo Engineer{% endblock %}</title>
+    <meta name="theme-color" content="#714B67">
+    <meta name="color-scheme" content="light">
+    <title>{% block title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — ERP & Odoo Engineer{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.hero_subtitle|default:"Odoo and ERP implementation, customization, migration and support by Mostakim Jihad." }}{% endblock %}">
 
+    <!-- Open Graph / Twitter Cards — for link previews on social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — ERP & Odoo Engineer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.hero_subtitle|default:"Odoo and ERP implementation, customization, migration and support." }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% if site_settings.og_image %}{{ site_settings.og_image.url }}{% else %}{% static 'images/profile.png' %}{% endif %}{% endblock %}">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site_settings.full_name|default:"Mostakim Jihad" }} — ERP & Odoo Engineer{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ site_settings.hero_subtitle|default:"Odoo and ERP implementation, customization, migration and support." }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% if site_settings.og_image %}{{ site_settings.og_image.url }}{% else %}{% static 'images/profile.png' %}{% endif %}{% endblock %}">
+
+    <!-- View Transitions API opt-in — smooth page-to-page morphing.
+         Browsers without support ignore this meta + the CSS rule below. -->
+    <meta name="view-transition" content="same-origin">
+    <meta name="supported-color-schemes" content="light">
+
+    <!-- Canonical URL — avoid duplicate-content SEO penalties -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Resource hints — preconnect to font + image CDNs early -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+
     <link rel="stylesheet" href="{% static 'css/tailwind.compiled.css' %}?v=aud1">
-    <link rel="stylesheet" href="{% static 'css/flat.css' %}?v=mod3">
+    <link rel="stylesheet" href="{% static 'css/flat.css' %}?v=odo19">
     {% block extra_css %}{% endblock %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,31 +44,43 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body style="font-family:'Inter',system-ui,-apple-system,sans-serif;background:#ffffff;color:#262626;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;">
+<body style="font-family:'Inter',system-ui,-apple-system,sans-serif;background:#ffffff;color:#111827;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;">
+
+<!-- Skip to content — keyboard-only users -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- Scroll progress -->
-<div id="scroll-progress" style="position:fixed;top:0;left:0;right:0;height:2px;background:#1A73E8;transform:scaleX(0);transform-origin:0 50%;z-index:60;pointer-events:none;transition:transform .15s ease;"></div>
+<div id="scroll-progress" style="position:fixed;top:0;left:0;right:0;height:2px;background:#714B67;transform:scaleX(0);transform-origin:0 50%;z-index:60;pointer-events:none;transition:transform .15s ease;"></div>
 
 <!-- ============================================================
      NAVBAR
      ============================================================ -->
-<header id="site-nav" style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(232,234,237,0.7);transition:box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1), background 0.2s cubic-bezier(0.2, 0, 0, 1);">
+<header id="site-nav" style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(229,231,235,0.7);transition:box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1), background 0.2s cubic-bezier(0.2, 0, 0, 1);">
     <nav class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:0.85rem;padding-bottom:0.85rem;gap:1rem;">
         <a href="{% url 'home' %}" style="display:flex;align-items:center;gap:0.6rem;font-weight:700;color:var(--text-1);font-size:0.95rem;text-decoration:none;">
             <img src="{% static 'images/logo.png' %}" alt="Mostakim Jihad" style="width:32px;height:32px;border-radius:7px;display:block;">
             <span class="nav-brand-text" style="font-size:0.95rem;letter-spacing:-0.01em;">Mostakim Jihad</span>
         </a>
 
-        <div class="nav-center" style="display:none;align-items:center;gap:0.15rem;">
+        <div class="nav-center" style="display:none;align-items:center;gap:0.05rem;">
             <a href="{% url 'home' %}" class="nav-link">Home</a>
-            <a href="{% url 'products' %}" class="nav-link">Products</a>
-            <a href="{% url 'services' %}" class="nav-link">Services</a>
-            <a href="{% url 'modules' %}" class="nav-link">Modules</a>
-            <a href="{% url 'portfolio:portfolio' %}" class="nav-link">Work</a>
+
+            <div class="nav-mega" data-mega="explore">
+                <button type="button" class="nav-link nav-link--has-mega" data-mega-trigger="explore" aria-haspopup="true" aria-expanded="false" aria-controls="mega-panel-explore">
+                    Explore
+                    <svg class="nav-link-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+            </div>
+
+            <a href="{% url 'store' %}" class="nav-link">App Store</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'portfolio:portfolio' %}" class="nav-link">Case Study</a>
             <a href="{% url 'clients' %}" class="nav-link">Clients</a>
             <a href="{% url 'blog:list' %}" class="nav-link">Blog</a>
             <a href="{% url 'contact' %}" class="nav-link">Contact</a>
         </div>
+
+        {% include 'partials/_mega_menu.html' %}
 
         <div class="nav-cta" style="display:none;align-items:center;gap:0.5rem;">
             <a href="{% url 'pricing' %}" class="btn btn-ghost btn-sm">Pricing</a>
@@ -58,11 +97,42 @@
     <div id="mobile-menu" style="display:none;border-top:1px solid #e5e5e5;background:#ffffff;">
         <div class="container" style="padding-top:0.75rem;padding-bottom:1rem;display:flex;flex-direction:column;gap:0.25rem;">
             <a href="{% url 'home' %}" class="mob-link">Home</a>
-            <a href="{% url 'products' %}" class="mob-link">Products</a>
-            <a href="{% url 'services' %}" class="mob-link">Services</a>
-            <a href="{% url 'modules' %}" class="mob-link">Modules</a>
+
+            <details class="mob-mega">
+                <summary class="mob-link mob-link--toggle">
+                    Explore
+                    <svg class="mob-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </summary>
+
+                <div class="mob-mega-group">
+                    <div class="mob-mega-group-title">Products</div>
+                    <a href="{% url 'products' %}" class="mob-link mob-link--child">All products</a>
+                    <a href="{% url 'products' %}#manufacturing" class="mob-link mob-link--child">Manufacturing</a>
+                    <a href="{% url 'products' %}#retail" class="mob-link mob-link--child">Retail &amp; apparel</a>
+                    <a href="{% url 'products' %}#distribution" class="mob-link mob-link--child">Distribution &amp; 3PL</a>
+                </div>
+
+                <div class="mob-mega-group">
+                    <div class="mob-mega-group-title">Services</div>
+                    <a href="{% url 'services' %}" class="mob-link mob-link--child">All services</a>
+                    <a href="{% url 'services' %}#rollout" class="mob-link mob-link--child">Full rollout</a>
+                    <a href="{% url 'services' %}#audit" class="mob-link mob-link--child">Audit &amp; rescue</a>
+                    <a href="{% url 'services' %}#migration" class="mob-link mob-link--child">Version migration</a>
+                </div>
+
+                <div class="mob-mega-group">
+                    <div class="mob-mega-group-title">Modules</div>
+                    <a href="{% url 'modules' %}" class="mob-link mob-link--child">All modules</a>
+                    <a href="{% url 'modules' %}#operations" class="mob-link mob-link--child">Operations</a>
+                    <a href="{% url 'modules' %}#sales" class="mob-link mob-link--child">Sales &amp; Commerce</a>
+                    <a href="{% url 'modules' %}#finance" class="mob-link mob-link--child">Finance &amp; Accounting</a>
+                </div>
+            </details>
+
+            <a href="{% url 'store' %}" class="mob-link">App Store</a>
+            <a href="{% url 'projects' %}" class="mob-link">Projects</a>
             <a href="{% url 'pricing' %}" class="mob-link">Pricing Calculator</a>
-            <a href="{% url 'portfolio:portfolio' %}" class="mob-link">Work</a>
+            <a href="{% url 'portfolio:portfolio' %}" class="mob-link">Case Study</a>
             <a href="{% url 'clients' %}" class="mob-link">Clients</a>
             <a href="{% url 'blog:list' %}" class="mob-link">Blog</a>
             <a href="{% url 'contact' %}" class="mob-link">Contact</a>
@@ -81,16 +151,21 @@
 }
 /* Nav link styles */
 .nav-link {
-    padding: 0.45rem 0.7rem;
+    padding: 0.38rem 0.5rem;
     border-radius: 7px;
     color: #5F6368;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
     transition: color 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.18s cubic-bezier(0.22, 1, 0.36, 1), transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.nav-link:hover { color: #202124; background: #F8F9FA; transform: translateY(-1px); }
-.nav-link.is-active { color: #1A73E8; background: #E8F0FE; }
+.nav-link:hover { color: #714B67; background: #F5F0F4; transform: translateY(-1px); }
+.nav-link.is-active { color: #714B67; background: #F5F0F4; }
+
+@media (min-width: 1280px) {
+    .nav-link { padding: 0.42rem 0.65rem; font-size: 0.84rem; }
+}
 
 .nav-mobile-btn {
     display: inline-flex;
@@ -120,6 +195,10 @@
     .nav-center { display: flex !important; }
     .nav-cta { display: flex !important; }
     .nav-mobile-btn { display: none !important; }
+    .nav-brand-text { display: none; }
+}
+@media (min-width: 1280px) {
+    .nav-brand-text { display: inline; }
 }
 @media (min-width: 768px) {
     .nav-cta { display: flex !important; }
@@ -148,14 +227,14 @@
 </div>
 {% endif %}
 
-<main style="flex:1;">
+<main id="main-content" tabindex="-1" style="flex:1;">
     {% block content %}{% endblock %}
 </main>
 
 <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer style="background:#f8fafc;border-top:1px solid #e5e5e5;padding:3rem 0 2rem;margin-top:4rem;">
+<footer style="background:#fafafa;border-top:1px solid #e5e7eb;padding:3rem 0 2rem;margin-top:4rem;">
     <div class="container">
         <div style="display:grid;grid-template-columns:1fr;gap:2rem;">
             <div>
@@ -163,11 +242,11 @@
                     <img src="{% static 'images/logo.png' %}" alt="Mostakim Jihad" style="width:32px;height:32px;border-radius:7px;display:block;">
                     <span style="font-weight:700;color:var(--text-1);font-size:0.95rem;">{{ site_settings.full_name|default:"Mostakim Jihad" }}</span>
                 </div>
-                <p style="color:#737373;font-size:0.88rem;line-height:1.55;max-width:40ch;margin:0 0 1rem;">{{ site_settings.tagline }}</p>
-                <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.3rem 0.7rem;border:1px solid #e5e5e5;border-radius:999px;font-size:0.78rem;color:#525252;">
-                    <span style="width:6px;height:6px;border-radius:50%;background:#1E8E3E;display:inline-block;"></span>
-                    <span style="font-weight:500;color:#171717;">Available</span>
-                    <span style="color:#d4d4d4;">·</span>
+                <p style="color:#6B7280;font-size:0.88rem;line-height:1.55;max-width:40ch;margin:0 0 1rem;">{{ site_settings.tagline }}</p>
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.3rem 0.7rem;border:1px solid #e5e7eb;border-radius:999px;font-size:0.78rem;color:#374151;">
+                    <span style="width:6px;height:6px;border-radius:50%;background:#714B67;display:inline-block;"></span>
+                    <span style="font-weight:500;color:#111827;">Available</span>
+                    <span style="color:#d1d5db;">·</span>
                     <span>Replies &lt; 4h</span>
                 </div>
             </div>
@@ -180,7 +259,9 @@
                     <li style="margin-bottom:0.4rem;"><a href="{% url 'products' %}" class="footer-link">Products</a></li>
                     <li style="margin-bottom:0.4rem;"><a href="{% url 'services' %}" class="footer-link">Services</a></li>
                     <li style="margin-bottom:0.4rem;"><a href="{% url 'modules' %}" class="footer-link">Modules</a></li>
-                    <li style="margin-bottom:0.4rem;"><a href="{% url 'portfolio:portfolio' %}" class="footer-link">Work</a></li>
+                    <li style="margin-bottom:0.4rem;"><a href="{% url 'store' %}" class="footer-link">App Store</a></li>
+                    <li style="margin-bottom:0.4rem;"><a href="{% url 'projects' %}" class="footer-link">Projects</a></li>
+                    <li style="margin-bottom:0.4rem;"><a href="{% url 'portfolio:portfolio' %}" class="footer-link">Case Study</a></li>
                     <li style="margin-bottom:0.4rem;"><a href="{% url 'blog:list' %}" class="footer-link">Blog</a></li>
                 </ul>
             </div>
@@ -202,10 +283,10 @@
             </div>
         </div>
 
-        <div style="border-top:1px solid #e5e5e5;margin-top:2rem;padding-top:1.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.75rem;font-size:0.8rem;color:#a3a3a3;">
+        <div style="border-top:1px solid #e5e7eb;margin-top:2rem;padding-top:1.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.75rem;font-size:0.8rem;color:#9CA3AF;">
             <span>&copy; {% now "Y" %} {{ site_settings.full_name|default:"Mostakim Jihad" }}</span>
             <span style="display:inline-flex;align-items:center;gap:0.4rem;">
-                <span style="width:6px;height:6px;border-radius:50%;background:#1A73E8;display:inline-block;"></span>
+                <span style="width:6px;height:6px;border-radius:50%;background:#714B67;display:inline-block;"></span>
                 Built with Django · PostgreSQL
             </span>
         </div>
@@ -213,19 +294,19 @@
 </footer>
 
 <style>
-.footer-link { color:#5F6368;font-size:0.88rem;text-decoration:none;transition:color 0.15s; }
-.footer-link:hover { color:#1A73E8; }
+.footer-link { color:#6B7280;font-size:0.88rem;text-decoration:none;transition:color 0.15s; }
+.footer-link:hover { color:#714B67; }
 .footer-tag {
     display:inline-flex;align-items:center;
     padding:0.3rem 0.7rem;
-    background:#ffffff;color:#3C4043;
-    border:1px solid #DADCE0;border-radius:9999px;
+    background:#ffffff;color:#374151;
+    border:1px solid #E5E7EB;border-radius:9999px;
     font-size:0.78rem;font-weight:500;
     text-decoration:none;
     box-shadow: 0 1px 2px rgba(15,23,42,0.04);
     transition:transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
-.footer-tag:hover { transform: translateY(-2px); border-color:#1A73E8;color:#1A73E8; box-shadow: 0 4px 12px rgba(15,23,42,0.08); }
+.footer-tag:hover { transform: translateY(-2px); border-color:#714B67;color:#714B67; box-shadow: 0 4px 12px rgba(15,23,42,0.08); }
 
 .message {
     padding: 0.875rem 1.25rem;
@@ -273,22 +354,22 @@
     gap: 0.5rem;
     padding: 0.7rem 1rem;
     border-radius: 9999px;
-    background: #1A73E8;
+    background: #714B67;
     color: #ffffff;
     font-size: 0.85rem;
     font-weight: 700;
     text-decoration: none;
-    border: 2px solid #1A73E8;
-    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.10), 0 12px 24px rgba(15, 23, 42, 0.12), 0 8px 24px -8px rgba(26, 115, 232, 0.40);
+    border: 2px solid #714B67;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.10), 0 12px 24px rgba(15, 23, 42, 0.12), 0 8px 24px -8px rgba(113, 75, 103, 0.40);
     transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     display: none;
 }
 #floating-cta.is-visible { display: inline-flex; }
-#floating-cta:hover { background: #174EA6; border-color: #174EA6; transform: translateY(-3px) scale(1.03); box-shadow: 0 4px 8px rgba(15, 23, 42, 0.12), 0 16px 32px rgba(15, 23, 42, 0.16), 0 12px 28px -8px rgba(26, 115, 232, 0.55); }
+#floating-cta:hover { background: #5A3B52; border-color: #5A3B52; transform: translateY(-3px) scale(1.03); box-shadow: 0 4px 8px rgba(15, 23, 42, 0.12), 0 16px 32px rgba(15, 23, 42, 0.16), 0 12px 28px -8px rgba(113, 75, 103, 0.55); }
 @media (max-width: 767px) { #floating-cta { display: none !important; } }
 </style>
 
-<script src="{% static 'js/main.js' %}?v=aud1" defer></script>
+<script src="{% static 'js/main.js' %}?v=odo19" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
@@ -303,15 +384,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 {% block extra_js %}{% endblock %}
 
+<!-- Back to top button -->
 <button id="back-to-top" aria-label="Back to top">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 15l7-7 7 7"/></svg>
 </button>
 
-<a href="{% url 'contact' %}" id="floating-cta" aria-label="Book a free call">
+<a href="{% url 'contact' %}" id="floating-cta" aria-label="Book a free call" data-book-trigger>
     <span style="width:8px;height:8px;background:#fff;border-radius:50%;display:inline-block;"></span>
     Book a free call
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 5l7 7-7 7M21 12H3"/></svg>
 </a>
+
+{% include 'partials/_booking_modal.html' %}
+
+<script src="{% static 'js/booking.js' %}?v=bk1" defer></script>
 
 {% load core_extras %}
 </body>
